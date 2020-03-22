@@ -34,7 +34,7 @@ The payment will go to an [Aragon DAO](https://aragon.org), which will act as a 
 
 We can use Dai, which a stable cryprocurrency. 1 Dai always equals 1 US Dollar.
 For that, here are some alternatives:
-[Wyre](https://www.sendwyre.com/) | [Ramp](https://instant.ramp.network/) | [Moonpay] (https://www.moonpay.io/)
+[Wyre](https://www.sendwyre.com/) | [Ramp](https://instant.ramp.network/) | [Moonpay](https://www.moonpay.io/)
 
 ## Chat group
 The important thing is that donors should be close to the help squad in order to build trust and ensure their funds will be spent correctly.
