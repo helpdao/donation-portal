@@ -22,9 +22,9 @@ Their website may be as simple as a name for the help squad and a description.
 ## Donation portal
 It should contain the name of the help squad and its description.
 It will show:
-- Amount of funds donated: Total amount that has been donated to that help squad
-- Amount of funds remaining: How much money the help squad has remaining
-- Donate button: Will open payment window
+- **Amount of funds donated**: Total amount that has been donated to that help squad
+- **Amount of funds remaining**: How much money the help squad has remaining
+- **Donate button**: Will open payment window
 
 <img width="695" alt="PNG image 2" src="https://user-images.githubusercontent.com/718208/77250625-23f2a500-6c41-11ea-998b-c0ef8b520e8e.png">
 
