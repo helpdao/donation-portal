@@ -1,6 +1,4 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-This is just a template to organize various help squads within a single app. And each squad will have it's own route. Feel free to add improvements or changes :)
+This is a template created with **create-react-app** to organize various help squads within a single app. Each squad will have it's own route. Feel free to add improvements or changes :)
 
 ## How to run
 
