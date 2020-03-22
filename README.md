@@ -17,12 +17,16 @@ For that the flow should be as follows:
 We need a way for those who want to help squad to easily create their own website.
 Their website may be as simple as a name for the help squad and a description.
 
+
+
 ## Donation portal
 It should contain the name of the help squad and its description.
 It will show:
 - Amount of funds donated: Total amount that has been donated to that help squad
 - Amount of funds remaining: How much money the help squad has remaining
 - Donate button: Will open payment window
+
+
 
 ## Payment process
 The payment will go to an [Aragon DAO](https://aragon.org), which will act as a collaborative *digital piggybank* that allows supervisors and volunteers to spend the money. Since it works with cryptocurrencies, we need to be able to convert credit card payments to cryptocurrency.
