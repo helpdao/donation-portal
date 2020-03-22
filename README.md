@@ -17,7 +17,7 @@ For that the flow should be as follows:
 We need a way for those who want to help squad to easily create their own website.
 Their website may be as simple as a name for the help squad and a description.
 
-
+<img width="744" alt="PNG image" src="https://user-images.githubusercontent.com/718208/77250623-2228e180-6c41-11ea-9c6d-3b2e6d0b53bd.png">
 
 ## Donation portal
 It should contain the name of the help squad and its description.
@@ -26,6 +26,7 @@ It will show:
 - Amount of funds remaining: How much money the help squad has remaining
 - Donate button: Will open payment window
 
+<img width="695" alt="PNG image 2" src="https://user-images.githubusercontent.com/718208/77250625-23f2a500-6c41-11ea-998b-c0ef8b520e8e.png">
 
 
 ## Payment process
