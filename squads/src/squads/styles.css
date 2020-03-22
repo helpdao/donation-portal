@@ -1,0 +1,22 @@
+.container {
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	font-family: 'Roboto Slab', serif;
+}
+
+p {
+	max-width: 60vh;
+}
+
+span {
+	color: #ff5656;
+}
+
+button {
+	color: white;
+	font-family: 'Roboto Slab', serif;
+}
