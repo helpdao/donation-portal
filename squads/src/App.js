@@ -7,6 +7,8 @@ import XXXSquad from './squads/XXX';
 import YYYSquad from './squads/YYY';
 import ZZZSquad from './squads/ZZZ';
 
+import NewSquad from './squads/NewSquad';
+
 import './App.css';
 
 class App extends React.Component {
@@ -16,6 +18,9 @@ class App extends React.Component {
 				<Switch>
 					<Route exact path='/'>
 						<div className='home'>
+							<button id='new-squad'>
+								<Link to='/new-squad'>Init Squad</Link>
+							</button>
 							<img src={help_dao} alt='help_dao_logo'></img>
 							<li>
 								<button>
@@ -34,6 +39,9 @@ class App extends React.Component {
 							</li>
 							<p>.. more help on the way!</p>
 						</div>
+					</Route>
+					<Route exact path='/new-squad'>
+						<NewSquad />
 					</Route>
 					<Route exact path='/XXX'>
 						<XXXSquad />
