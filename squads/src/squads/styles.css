@@ -8,6 +8,16 @@
 	font-family: 'Roboto Slab', serif;
 }
 
+#form {
+	display: flex;
+	flex-direction: column;
+}
+
+#standard-basic-label,
+#standard-basic {
+	font-family: 'Roboto Slab', serif;
+}
+
 p {
 	max-width: 60vh;
 }
@@ -19,4 +29,19 @@ span {
 button {
 	color: white;
 	font-family: 'Roboto Slab', serif;
+}
+
+#form-submit {
+	background: none;
+	padding: 1.5em;
+	border-radius: 5px;
+	transition: transform 0.5s;
+	background-color: #001e42;
+	border: 1px solid #001e42;
+	margin-top: 1em;
+}
+
+#form-submit:hover {
+	cursor: pointer;
+	transform: scale(1.1);
 }
