@@ -28,7 +28,7 @@ const NewSquad = () => {
 				<TextField id='standard-basic' label='DAO Address' />
 				<TextField id='standard-basic' label='Chat Invite Link' />
 			</form>
-			<button id='form-submit'>Init Squad</button>
+			<a id='form-submit' href='/new/register'>Init Squad</a>
 		</div>
 	);
 };
