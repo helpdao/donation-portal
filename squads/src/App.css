@@ -24,14 +24,15 @@ img {
 	padding: 5px;
 }
 
-a {
+button {
 	text-decoration: none;
 	color: white;
 	font-family: 'Roboto Slab', serif;
 	font-weight: bold;
 }
 
-button {
+li button,
+#new-squad {
 	background: none;
 	padding: 1.5em;
 	border: 1px solid #ff5656;
@@ -40,7 +41,8 @@ button {
 	background-color: #ff5656;
 }
 
-button:hover {
+li button:hover,
+#new-squad:hover {
 	cursor: pointer;
 	transform: scale(1.1);
 }

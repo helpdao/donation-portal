@@ -1,11 +1,11 @@
 import React from 'react';
 
-import './styles.css';
+import '../styles/styles.css';
 
-const XXX = () => {
+const ZZZ = () => {
 	return (
 		<div className='container'>
-			<h4>XXX Help Squad</h4>
+			<h4>ZZZ Help Squad</h4>
 			<p>
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
 				dolor ipsum, porta vel faucibus malesuada, euismod et ipsum.
@@ -22,9 +22,9 @@ const XXX = () => {
 				</p>
 			</div>
 
-			<button>Donate</button>
+			<button id='donate'>Donate</button>
 		</div>
 	);
 };
 
-export default XXX;
+export default ZZZ;

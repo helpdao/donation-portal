@@ -11,6 +11,7 @@
 #form {
 	display: flex;
 	flex-direction: column;
+	width: 70vh;
 }
 
 #standard-basic-label,
@@ -26,22 +27,43 @@ span {
 	color: #ff5656;
 }
 
-button {
-	color: white;
-	font-family: 'Roboto Slab', serif;
+.dao-section {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 }
 
-#form-submit {
-	background: none;
+#register-dao .MuiButton-label {
+	font-family: 'Roboto Slab', serif;
+	font-weight: bold;
+	color: #001e42;
+}
+
+#submit {
 	padding: 1.5em;
 	border-radius: 5px;
-	transition: transform 0.5s;
-	background-color: #001e42;
-	border: 1px solid #001e42;
 	margin-top: 1em;
+	font-family: 'Roboto Slab', serif;
+	font-weight: bold;
 }
 
-#form-submit:hover {
+#donate {
+	text-decoration: none;
+	color: white;
+	font-family: 'Roboto Slab', serif;
+	font-weight: bold;
+}
+
+#donate {
+	background: none;
+	padding: 1.5em;
+	border: 1px solid #ff5656;
+	border-radius: 5px;
+	transition: transform 0.5s;
+	background-color: #ff5656;
+}
+
+#donate:hover {
 	cursor: pointer;
 	transform: scale(1.1);
 }

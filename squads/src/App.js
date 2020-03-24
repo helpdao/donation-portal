@@ -1,41 +1,42 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 import help_dao from './assets/help_dao.svg';
 
-import XXXSquad from './squads/XXX';
-import YYYSquad from './squads/YYY';
-import ZZZSquad from './squads/ZZZ';
+import XXXSquad from './components/squads/XXX';
+import YYYSquad from './components/squads/YYY';
+import ZZZSquad from './components/squads/ZZZ';
 
-import NewSquad from './squads/NewSquad';
-import Register from './squads/Register';
+import NewSquad from './components/new/NewSquad';
+import Register from './components/new/Register';
 
 import './App.css';
 
-function App () {
+function App() {
 	return (
 		<Router>
 			<Switch>
 				<Route exact path='/'>
 					<div className='home'>
-						<button id='new-squad'>
-							<Link to='/new'>Launch a help squad</Link>
-						</button>
+						<Link to='/new'>
+							<button id='new-squad'>Launch a help squad</button>
+						</Link>
+
 						<img src={help_dao} alt='help_dao_logo'></img>
 						<li>
-							<button>
-								<Link to='/XXX'>XXX Help Squad</Link>
-							</button>
+							<Link to='/XXX'>
+								<button>XXX Help Squad</button>
+							</Link>
 						</li>
 						<li>
-							<button>
-								<Link to='/YYY'>YYY Help Squad</Link>
-							</button>
+							<Link to='/YYY'>
+								<button>YYY Help Squad</button>
+							</Link>
 						</li>
 						<li>
-							<button>
-								<Link to='/ZZZ'>ZZZ Help Squad</Link>
-							</button>
+							<Link to='/ZZZ'>
+								<button>ZZZ Help Squad</button>
+							</Link>
 						</li>
 						<p>.. more help on the way!</p>
 					</div>
@@ -60,4 +61,4 @@ function App () {
 	);
 }
 
-export default App
+export default App;
