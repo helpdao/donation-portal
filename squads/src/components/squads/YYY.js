@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './styles.css';
+import '../styles/styles.css';
 
 const YYY = () => {
 	return (
@@ -22,7 +22,7 @@ const YYY = () => {
 				</p>
 			</div>
 
-			<button>Donate</button>
+			<button id='donate'>Donate</button>
 		</div>
 	);
 };
