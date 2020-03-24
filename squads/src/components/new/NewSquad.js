@@ -6,6 +6,7 @@ import '../new/Register';
 
 import '../styles/styles.css';
 import Register from '../new/Register';
+import { createSquad } from "../../requests"
 
 var name;
 var description;
@@ -19,7 +20,21 @@ class NewSquad extends React.Component {
 			disabled: true,
 			valid: false
 		};
-	}
+  }
+  
+  submitSquad = async () => {
+    try {
+      const body = {
+        name,
+        description,
+        inviteLink: telegram,
+        daoAddress: dao
+      }
+      await createSquad(body)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
 	render() {
 		return (
@@ -70,7 +85,7 @@ class NewSquad extends React.Component {
 					/>
 				</form>
 				<Button
-					id='submit'
+          onClick={this.submitSquad}
 					disabled={this.state.disabled}
 					variant='outlined'
 					color='secondary'
