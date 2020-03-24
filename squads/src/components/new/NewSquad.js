@@ -16,67 +16,110 @@ class NewSquad extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			disabled: true,
-			valid: false
+			disabled: true
 		};
 	}
 
 	render() {
 		return (
-			<div className='container'>
-				<h3>Launch a New Squad</h3>
-				<form id='form' autoComplete='off'>
-					<TextField
-						id='standard-basic'
-						label='Squad Name'
-						required
-						onChange={event => {
-							name = event.target.value;
-						}}
-					/>
-					<TextField
-						id='standard-basic'
-						label='Squad Description'
-						required
-						onChange={event => {
-							description = event.target.value;
-						}}
-					/>
-					<div className='dao-section'>
-						<TextField
-							style={{ width: '100%' }}
-							id='standard-basic'
-							label='DAO Address'
-							required
-							helperText='Register a DAO if not available'
-							onChange={event => {
-								dao = event.target.value;
-							}}
-						/>
+			<div className='main'>
+				<div className='container'>
+					<section>
+						<h3>Launch a New Squad</h3>
+						<form id='form' autoComplete='off'>
+							<TextField
+								id='standard-basic'
+								label='Squad Name'
+								required
+								onChange={event => {
+									name = event.target.value;
+								}}
+							/>
+							<TextField
+								id='standard-basic'
+								label='Squad Description'
+								required
+								onChange={event => {
+									description = event.target.value;
+								}}
+							/>
+
+							<TextField
+								id='standard-basic'
+								label='Chat Invite Link'
+								required
+								onChange={event => {
+									telegram = event.target.value;
+								}}
+							/>
+							<hr />
+						</form>
+						<a
+							href='#register-dao'
+							style={{ textDecoration: 'none' }}
+						>
+							<Button
+								id='next'
+								variant='outlined'
+								color='secondary'
+							>
+								Next
+							</Button>
+						</a>
+					</section>
+					<section id='register-dao'>
 						<Register />
-					</div>
-					<TextField
-						id='standard-basic'
-						label='Chat Invite Link'
-						required
-						onChange={event => {
-							telegram = event.target.value;
-							if (name && description && dao && telegram) {
-								this.setState({ disabled: false });
-							} else {
-								this.setState({ disabled: true });
-							}
-						}}
-					/>
-				</form>
-				<Button
-					id='submit'
-					disabled={this.state.disabled}
-					variant='outlined'
-					color='secondary'
-				>
-					Init Squad
-				</Button>
+						<a
+							href='#init-squad'
+							style={{ textDecoration: 'none' }}
+						>
+							<Button
+								id='next'
+								variant='outlined'
+								color='secondary'
+							>
+								Next
+							</Button>
+						</a>
+					</section>
+					<section id='init-squad'>
+						<h3>TakeOff</h3>
+						<form id='form' autoComplete='off'>
+							<TextField
+								id='standard-basic'
+								label='DAO Address'
+								required
+								helperText='Enter the address of the registered DAO'
+								onChange={event => {
+									dao = event.target.value;
+									if (
+										name &&
+										description &&
+										telegram &&
+										dao
+									) {
+										this.setState({
+											disabled: false
+										});
+									} else {
+										this.setState({
+											disabled: true
+										});
+									}
+								}}
+							/>
+						</form>
+						<hr></hr>
+						<Button
+							id='next'
+							variant='outlined'
+							color='secondary'
+							disabled={this.state.disabled}
+						>
+							Init DAO
+						</Button>
+					</section>
+				</div>
 			</div>
 		);
 	}

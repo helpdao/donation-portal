@@ -4,7 +4,7 @@ import '../styles/styles.css';
 
 const YYY = () => {
 	return (
-		<div className='container'>
+		<div className='squad-container'>
 			<h4>YYY Help Squad</h4>
 			<p>
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
