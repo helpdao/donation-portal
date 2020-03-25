@@ -9,10 +9,10 @@ import '../styles/styles.css';
 import Register from '../new/Register';
 import { createSquad } from "../../requests"
 
-var name;
-var description;
-//var dao;
-var inviteLink;
+var name = "";
+var description ="";
+var dao = "0x931D387731bBbC988B312206c74F77D004D6B84b";
+var inviteLink = "";
 
 class NewSquad extends React.Component {
 	constructor() {
@@ -27,7 +27,7 @@ class NewSquad extends React.Component {
       const body = {
         name,
         description,
-        inviteLink: telegram,
+        inviteLink: inviteLink,
         daoAddress: dao
       }
       await createSquad(body)
@@ -109,7 +109,7 @@ class NewSquad extends React.Component {
 							id='next'
 							variant='outlined'
 							color='secondary'
-							disabled={name && description && dao && telegram}
+							disabled={name && description && dao && inviteLink}
 							onClick={this.submitSquad}
 						>
 							Init DAO
