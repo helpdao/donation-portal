@@ -7,6 +7,7 @@ import '../new/Register';
 
 import '../styles/styles.css';
 import Register from '../new/Register';
+import { createSquad } from "../../requests"
 
 var name;
 var description;
@@ -19,7 +20,21 @@ class NewSquad extends React.Component {
 		this.state = {
 			disabled: false
 		};
-	}
+  }
+  
+  submitSquad = async () => {
+    try {
+      const body = {
+        name,
+        description,
+        inviteLink: telegram,
+        daoAddress: dao
+      }
+      await createSquad(body)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
 	render() {
 		return (
@@ -94,7 +109,7 @@ class NewSquad extends React.Component {
 							id='next'
 							variant='outlined'
 							color='secondary'
-							disabled={this.state.disabled}
+							disabled={name && description && dao && telegram}
 							onClick={this.submitSquad}
 						>
 							Init DAO
