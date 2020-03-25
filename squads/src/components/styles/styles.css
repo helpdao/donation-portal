@@ -89,3 +89,10 @@ span {
 	cursor: pointer;
 	transform: scale(1.1);
 }
+
+#home {
+	position: absolute;
+	top: 1em;
+	left: 1em;
+	color: #ff5656;
+}

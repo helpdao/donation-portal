@@ -18,7 +18,7 @@ const NewSquad = () => {
 						size='large'
 						onClick={() => wallet.activate('fortmatic')}
 					>
-						Register DAO
+						&#128205; Register DAO &#128205;
 					</Button>
 				</Tooltip>
 			)}
