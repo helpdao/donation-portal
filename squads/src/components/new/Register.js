@@ -1,6 +1,7 @@
 import React from 'react';
 import { useWallet, UseWalletProvider } from 'use-wallet';
 import Button from '@material-ui/core/Button';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import '../styles/styles.css';
 
@@ -11,13 +12,15 @@ const NewSquad = () => {
 			{wallet.connected ? (
 				<div>Registered!</div>
 			) : (
-				<Button
-					id='register-dao'
-					size='small'
-					onClick={() => wallet.activate('fortmatic')}
-				>
-					Register
-				</Button>
+				<Tooltip title='Register to create a DAO' placement='top'>
+					<Button
+						id='register-dao'
+						size='large'
+						onClick={() => wallet.activate('fortmatic')}
+					>
+						&#128205; Register DAO &#128205;
+					</Button>
+				</Tooltip>
 			)}
 		</div>
 	);

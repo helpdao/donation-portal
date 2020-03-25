@@ -17,7 +17,7 @@ const SquadDetails = props => {
   }, []);
 
   return (
-    <div className="container">
+    <div className="squad-container">
       <h4>{details.name} Help Squad</h4>
       <p> {details.description} </p>
 
