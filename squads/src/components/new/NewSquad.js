@@ -1,8 +1,7 @@
 import React from 'react';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import HomeIcon from '@material-ui/icons/Home';
-
+import RegisterForm from './registerForm';
 import '../new/Register';
 
 import '../styles/styles.css';
@@ -18,10 +17,14 @@ class NewSquad extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			disabled: false
+			disabled: false,
+			body: null
 		};
   }
-  
+  myCallback = (dataFromChild) => {
+	this.state.body = dataFromChild;
+	console.log(dataFromChild)
+  }
   submitSquad = async () => {
     try {
       const body = {
@@ -35,7 +38,10 @@ class NewSquad extends React.Component {
       console.log(error)
     }
   }
-
+  getFormData = () => {
+	console.log("GettingData")
+	this.refs.submit.mySubmitHandler()
+  }
 	render() {
 		return (
 			<div className='main'>
@@ -46,39 +52,13 @@ class NewSquad extends React.Component {
 				<div className='container'>
 					<section>
 						<h3> <span>&#9937;</span> Launch a New Squad <span>&#9937;</span></h3>
-						<form id='form' autoComplete='off'>
-							<TextField
-								id='standard-basic'
-								label='Squad Name'
-								required
-								onChange={event => {
-									name = event.target.value;
-								}}
-							/>
-							<TextField
-								id='standard-basic'
-								label='Squad Description'
-								required
-								onChange={event => {
-									description = event.target.value;
-								}}
-							/>
-
-							<TextField
-								id='standard-basic'
-								label='Chat Invite Link'
-								required
-								onChange={event => {
-									inviteLink = event.target.value;
-								}}
-							/>
-							<hr />
-						</form>
+						<RegisterForm ref="submit" callback={this.myCallback}></RegisterForm>
 						<a
-							href='#register-dao'
+							href={ this.state.body != null ? '#register-dao':'#' }
 							style={{ textDecoration: 'none' }}
 						>
 							<Button
+								onClick={this.getFormData}
 								id='next'
 								variant='outlined'
 								color='secondary'
@@ -93,6 +73,8 @@ class NewSquad extends React.Component {
 						<a
 							href='#init-squad'
 							style={{ textDecoration: 'none' }}
+							onClick={this.getFormData}
+
 						>
 							<Button
 								id='next'
