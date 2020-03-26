@@ -7,14 +7,15 @@ const SquadDetails = props => {
   const { squadId } = props.match.params;
   const [details, setDetails] = useState({});
 
-  const getDetails = async () => {
-    const result = await squadDetails(squadId);
-    setDetails(result.squad);
-  };
-
   useEffect(() => {
+    async function getDetails() {
+      const result = await squadDetails(squadId);
+      if(result && result.squad){
+        setDetails(result.squad);
+      }
+    }
     getDetails();
-  }, []);
+  }, [squadId]);
 
   return (
     <div className="squad-container">
