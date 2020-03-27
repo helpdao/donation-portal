@@ -47,7 +47,7 @@ export function createSquad(data){
 }
 export function findSquad(data){
   return new Promise((resolve, reject) => {
-    axios.post(`${ENDPOINT}/find`, {data}).then(
+    axios.post(`${ENDPOINT}/find`, data).then(
       (response)=> {
         resolve(response)
       }).catch((err) => reject(err))

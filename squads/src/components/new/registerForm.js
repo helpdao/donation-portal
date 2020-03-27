@@ -2,6 +2,7 @@ import React from 'react'
 import {TextField, Button} from '@material-ui/core'
 import Alert from '@material-ui/lab/Alert';
 import { withStyles, makeStyles} from '@material-ui/core/styles';
+import { findSquad } from "../../requests"
 
 const styles = makeStyles({
   fieldStyles: {    
@@ -18,9 +19,27 @@ export default class RegisterForm extends React.Component{
             description:'',
             nameError:'',
             descriptionError:'',
-            inviteLinkError:''
+            inviteLinkError:'',
+            requestError:''
 
                 }
+    }
+    checkName(){
+        return new Promise((resolve, reject) => {
+            findSquad({name:this.state.name}).then((response) =>{
+                console.log("Valid Name?")
+                console.log(response)
+                if(response.data.squads.length === 0){
+                    Promise.resolve(this.setState({nameError:''})).then(() =>  resolve());
+                }else{
+                    let error = 'This name is in use, you need to choose a different Squad Name'
+                    Promise.resolve(this.setState({nameError:error})).then(() =>  reject(error));
+                }
+            }).catch((err) => {
+                let error = "Somenthing goes wrong. Try it again in a while"
+                Promise.resolve(this.setState({requestError:error})).then(() => reject(error))
+            })
+        });
     }
     valideInviteLink(){
         return new Promise((resolve, reject) => {
@@ -44,7 +63,7 @@ export default class RegisterForm extends React.Component{
                 Promise.resolve(this.setState({nameError:error})).then(() =>  reject(error));
             }
             else
-            Promise.resolve(this.setState({nameError:''})).then(() =>  resolve());
+                Promise.resolve(this.setState({nameError:''})).then(() =>  resolve());
         });        
     }
     validateDescription(){
@@ -63,6 +82,8 @@ export default class RegisterForm extends React.Component{
     onSubmitHandler = () => {
         this.validateName()
         .then((data) => {
+            return this.checkName()
+        }).then((data) => {
             return this.valideInviteLink()
         }).then((data) => {
             return this.validateDescription()

@@ -17,7 +17,8 @@ class NewSquad extends React.Component {
 			body: null,
 			formValid: false,
 			daoInfoError:'',
-			walletRegisterError:''
+			walletRegisterError:'',
+			requestError:''
 		};
   }
   isWalletRegistered(){
@@ -49,25 +50,17 @@ class NewSquad extends React.Component {
 				daoAddress: dao
 			  }
 		  	let response = await createSquad(body)
-			console.log(response)
 			if(response.status === 200){
 				document.location.href=`/squad/${response.data.newSquad._id}`
 			}
 		}else if(!this.state.formValid){
-			document.location.href="#dao-info"
+			Promise.resolve(this.setState({daoInfoError:"Review the form, somenthing is missing."})).then(() => document.location.href="#dao-info");
 		}else{
-			document.location.href="#register-dao"
+			Promise.resolve(this.setState({walletRegisterError:"You need to login into your wallet."})).then(() => document.location.href="#register-dao");
 		}
-    } catch (error) {
-		console.log("Cogemos el Error")
-		console.log(error)
-		if(error.status === 500){
-			Promise.resolve(this.setState({daoInfoError:'This name is in use, you need to choose a different Squad Name'})).then(
-				() =>{
-					document.location.href=`#dao-info`
-				})
-		}
-		  
+    } catch (err) {
+		let error = "Somenthing goes wrong. Try it again in a while"
+		Promise.resolve(this.setState({requestError:error})).then(() => document.location.href="#dao-info")
     }
   }
 	render() {
@@ -80,11 +73,14 @@ class NewSquad extends React.Component {
 				</a>
 				<div className='container '>
 					<section id="dao-info">
+					{this.state.daoInfoError.length === 0 ? '':<Alert severity="error"> {this.state.daoInfoError} — check it out!</Alert>}
+					{this.state.requestError.length === 0 ? '':<Alert severity="error"> {this.state.requestError} — check it out!</Alert>}
+
 						<h3> <span role="img" aria-label="Rescue Worker’s Helmet">&#9937;</span> Launch a New Squad <span role="img" aria-label="Rescue Worker’s Helmet">&#9937;</span></h3>
-						{this.state.daoInfoError.length === 0 ? '':<Alert severity="error"> {this.state.daoInfoError} — check it out!</Alert>}
 						<RegisterForm parentCallback={this.getFormData}></RegisterForm>
 					</section>
 					<section id='register-dao'>
+					{this.state.walletRegisterError.length === 0 ? '':<Alert severity="error"> {this.state.walletRegisterError} — check it out!</Alert>}
 					<h3> It's time to connect your wallet:</h3>
 						<RegisterWallet />
 					</section>
