@@ -10,9 +10,15 @@ const SquadDetails = props => {
 
   useEffect(() => {
     async function getDetails() {
-      const result = await squadDetails(squadId);
-      if(result && result.squad){
-        setDetails(result.squad);
+      try{
+        const result = await squadDetails(squadId);
+        console.log("Result Squad Details: ")
+        console.log(result)
+        if(result.data && result.data.squad){
+          setDetails(result.data.squad);
+        }
+      }catch(err){ 
+        console.log(err)
       }
     }
     getDetails();

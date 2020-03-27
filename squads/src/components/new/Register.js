@@ -28,7 +28,7 @@ const NewSquad = () => {
 						id='register-dao-button'
 						size='large'
 						onClick={() => {
-							wallet.activate('fortmatic')
+								wallet.activate('fortmatic')
 						}}
 					>
 						Connect

@@ -8,10 +8,16 @@ const SquadList = props => {
   const [squads, setSquads] = useState([]);
 
   const getSquads = async () => {
-    const result = await allSquads();
-    if(result && result.squads){
-      setSquads(result.squads);
+    try{
+      let result = await allSquads();
+      if(result.data.squads.length > 0){
+        setSquads(result.data.squads);
+      }
+    }catch(err){
+      console.log("SquadList.js line 17")
+      console.log(err)
     }
+
   };
 
   useEffect(() => {
