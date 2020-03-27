@@ -40,7 +40,21 @@ section {
 	flex-direction: column;
 	width: 70vh;
 }
-
+.textRight{
+	text-align: right;
+}
+#previewMD{
+	width: 20%!important;
+	margin-top: 2%;
+	color: #ffffff!important;
+	background-color:#ff5656 ;
+}
+#previewMD .MuiButton-label{
+	color: #ffffff!important;
+}
+#mdInterpreter{
+	text-align: left!important;
+}
 #standard-basic-label,
 #standard-basic {
 	font-family: 'Roboto Slab', serif;

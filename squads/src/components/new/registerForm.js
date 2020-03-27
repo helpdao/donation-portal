@@ -1,15 +1,20 @@
 import React from 'react'
 import {TextField, Button} from '@material-ui/core'
 import Alert from '@material-ui/lab/Alert';
-import { withStyles, makeStyles} from '@material-ui/core/styles';
+import { withStyles, makeStyles, useTheme} from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { findSquad } from "../../requests"
+import ReactMarkdown from 'react-markdown'
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import Dialog from '@material-ui/core/Dialog';
 
 const styles = makeStyles({
   fieldStyles: {    
     padding: '20px',   
   },
 });
-let inviteLinkRegex = RegExp(/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?(t\.me\/|chat\.whatsapp\.com)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/, "i")
+let inviteLinkRegex = RegExp(/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?(t\.me\/|chat\.whatsapp\.com)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/, "i");
 export default class RegisterForm extends React.Component{
     constructor(props){
         super(props);
@@ -20,10 +25,18 @@ export default class RegisterForm extends React.Component{
             nameError:'',
             descriptionError:'',
             inviteLinkError:'',
-            requestError:''
+            requestError:'',
+            open:false
+            
 
                 }
     }
+    openDialog() {
+        this.setState({ open: true });
+    }    
+    closeDialog() {
+        this.setState({ open: false });
+    }    
     checkName(){
         return new Promise((resolve, reject) => {
             findSquad({name:this.state.name}).then((response) =>{
@@ -94,7 +107,9 @@ export default class RegisterForm extends React.Component{
 
     }
     render(){
+
         return(
+            <div>
             <form id="form">
                 {this.state.nameError.length === 0 ? '':<Alert severity="error"> {this.state.nameError} — check it out!</Alert>}
                 {this.state.inviteLinkError.length === 0 ? '':<Alert severity="error">{this.state.inviteLinkError} — check it out!</Alert>}
@@ -112,9 +127,12 @@ export default class RegisterForm extends React.Component{
                     name="Invite Link"
                     onChange={(evt) => this.setState({inviteLink:evt.target.value})}
                 />
+                <div class="textRight">
+                <Button id="previewMD"variant="contained" size="small" color="primary" onClick={this.openDialog.bind(this)}>Preview MD</Button>                
+                </div>                
                 <TextField
                     required
-                    label="Description"
+                    label="Tell somenthing about your squad, you can use MarkDown!"
                     name="Description"
                     margin='normal'
                     multiline
@@ -122,6 +140,7 @@ export default class RegisterForm extends React.Component{
                     variant="outlined"
                     onChange={(evt) => this.setState({description:evt.target.value})}
                 /> 
+
                 <Button
                     id='next'
                     variant='outlined'
@@ -132,6 +151,14 @@ export default class RegisterForm extends React.Component{
                     Next
                 </Button>                
             </form>
+            <Dialog maxWidth='lg' fullWidth={true} open={this.state.open} onClose={this.closeDialog.bind(this)}>
+                <DialogContent>
+                    <div id="mdInterpreter">
+                        <ReactMarkdown source={this.state.description} />
+                    </div>
+                </DialogContent>
+            </Dialog>         
+            </div>
         );
     }
 }
