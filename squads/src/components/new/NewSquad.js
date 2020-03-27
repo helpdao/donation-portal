@@ -45,7 +45,7 @@ class NewSquad extends React.Component {
 
 				<div className='container'>
 					<section>
-						<h3> <span>&#9937;</span> Launch a New Squad <span>&#9937;</span></h3>
+						<h3> <span role="img" aria-label="Rescue Worker’s Helmet">&#9937;</span> Launch a New Squad <span role="img" aria-label="Rescue Worker’s Helmet">&#9937;</span></h3>
 						<form id='form' autoComplete='off'>
 							<TextField
 								id='standard-basic'
@@ -104,7 +104,7 @@ class NewSquad extends React.Component {
 						</a>
 					</section>
 					<section id='init-squad'>
-						<h3> <span>&#128640;</span> TakeOff <span>&#128640;</span></h3>
+						<h3> <span role="img" aria-label="Launching Rocket">&#128640;</span> TakeOff <span role="img" aria-label="Launching Rocket">&#128640;</span></h3>
 						<Button
 							id='next'
 							variant='outlined'
