@@ -69,7 +69,7 @@ class NewSquad extends React.Component {
 				</a>
 				<div className='container '>
 					<section id="dao-info">
-						<h3> <span>&#9937;</span> Launch a New Squad <span>&#9937;</span></h3>
+						<h3> <span role="img" aria-label="Rescue Worker’s Helmet">&#9937;</span> Launch a New Squad <span role="img" aria-label="Rescue Worker’s Helmet">&#9937;</span></h3>
 						<RegisterForm parentCallback={this.getFormData}></RegisterForm>
 					</section>
 					<section id='register-dao'>
@@ -77,7 +77,7 @@ class NewSquad extends React.Component {
 						<RegisterWallet />
 					</section>
 					<section id='init-squad'>
-						<h3> <span>&#128640;</span> TakeOff <span>&#128640;</span></h3>
+						<h3> <span role="img" aria-label="Launching Rocket">&#128640;</span> TakeOff <span role="img" aria-label="Launching Rocket">&#128640;</span></h3>
 						<Button
 							id='next'
 							variant='outlined'

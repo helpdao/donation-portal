@@ -9,7 +9,9 @@ const SquadList = props => {
 
   const getSquads = async () => {
     const result = await allSquads();
-    setSquads(result.squads);
+    if(result && result.squads){
+      setSquads(result.squads);
+    }
   };
 
   useEffect(() => {
