@@ -2,11 +2,9 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import HomeIcon from '@material-ui/icons/Home';
 import RegisterForm from './registerForm';
-import '../new/Register';
-
-import '../styles/styles.css';
-import Register from '../new/Register';
+import Register from './Register'
 import { createSquad } from "../../requests"
+import '../styles/styles.css';
 
 var name = "";
 var description ="";
@@ -21,9 +19,8 @@ class NewSquad extends React.Component {
 			body: null
 		};
   }
-  myCallback = (dataFromChild) => {
+  getFormData = (dataFromChild) => {
 	this.state.body = dataFromChild;
-	console.log(dataFromChild)
   }
   submitSquad = async () => {
     try {
@@ -38,10 +35,6 @@ class NewSquad extends React.Component {
       console.log(error)
     }
   }
-  getFormData = () => {
-	console.log("GettingData")
-	this.refs.submit.mySubmitHandler()
-  }
 	render() {
 		return (
 			<div className='main'>
@@ -49,53 +42,11 @@ class NewSquad extends React.Component {
 					<HomeIcon id='home'></HomeIcon>
 				</a>
 
-				<div className='container'>
+				<div className='container '>
 					<section>
 						<h3> <span>&#9937;</span> Launch a New Squad <span>&#9937;</span></h3>
-						<RegisterForm ref="submit" callback={this.myCallback}></RegisterForm>
-						<a
-							href={ this.state.body != null ? '#register-dao':'#' }
-							style={{ textDecoration: 'none' }}
-						>
-							<Button
-								onClick={this.getFormData}
-								id='next'
-								variant='outlined'
-								color='secondary'
-							>
-								Next
-							</Button>
-						</a>
-					</section>
-					<section id='register-dao'>
-						<Register />
-
-						<a
-							href='#init-squad'
-							style={{ textDecoration: 'none' }}
-							onClick={this.getFormData}
-
-						>
-							<Button
-								id='next'
-								variant='outlined'
-								color='secondary'
-							>
-								Next
-							</Button>
-						</a>
-					</section>
-					<section id='init-squad'>
-						<h3> <span>&#128640;</span> TakeOff <span>&#128640;</span></h3>
-						<Button
-							id='next'
-							variant='outlined'
-							color='secondary'
-							disabled={name && description && dao && inviteLink}
-							onClick={this.submitSquad}
-						>
-							Init DAO
-						</Button>
+						<RegisterForm ref="submit" parentCallback={this.getFormData}></RegisterForm>
+						<Register/>
 					</section>
 				</div>
 			</div>

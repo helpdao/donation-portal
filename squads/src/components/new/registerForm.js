@@ -1,75 +1,116 @@
 import React from 'react'
-import TextField from '@material-ui/core/TextField';
+import {TextField, Button} from '@material-ui/core'
+import Alert from '@material-ui/lab/Alert';
+import { withStyles, makeStyles} from '@material-ui/core/styles';
 
+const styles = makeStyles({
+  fieldStyles: {    
+    padding: '20px',   
+  },
+});
+let inviteLinkRegex = RegExp(/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?(t\.me\/|chat\.whatsapp\.com)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/, "i")
+export default class RegisterForm extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            name:'',
+            inviteLink:'',
+            description:'',
+            nameError:'',
+            descriptionError:'',
+            inviteLinkError:''
 
-export default class RegistrationForm extends React.Component {
-        constructor(props) {
-            super(props);
-            this.state = {
-              name: '',
-              description: '',
-              inviteLink:'',
-              errormessage: ''
-            };
-          }
-          myChangeHandler = (event) => {
-            let nam = event.target.name;
-            let val = event.target.value;
-            this.setState({[nam]: val});
-          }
-          mySubmitHandler = (event) => {
-            console.log("Validating...")
-            //event.preventDefault();
-            let name = this.state.name;
-            let inviteLink = this.state.inviteLink;
-            let description = this.state.description;
-            if (name.length === 0) {
-              this.setState({['errormessage']:"The name is mandatory"});
+                }
+    }
+    valideInviteLink(){
+        return new Promise((resolve, reject) => {
+            if(this.state.inviteLink.length === 0){
+                let error = 'You need to provide an invitation link.'
+                Promise.resolve(this.setState({inviteLinkError:error})).then(() =>  reject(error));
+               
             }
-            if (inviteLink.length === 0) {
-                this.setState({['errormessage']:"The inviteLink is mandatory"});
+            else if(!inviteLinkRegex.test(this.state.inviteLink)){
+                let error = 'You need to provide a valid invitation link.'
+                Promise.resolve(this.setState({inviteLinkError:error})).then(() =>  reject(error));
             }
-              if (description.length < 100) {
-                this.setState({['errormessage']:"You can do it better, use at least 100 chars to the Description"});
-            }                          
-            if(!RegExp(/^(chat\.whatsapp\.com\/invite\/|t\.me\/|http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/).test(inviteLink)){
-                this.setState({['errormessage']:"Invalid Invite Link"});
+            else
+                Promise.resolve(this.setState({inviteLinkError:''})).then(() =>  resolve());
+        });
+    }
+    validateName(){
+        return new Promise((resolve, reject) => {
+            if(this.state.name.length === 0){
+                let error = 'You need to provide Squad name'
+                Promise.resolve(this.setState({nameError:error})).then(() =>  reject(error));
             }
-            if(this.state.errormessage.length === 0){
-                this.props.callback({name:this.state.name, description:this.state.description, inviteLink:this.state.inviteLink})
-            }else{
-                this.props.callback(null)
+            else
+            Promise.resolve(this.setState({nameError:''})).then(() =>  resolve());
+        });        
+    }
+    validateDescription(){
+        return new Promise((resolve, reject) => {
+            if(this.state.description.length === 0){
+                let error = 'You need to provided a description'
+                Promise.resolve(this.setState({descriptionError:error})).then(() =>  reject(error));
             }
-            console.log("iviteLink: " + inviteLink + ": " +  RegExp(/^(chat\.whatsapp\.com\/invite\/|t\.me\/|http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/).test(inviteLink))
-          }
-          render() {
-            return (
-                <form id='form' autoComplete='off'>
+            else
+                Promise.resolve(this.setState({descriptionError:''})).then(() =>  resolve());
+        });        
+    }
+    sendData(){
+        this.props.parentCallback(this.state)
+    }
+    onSubmitHandler = () => {
+        this.validateName()
+        .then((data) => {
+            return this.valideInviteLink()
+        }).then((data) => {
+            return this.validateDescription()
+        }).then((data) => {
+            return this.sendData()
+        })
+        .catch(err => console.log(err))
+
+    }
+    render(){
+        return(
+            <form id="form">
+                {this.state.nameError.length === 0 ? '':<Alert severity="error"> {this.state.nameError} — check it out!</Alert>}
+                {this.state.inviteLinkError.length === 0 ? '':<Alert severity="error">{this.state.inviteLinkError} — check it out!</Alert>}
+                {this.state.descriptionError.length === 0 ? '':<Alert severity="error">{this.state.descriptionError} — check it out!</Alert>}
                 <TextField
-                    id='name'
-                    label='Squad Name'
                     required
-                    onChange={(evt) => this.myChangeHandler(evt)}
+                    className={styles.fieldStyles}
+                    label="Squad name"
+                    name="Squad name"
+                    onChange={(evt) => this.setState({name:evt.target.value})}
                 />
                 <TextField
-                    id='inviteLink'
-                    label='Chat Invite Link'
                     required
-                    onChange={(evt) => this.myChangeHandler(evt)}
-
+                    label="Invite Link"
+                    name="Invite Link"
+                    onChange={(evt) => this.setState({inviteLink:evt.target.value})}
                 />
-
                 <TextField
-                    id='description'
-                    label="Write somenthing about your Squad, use at least 200 characters."
                     required
+                    label="Description"
+                    name="Description"
+                    margin='normal'
                     multiline
                     rows={20}
-                    rowsMax={20}
-                    onChange={(evt) => this.myChangeHandler(evt)}
-                />
-             <p >{this.state.errormessage}</p>
+                    variant="outlined"
+                    onChange={(evt) => this.setState({description:evt.target.value})}
+                /> 
+                <Button
+                    id='next'
+                    variant='outlined'
+                    color='secondary'
+
+                    onClick={this.onSubmitHandler}
+                >
+                    Next
+                </Button>                
             </form>
-            );
-          }
-  }
+        );
+    }
+}
