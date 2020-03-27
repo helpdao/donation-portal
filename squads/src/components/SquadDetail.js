@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import HomeIcon from '@material-ui/icons/Home';
 
 import "./styles/styles.css";
 import { squadDetails } from "../requests";
@@ -17,6 +18,10 @@ const SquadDetails = props => {
   }, []);
 
   return (
+    <div>
+    <a href='/'>
+      <HomeIcon id='home'></HomeIcon>
+    </a>
     <div className="squad-container">
       <h4>{details.name} Help Squad</h4>
       <p> {details.description} </p>
@@ -31,6 +36,7 @@ const SquadDetails = props => {
       </div>
 
       <button id="donate">Donate</button>
+    </div>
     </div>
   );
 };
