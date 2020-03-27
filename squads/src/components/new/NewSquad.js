@@ -23,8 +23,8 @@ class NewSquad extends React.Component {
   getFormData = (dataFromChild) => {
 	  Promise.resolve(dataFromChild).then((data) => {
 		  this.setState({body:data})
-		  this.props.history.push("#register-dao")
-		  window.location.reload();
+		  //this.props.history.push("#register-dao")
+		  document.location.href="#register-dao"
 		})
   }
   submitSquad = async () => {
