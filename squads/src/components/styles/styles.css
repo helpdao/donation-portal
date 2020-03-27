@@ -53,11 +53,15 @@ p {
 span {
 	color: #ff5656;
 }
-
+#register-dao-button {
+	background-color: #ff5656!important;
+}
+#register-dao-button .MuiButton-label{
+	color: #ffffff!important;
+}
 #register-dao .MuiButton-label {
 	font-family: 'Roboto Slab', serif;
 	font-weight: bold;
-	color: #001e42;
 }
 
 #next {

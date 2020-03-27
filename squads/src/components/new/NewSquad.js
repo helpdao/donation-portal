@@ -1,7 +1,6 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import HomeIcon from '@material-ui/icons/Home';
-import {withRouter} from 'react-router-dom'
 import RegisterForm from './registerForm';
 import RegisterWallet from './Register'
 import { createSquad } from "../../requests"
@@ -17,27 +16,47 @@ class NewSquad extends React.Component {
 		super(props);
 		this.state = {
 			disabled: false,
-			body: null
+			body: null,
+			formValid: false
 		};
+  }
+  isWalletRegistered(){
+	return new Promise(async (resolve, reject) => {
+		let data = await localStorage.getItem('walletConected')
+		if(data !== null){
+			resolve(true);
+		}else{
+			resolve(false)
+		}
+	});
   }
   getFormData = (dataFromChild) => {
 	  Promise.resolve(dataFromChild).then((data) => {
 		  this.setState({body:data})
-		  //this.props.history.push("#register-dao")
+		  this.setState({formValid:true})
 		  document.location.href="#register-dao"
 		})
   }
   submitSquad = async () => {
     try {
-      const body = {
-        name,
-        description,
-        inviteLink: inviteLink,
-        daoAddress: dao
-      }
-      await createSquad(body)
+		let walletConnected = await this.isWalletRegistered()
+		if(this.state.formValid && walletConnected){
+			let body = {
+				name:this.state.body.name,
+				description:this.state.body.description,
+				inviteLink: this.state.body.inviteLink,
+				daoAddress: dao
+			  }
+		  let response = await createSquad(body)
+		  console.log(response)
+		  document.location.href=`/squad/${response.newSquad._id}`
+		}else if(!this.state.formValid){
+			document.location.href="#dao-info"
+		}else{
+			document.location.href="#register-dao"
+		}
     } catch (error) {
-      console.log(error)
+    	console.log(error)
     }
   }
 	render() {
@@ -49,25 +68,13 @@ class NewSquad extends React.Component {
 					<HomeIcon id='home'></HomeIcon>
 				</a>
 				<div className='container '>
-					<section>
+					<section id="dao-info">
 						<h3> <span>&#9937;</span> Launch a New Squad <span>&#9937;</span></h3>
 						<RegisterForm parentCallback={this.getFormData}></RegisterForm>
 					</section>
 					<section id='register-dao'>
+					<h3> It's time to connect your wallet:</h3>
 						<RegisterWallet />
-
-						<a
-							href='#init-squad'
-							style={{ textDecoration: 'none' }}
-						>
-							<Button
-								id='next'
-								variant='outlined'
-								color='secondary'
-							>
-								Next
-							</Button>
-						</a>
 					</section>
 					<section id='init-squad'>
 						<h3> <span>&#128640;</span> TakeOff <span>&#128640;</span></h3>
@@ -87,4 +94,4 @@ class NewSquad extends React.Component {
 	}
 }
 
-export default withRouter(NewSquad);
+export default NewSquad;
