@@ -10,7 +10,7 @@
 }
 
 img {
-	width: 50vh;
+	width: 40vh;
 	height: auto;
 	margin-bottom: 10px;
 }
@@ -53,4 +53,14 @@ li button:hover,
 	left: 1em;
 	background-color: #001e42;
 	border: 1px solid #001e42;
+}
+
+@media only screen and (max-width: 420px) {
+	#new-squad {
+		font-size: 0.6rem;
+	}
+
+	img {
+		width: 60%;
+	}
 }
