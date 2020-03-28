@@ -56,7 +56,7 @@ section {
 #form {
 	display: flex;
 	flex-direction: column;
-	width: 70vh;
+	width: 70%;
 }
 .textRight{
 	text-align: right;
