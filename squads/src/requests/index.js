@@ -1,1 +1,1 @@
-export { createSquad, allSquads, squadDetails } from "./squads";
+export { createSquad, allSquads, squadDetails, findSquad} from "./squads";
