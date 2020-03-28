@@ -8,6 +8,9 @@ import '../styles/styles.css';
 
 const NewSquad = () => {
 	let wallet = useWallet();
+	let loadPluggin = () => {
+		wallet.activate('fortmatic')
+	}
 	let isConnected = () => {
 		if(wallet.account !== null){
 			document.location.href="#init-squad"
@@ -22,18 +25,17 @@ const NewSquad = () => {
 			<div>
 			{wallet.connected ? (
 				isConnected()
-			) : (
-				<Tooltip title='Register to create a DAO' placement='top'>
-					<Button
-						id='register-dao-button'
-						size='large'
-						onClick={() => {
-								wallet.activate('fortmatic')
-						}}
-					>
-						Connect
-					</Button>
-				</Tooltip>
+			) : ( wallet.activating !== null ? (
+				<div class="spinner-border red" role="status">
+					<span class="sr-only">Loading...</span>
+				</div>
+			):(	
+				<button
+				onClick = { () => {loadPluggin()}}
+				className="btn hdaoBtnOutline btn-lg">
+				Connect
+				</button>
+			)
 			)}
 			</div>
 	);

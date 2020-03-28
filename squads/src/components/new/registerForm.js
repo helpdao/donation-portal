@@ -14,6 +14,7 @@ const styles = makeStyles({
     padding: '20px',   
   },
 });
+
 let inviteLinkRegex = RegExp(/^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?(t\.me\/|chat\.whatsapp\.com)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/, "i");
 export default class RegisterForm extends React.Component{
     constructor(props){
@@ -27,9 +28,18 @@ export default class RegisterForm extends React.Component{
             inviteLinkError:'',
             requestError:'',
             open:false
-            
-
-                }
+                }    
+            this.handleChange = this.handleChange.bind(this)
+        }
+    mdTutorial(){
+        return ('# What is MD?\n'+
+        '**Markdown** was initially created by *John Gruber*\n'+
+        'as a simple way for non-programming types to write in an easy-to-read format that could be converted directly into HTML.\n' +
+        '#### You can learn how to use it [here](https://www.markdowntutorial.com/)'
+        )
+    }
+    handleChange(evt){
+        this.setState({[evt.target.name]:evt.target.value})
     }
     openDialog() {
         this.setState({ open: true });
@@ -92,7 +102,7 @@ export default class RegisterForm extends React.Component{
     sendData(){
         this.props.parentCallback(this.state)
     }
-    onSubmitHandler = () => {
+    validateAll = () => {
         this.validateName()
         .then((data) => {
             return this.checkName()
@@ -110,54 +120,65 @@ export default class RegisterForm extends React.Component{
 
         return(
             <div>
-            <form id="form">
+            <div >
                 {this.state.nameError.length === 0 ? '':<Alert severity="error"> {this.state.nameError} — check it out!</Alert>}
                 {this.state.inviteLinkError.length === 0 ? '':<Alert severity="error">{this.state.inviteLinkError} — check it out!</Alert>}
                 {this.state.descriptionError.length === 0 ? '':<Alert severity="error">{this.state.descriptionError} — check it out!</Alert>}
-                <TextField
-                    required
-                    className={styles.fieldStyles}
-                    label="Squad name"
-                    name="Squad name"
-                    onChange={(evt) => this.setState({name:evt.target.value})}
+            <div class="form-group">
+                <label class="zilla" for="squadName">Squad Name</label>
+                <input  
+                    name="name"
+                    type="text"
+                    class="form-control"
+                    id="squadName"
+                    aria-describedby="squadNameHelp"
+                    onChange={evt => {this.handleChange(evt)}} 
                 />
-                <TextField
-                    required
-                    label="Invite Link"
-                    name="Invite Link"
-                    onChange={(evt) => this.setState({inviteLink:evt.target.value})}
+                <small id="squadNameHelp" class="form-text text-muted">Remember that the name must be uniqe.</small>
+            </div>
+            <div class="form-group">
+                <label class="zilla" for="inviteLink">Invite Link</label>
+                <input 
+                type="text"
+                class="form-control"
+                id="inviteLink"
+                aria-describedby="inviteLinkHelp"
+                name="inviteLink"
+                onChange={(evt) => this.handleChange(evt)}
                 />
-                <div class="textRight">
-                <Button id="previewMD"variant="contained" size="small" color="primary" onClick={this.openDialog.bind(this)}>Preview MD</Button>                
+                <small id="inviteLinkHelp" class="form-text text-muted">Add the group link.</small>
+            </div>
+            <div class="form-group">
+            <label class="zilla" for="descriptionHelp">Tell somenthing about your squad, you can use <a class="red" href="https://www.markdowntutorial.com/" target="_blank">MarkDown!</a></label>
+                <textarea
+                rows="20"
+                class="form-control"
+                id="descriptionHelp"
+                name="description"
+                onChange={(evt) => this.handleChange(evt)}
+                />
+            </div>
+            <div className="row">
+                <div className="col-6">
+                    <button  type="button" class="btn btn-lg hdaoBtnContrast"  data-toggle="modal" data-target="#exampleModalScrollable">Preview MD</button>                
+                </div>
+                <div className="col-6 text-right">
+                    <button  onClick={this.validateAll} class="btn hdaoBtn btn-lg">Next</button>                
                 </div>                
-                <TextField
-                    required
-                    label="Tell somenthing about your squad, you can use MarkDown!"
-                    name="Description"
-                    margin='normal'
-                    multiline
-                    rows={20}
-                    variant="outlined"
-                    onChange={(evt) => this.setState({description:evt.target.value})}
-                /> 
-
-                <Button
-                    id='next'
-                    variant='outlined'
-                    color='secondary'
-
-                    onClick={this.onSubmitHandler}
-                >
-                    Next
-                </Button>                
-            </form>
-            <Dialog maxWidth='lg' fullWidth={true} open={this.state.open} onClose={this.closeDialog.bind(this)}>
-                <DialogContent>
-                    <div id="mdInterpreter">
-                        <ReactMarkdown source={this.state.description} />
-                    </div>
-                </DialogContent>
-            </Dialog>         
+            </div>          
+            </div>
+            <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                <div class="modal-body">
+                    <ReactMarkdown source={this.state.description.length === 0 ? this.mdTutorial():this.state.description}/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn hdaoBtnContrast" data-dismiss="modal">Close</button>
+                </div>
+                </div>
+            </div>
+            </div>        
             </div>
         );
     }

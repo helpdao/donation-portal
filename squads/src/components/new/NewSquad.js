@@ -1,11 +1,10 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import HomeIcon from '@material-ui/icons/Home';
-import Alert from '@material-ui/lab/Alert';
 import RegisterForm from './registerForm';
 import RegisterWallet from './Register'
 import { createSquad } from "../../requests"
-import '../styles/styles.css';
+import Layout from '../Layout'
 
 let dao = "0x931D387731bBbC988B312206c74F77D004D6B84b";
 
@@ -54,7 +53,7 @@ class NewSquad extends React.Component {
 				document.location.href=`/squad/${response.data.newSquad._id}`
 			}
 		}else if(!this.state.formValid){
-			Promise.resolve(this.setState({daoInfoError:"Review the form, somenthing is missing."})).then(() => document.location.href="#dao-info");
+			Promise.resolve(this.setState({daoInfoError:"Seems that something is missing."})).then(() => document.location.href="#top");
 		}else{
 			Promise.resolve(this.setState({walletRegisterError:"You need to login into your wallet."})).then(() => document.location.href="#register-dao");
 		}
@@ -66,37 +65,49 @@ class NewSquad extends React.Component {
 	render() {
 
 		return (
-			
-			<div className='main'>
-				<a href='/'>
-					<HomeIcon id='home'></HomeIcon>
-				</a>
-				<div className='container '>
-					<section id="dao-info">
-					{this.state.daoInfoError.length === 0 ? '':<Alert severity="error"> {this.state.daoInfoError} — check it out!</Alert>}
-					{this.state.requestError.length === 0 ? '':<Alert severity="error"> {this.state.requestError} — check it out!</Alert>}
+			<Layout>
+				<div  id="dao-info" className='container mt-5'>
+					<section >
+						<div className="row">
+							<div className="col-xs-12 col-lg-8 mx-auto text-center">
 
-						<h3> <span role="img" aria-label="Rescue Worker’s Helmet">&#9937;</span> Launch a New Squad <span role="img" aria-label="Rescue Worker’s Helmet">&#9937;</span></h3>
-						<RegisterForm parentCallback={this.getFormData}></RegisterForm>
+								<h3 className="mt-3">
+									<span role="img" aria-label="Rescue Worker’s Helmet">&#9937; </span>
+									Launch a New Squad
+									<span role="img" aria-label="Rescue Worker’s Helmet"> &#9937;</span>
+								</h3>
+								{this.state.daoInfoError.length === 0 ? '':<div className="alert alert-danger mt-3"> {this.state.daoInfoError} — check it out!</div>}
+								{this.state.requestError.length === 0 ? '':<div className="alert alert-danger mt-3"> {this.state.requestError} — check it out!</div>}
+							</div>
+						</div>
+						<div className="row mt-3">
+							<div className="col-xs-12 col-lg-8 mx-auto">
+								<RegisterForm parentCallback={this.getFormData}></RegisterForm>
+							</div>
+						</div>
 					</section>
-					<section id='register-dao'>
-					{this.state.walletRegisterError.length === 0 ? '':<Alert severity="error"> {this.state.walletRegisterError} — check it out!</Alert>}
-					<h3> It's time to connect your wallet:</h3>
+					<section id='register-dao' class="fullScreenSection">
+					<div className="row">
+							<div className="col-xs-12 col-lg-8 mx-auto text-center">						
+							{this.state.walletRegisterError.length === 0 ? '':<div className="alert alert-danger"> {this.state.walletRegisterError} — check it out!</div>}
+							<h3 className="mt-3"> It's time to connect your wallet:</h3>
+					</div>
+					</div>
 						<RegisterWallet />
 					</section>
-					<section id='init-squad'>
+					<section id='init-squad' className="fullScreenSection">
 						<h3> <span role="img" aria-label="Launching Rocket">&#128640;</span> TakeOff <span role="img" aria-label="Launching Rocket">&#128640;</span></h3>
-						<Button
-							id='next'
-							variant='outlined'
-							color='secondary'
+						<button
+							id='launchSquadButton'
+							className="btn hdaoBtnOutline btn-lg mt-3"
 							onClick={this.submitSquad}
 						>
-							Init DAO
-						</Button>
+							Launch Squad
+						</button>
 					</section>					
 				</div>
-			</div>
+			</Layout>
+
 		);
 	}
 }
