@@ -6,7 +6,7 @@ import RegisterWallet from './Register'
 import { createSquad } from "../../requests"
 import Layout from '../Layout'
 
-let dao = "0x931D387731bBbC988B312206c74F77D004D6B84b";
+let dao = "0x0000000000000000ABADBABE0000000000000000";
 
 class NewSquad extends React.Component {
 	constructor(props) {

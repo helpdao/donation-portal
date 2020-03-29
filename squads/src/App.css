@@ -3,6 +3,17 @@
 html {
 	scroll-behavior: smooth;
   }
+
+.noLink {
+    color: inherit!important;
+    text-decoration: none;
+}
+
+.noLink:hover 
+{
+     text-decoration:none; 
+     cursor:pointer;  
+}
 .hdaoBtn{
 	background:#ff565e!important;
 	color: #ffffff!important;

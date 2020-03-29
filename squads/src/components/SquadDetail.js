@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import ReactMarkdown from 'react-markdown'
 import { squadDetails } from "../requests";
 import Layout from './Layout'
-
 const SquadDetails = props => {
   const { squadId } = props.match.params;
   const [details, setDetails] = useState({});
@@ -49,7 +48,9 @@ const SquadDetails = props => {
         </div>
         <div className="row mt-3">
           <div className="col-xs-12 col-lg-8 mx-auto text-center">
+            <a target="_blank" href={"https://pay.sendwyre.com/purchase?destCurrency=DAI&paymentMethod=debit-card&dest=" + details.daoAddress}>
             <button className="btn hdaoBtn btn-lg">DONATE</button>
+            </a>
           </div>
         </div>
       </div>

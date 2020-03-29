@@ -10,6 +10,9 @@ import ReactMarkdown from 'react-markdown'
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
+    border:'0.5px solid #ffd8da',
+    height:'100%',
+    minHeight:'100%'
   },
   bullet: {
     display: 'inline-block',
@@ -40,7 +43,7 @@ export default function SquadCard({ name, desc, url }) {
           Amount donated: $10,000
         </Typography>
         <Typography variant="body2" component="p">
-        <ReactMarkdown source={desc.substring(0, 180)}></ReactMarkdown>
+        <ReactMarkdown source={desc.substring(0, 180).replace(/[\#]*/, '')}></ReactMarkdown>
         </Typography>
       </CardContent>
       <CardActions>
