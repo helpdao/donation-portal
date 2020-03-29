@@ -42,8 +42,8 @@ const SquadDetails = props => {
         </div>
         <div className="row mt-3">
           <div className="col-xs-12 col-lg-8 mx-auto text-center">
-            <h5>Total Donated: 000$</h5>
-            <h5>Remaining: 000$</h5>
+            <h5>Total Donated: $000</h5>
+            <h5>Remaining: $000</h5>
 
           </div>
         </div>

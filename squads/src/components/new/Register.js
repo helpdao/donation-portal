@@ -33,7 +33,7 @@ const NewSquad = () => {
 				<button
 				onClick = { () => {loadPluggin()}}
 				className="btn hdaoBtnOutline btn-lg">
-				Connect
+				Register
 				</button>
 			)
 			)}

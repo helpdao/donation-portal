@@ -90,7 +90,7 @@ class NewSquad extends React.Component {
 					<div className="row">
 							<div className="col-xs-12 col-lg-8 mx-auto text-center">						
 							{this.state.walletRegisterError.length === 0 ? '':<div className="alert alert-danger"> {this.state.walletRegisterError} — check it out!</div>}
-							<h3 className="mt-3"> It's time to connect your wallet:</h3>
+							<h3 className="mt-3">Register Your Account</h3>
 					</div>
 					</div>
 						<RegisterWallet />

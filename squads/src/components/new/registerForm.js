@@ -134,7 +134,7 @@ export default class RegisterForm extends React.Component{
                     aria-describedby="squadNameHelp"
                     onChange={evt => {this.handleChange(evt)}} 
                 />
-                <small id="squadNameHelp" className="form-text text-muted">Remember that the name must be uniqe.</small>
+                <small id="squadNameHelp" className="form-text text-muted">Remember that the name must be unique.</small>
             </div>
             <div className="form-group">
                 <label className="zilla" for="inviteLink">Invite Link</label>
@@ -146,10 +146,10 @@ export default class RegisterForm extends React.Component{
                 name="inviteLink"
                 onChange={(evt) => this.handleChange(evt)}
                 />
-                <small id="inviteLinkHelp" className="form-text text-muted">Add the group link.</small>
+                <small id="inviteLinkHelp" className="form-text text-muted">Add the chat group link.</small>
             </div>
             <div className="form-group">
-            <label className="zilla" for="descriptionHelp">Tell somenthing about your squad, you can use <a className="red" href="https://www.markdowntutorial.com/" target="_blank">MarkDown!</a></label>
+            <label className="zilla" for="descriptionHelp">Tell something about your squad, you can use <a className="red" href="https://www.markdowntutorial.com/" target="_blank">MarkDown!</a></label>
                 <textarea
                 rows="20"
                 className="form-control"

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { allSquads } from "../requests";
+import SquadCard from "./SquadCard";
 import {GoVerified, GoUnverified} from 'react-icons/go'
 //import "../App.css";
 
@@ -34,21 +35,7 @@ const SquadList = props => {
         squads.map(squad => {
           return (
             <div key={squad._id} className="col-xs-12 col-lg-3 mx-auto">
-              <div className="row p-2">
-                <a href={"/squad/" + squad._id} className="col-12">
-                  <button 
-                    className=" col-12 btn btn-lg hdaoBtn"
-                    data-toggle="tooltip"
-                    data-placement="right"
-                    title={squad.verified ? "This squad is verified by HelpDAO":"This squad is not verified by HelpDAO"}
-                  >
-                    {squad.name}
-                    <span className="text-white badge">
-                      {squad.verified ===true ? <h5><GoVerified/></h5>: <h5><GoUnverified/></h5>}
-                    </span>
-                  </button>
-                </a>
-              </div>
+              <SquadCard name={squad.name} desc={squad.description} url={"/squad/" + squad._id} verified={squad.verified}></SquadCard>
             </div>
           );
         })
