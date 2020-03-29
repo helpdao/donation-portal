@@ -26,8 +26,8 @@ const NewSquad = () => {
 			{wallet.connected ? (
 				isConnected()
 			) : ( wallet.activating !== null ? (
-				<div class="spinner-border red" role="status">
-					<span class="sr-only">Loading...</span>
+				<div className="spinner-border red" role="status">
+					<span className="sr-only">Loading...</span>
 				</div>
 			):(	
 				<button

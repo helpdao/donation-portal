@@ -24,7 +24,7 @@ const SquadList = props => {
     getSquads();
   }, []);
   return (
-    <div  class="">
+    <div  className="">
       <div className="row">
         <div className="col-xs-12 col-lg-8 mx-auto text-center">
           <h2 className="mt-5 blue"><b>OUR HELP SQUADS:</b></h2>
@@ -37,7 +37,7 @@ const SquadList = props => {
               <div className="row p-2">
                 <a href={"/squad/" + squad._id} className="col-12">
                   <button 
-                    class=" col-12 btn btn-lg hdaoBtn"
+                    className=" col-12 btn btn-lg hdaoBtn"
                     data-toggle="tooltip"
                     data-placement="right"
                     title={squad.verified ? "This squad is verified by HelpDAO":"This squad is not verified by HelpDAO"}

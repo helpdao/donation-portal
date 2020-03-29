@@ -124,35 +124,35 @@ export default class RegisterForm extends React.Component{
                 {this.state.nameError.length === 0 ? '':<Alert severity="error"> {this.state.nameError} — check it out!</Alert>}
                 {this.state.inviteLinkError.length === 0 ? '':<Alert severity="error">{this.state.inviteLinkError} — check it out!</Alert>}
                 {this.state.descriptionError.length === 0 ? '':<Alert severity="error">{this.state.descriptionError} — check it out!</Alert>}
-            <div class="form-group">
-                <label class="zilla" for="squadName">Squad Name</label>
+            <div className="form-group">
+                <label className="zilla" for="squadName">Squad Name</label>
                 <input  
                     name="name"
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     id="squadName"
                     aria-describedby="squadNameHelp"
                     onChange={evt => {this.handleChange(evt)}} 
                 />
-                <small id="squadNameHelp" class="form-text text-muted">Remember that the name must be uniqe.</small>
+                <small id="squadNameHelp" className="form-text text-muted">Remember that the name must be uniqe.</small>
             </div>
-            <div class="form-group">
-                <label class="zilla" for="inviteLink">Invite Link</label>
+            <div className="form-group">
+                <label className="zilla" for="inviteLink">Invite Link</label>
                 <input 
                 type="text"
-                class="form-control"
+                className="form-control"
                 id="inviteLink"
                 aria-describedby="inviteLinkHelp"
                 name="inviteLink"
                 onChange={(evt) => this.handleChange(evt)}
                 />
-                <small id="inviteLinkHelp" class="form-text text-muted">Add the group link.</small>
+                <small id="inviteLinkHelp" className="form-text text-muted">Add the group link.</small>
             </div>
-            <div class="form-group">
-            <label class="zilla" for="descriptionHelp">Tell somenthing about your squad, you can use <a class="red" href="https://www.markdowntutorial.com/" target="_blank">MarkDown!</a></label>
+            <div className="form-group">
+            <label className="zilla" for="descriptionHelp">Tell somenthing about your squad, you can use <a className="red" href="https://www.markdowntutorial.com/" target="_blank">MarkDown!</a></label>
                 <textarea
                 rows="20"
-                class="form-control"
+                className="form-control"
                 id="descriptionHelp"
                 name="description"
                 onChange={(evt) => this.handleChange(evt)}
@@ -160,21 +160,21 @@ export default class RegisterForm extends React.Component{
             </div>
             <div className="row">
                 <div className="col-6">
-                    <button  type="button" class="btn btn-lg hdaoBtnContrast"  data-toggle="modal" data-target="#exampleModalScrollable">Preview MD</button>                
+                    <button  type="button" className="btn btn-lg hdaoBtnContrast"  data-toggle="modal" data-target="#exampleModalScrollable">Preview MD</button>                
                 </div>
                 <div className="col-6 text-right">
-                    <button  onClick={this.validateAll} class="btn hdaoBtn btn-lg">Next</button>                
+                    <button  onClick={this.validateAll} className="btn hdaoBtn btn-lg">Next</button>                
                 </div>                
             </div>          
             </div>
-            <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable" role="document">
-                <div class="modal-content">
-                <div class="modal-body">
+            <div className="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+            <div className="modal-dialog modal-dialog-scrollable" role="document">
+                <div className="modal-content">
+                <div className="modal-body">
                     <ReactMarkdown source={this.state.description.length === 0 ? this.mdTutorial():this.state.description}/>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn hdaoBtnContrast" data-dismiss="modal">Close</button>
+                <div className="modal-footer">
+                    <button type="button" className="btn hdaoBtnContrast" data-dismiss="modal">Close</button>
                 </div>
                 </div>
             </div>
