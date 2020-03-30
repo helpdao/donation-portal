@@ -23,18 +23,18 @@ html {
 	transition: 0.3s;
 }
 .hdaoBtnOutline{
-	background: #ffffff;
-	color: #ff565e;
-	border: 1px solid #ff565e;
+	background: #ffffff!important;
+	color: #ff565e!important;
+	border: 1px solid #ff565e!important;
 	font-family: 'Zilla Slab', serif!important;
-	font-weight: 700;
-	opacity: 1;
-	transition: 0.5s;
+	font-weight: 700!important;
+	opacity: 1!important;
+	transition: 0.5s!important;
 }
 .hdaoBtnOutline:hover{
-	background: #ff565e;
-	color: #ffffff;
-	transition: 0.5s;
+	background: #ff565e!important;
+	color: #ffffff!important;
+	transition: 0.5s!important;
 }
 .red{
 	color: #ff565e!important;

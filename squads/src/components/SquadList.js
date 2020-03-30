@@ -36,10 +36,9 @@ const SquadList = props => {
         squads.map(squad => {
           return (
             <div key={squad._id} className="col-xs-12 col-lg-4 p-1">
-              <a className="noLink" href={"/squad/" + squad._id}>
                 <SquadCard name={squad.name} desc={squad.description} url={"/squad/" + squad._id} verified={squad.verified}></SquadCard>
-              </a>
             </div>
+            
           );
         })
       ) : (

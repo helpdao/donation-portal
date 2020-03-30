@@ -21,7 +21,19 @@ const SquadDetails = props => {
     }
     getDetails();
   }, [squadId]);
+  let donation = false
+  let makeDonation = () =>{
+    localStorage.setItem('donation', details._id);
+  }
+  let isDonationMaked = () => {
+    try{
+      donation = localStorage.getItem('donation');
+    }catch(err){
+      console.log(err);
 
+    }
+  }
+  isDonationMaked()
   return (
     <Layout>
       <div className="container my-5">
@@ -48,11 +60,21 @@ const SquadDetails = props => {
         </div>
         <div className="row mt-3">
           <div className="col-xs-12 col-lg-8 mx-auto text-center">
-            <a target="_blank" href={"https://pay.sendwyre.com/purchase?destCurrency=DAI&paymentMethod=debit-card&dest=" + details.daoAddress}>
-            <button className="btn hdaoBtn btn-lg">DONATE</button>
+            <a onClick={() => {makeDonation()}}href={"https://pay.sendwyre.com/purchase?destCurrency=DAI&paymentMethod=debit-card&dest=" + details.daoAddress + "&redirectUrl=http://localhost:3000/squad/" + details._id}>
+              <button className="btn hdaoBtn btn-lg">Donate</button>
             </a>
           </div>
         </div>
+        { donation === details._id? 
+         ( <div className="row mt-3">
+            <div className="col-xs-12 col-lg-8 mx-auto text-center">
+              <a href={details.inviteLink}>
+                <button className="btn hdaoBtnContrast ml-1 btn-lg" >Join the Group</button>
+              </a>
+            </div>
+          </div>  
+         ):''
+        }      
       </div>
     </Layout>
   );
