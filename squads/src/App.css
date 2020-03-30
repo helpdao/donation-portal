@@ -42,6 +42,12 @@ html {
 .blue{
 	color: #001e42!important;
 }
+.lightBlue{
+	color: #205899!important;
+}
+.black{
+	color: #000000!important;
+}
 .hdaoBtn:hover{
 	background:#cf4148!important;
 }
