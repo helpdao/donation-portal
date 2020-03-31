@@ -1,115 +1,84 @@
-import React from 'react';
-import Button from '@material-ui/core/Button';
-import HomeIcon from '@material-ui/icons/Home';
-import RegisterForm from './registerForm';
-import RegisterWallet from './Register'
-import { createSquad } from "../../requests"
+import React from 'react'
 import Layout from '../Layout'
+import Layaout from '../Layout'
+import Stepper from 'bs-stepper'
+import Register from './Register'
+import 'bs-stepper/dist/css/bs-stepper.min.css'
+import RegisterForm from './registerForm'
 
-let dao = "0x0000000000000000ABADBABE0000000000000000";
-
-class NewSquad extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			disabled: false,
-			body: null,
-			formValid: false,
-			daoInfoError:'',
-			walletRegisterError:'',
-			requestError:''
-		};
+let stepper = null
+export default function NewSquad(){
+  let showButtons = false
+  const [body,setBody] = React.useState({})
+  const [formValid, setformValid] = React.useState(false);
+  const [walletConnected, setWalletConnected] = React.useState(false);
+  let stepperEl = null
+  document.addEventListener('DOMContentLoaded', function () {
+    stepperEl = document.getElementById("bs-stepper")
+    let options = {linear:false}
+    stepper = new Stepper(document.querySelector('.bs-stepper'), options)
+    console.log(stepper._currentIndex)     
+  })
+  const getFormData = (childrenData) => {
+    Promise.resolve(childrenData)
+    .then((data) => {
+      setBody((data) => data);
+      setformValid(true);
+      return Promise.resolve(stepper.next())
+    }).then(() => showButtons = true)
   }
-  isWalletRegistered(){
-	return new Promise(async (resolve, reject) => {
-		let data = await localStorage.getItem('walletConected')
-		if(data !== null){
-			resolve(true);
-		}else{
-			resolve(false)
-		}
-	});
-  }
-  getFormData = (dataFromChild) => {
-	  Promise.resolve(dataFromChild).then((data) => {
-		  this.setState({body:data})
-		  this.setState({formValid:true})
-		  this.setState({daoInfoError:''})
-		  document.location.href="#register-dao"
-		})
-  }
-  submitSquad = async () => {
-    try {
-		let walletConnected = await this.isWalletRegistered()
-		if(this.state.formValid && walletConnected){
-			let body = {
-				name:this.state.body.name,
-				description:this.state.body.description,
-				inviteLink: this.state.body.inviteLink,
-				daoAddress: dao
-			  }
-		  	let response = await createSquad(body)
-			if(response.status === 200){
-				document.location.href=`/squad/${response.data.newSquad._id}`
-			}
-		}else if(!this.state.formValid){
-			Promise.resolve(this.setState({daoInfoError:"Seems that something is missing."})).then(() => document.location.href="#top");
-		}else{
-			Promise.resolve(this.setState({walletRegisterError:"You need to login into your wallet."})).then(() => document.location.href="#register-dao");
-		}
-    } catch (err) {
-		let error = "Somenthing goes wrong. Try it again in a while"
-		Promise.resolve(this.setState({requestError:error})).then(() => document.location.href="#dao-info")
-    }
-  }
-	render() {
 
-		return (
-			<Layout>
-				<div  id="dao-info" className='container mt-5'>
-					<section >
-						<div className="row">
-							<div className="col-xs-12 col-lg-8 mx-auto text-center">
+    return(
+      <Layaout>
+        <div className="container">
+        <div id="bs-stepper" className="bs-stepper">
+          <div className="bs-stepper-header" role="tablist">
+            <div className="step" data-target="#logins-part">
+              <button type="button" className="step-trigger" role="tab" aria-controls="logins-part" id="logins-part-trigger">
+                <span className="bs-stepper-circle">1</span>
+                <span className="bs-stepper-label">Squad Info</span>
+              </button>
+            </div>
+            <div className="line"></div>
+            <div className="step" data-target="#information-part">
+              <button type="button" className="step-trigger" role="tab" aria-controls="information-part" id="information-part-trigger">
+                <span className="bs-stepper-circle">2</span>
+                <span className="bs-stepper-label">Connect your Account</span>
+              </button>
+            </div>
+            <div className="line"></div>
+            <div className="step" data-target="#finish-part">
+              <button type="button" className="step-trigger" role="tab" aria-controls="finish-part" id="finish-part-trigger">
+                <span className="bs-stepper-circle">3</span>
+                <span className="bs-stepper-label">Launch Squad</span>
+              </button>
+            </div>            
+          </div>
+          <div className="bs-stepper-content">
+            <div id="logins-part" className="content" role="tabpanel" aria-labelledby="logins-part-trigger">
+              <RegisterForm parentCallback={() => getFormData()}></RegisterForm>
+            </div>
+            <div id="information-part" className="content" role="tabpanel" aria-labelledby="information-part-trigger">
+              <div className="fullScreenSection">
+                <h3 className="my-3">Register Your Account</h3>
+                <Register></Register>
+              </div>
+            <div className="row">
+              <div className="col-6">
+                <button className="btn hdaoBtnContrast btn-lg" onClick={() => {stepper.previous()}}>Previous</button>
+              </div>
+              <div className="col-6 text-right">
+                <button className="btn hdaoBtn btn-lg" onClick={() => {stepper.next()}}>Next</button>
+              </div>
+            </div>  
+            </div>
+            <div id="finish-part" className="content" role="tabpanel" aria-labelledby="finish-part-trigger">
 
-								<h3 className="mt-3">
-									<span role="img" aria-label="Rescue Worker’s Helmet">&#9937; </span>
-									Launch a New Squad
-									<span role="img" aria-label="Rescue Worker’s Helmet"> &#9937;</span>
-								</h3>
-								{this.state.daoInfoError.length === 0 ? '':<div className="alert alert-danger mt-3"> {this.state.daoInfoError} — check it out!</div>}
-								{this.state.requestError.length === 0 ? '':<div className="alert alert-danger mt-3"> {this.state.requestError} — check it out!</div>}
-							</div>
-						</div>
-						<div className="row mt-3">
-							<div className="col-xs-12 col-lg-8 mx-auto">
-								<RegisterForm parentCallback={this.getFormData}></RegisterForm>
-							</div>
-						</div>
-					</section>
-					<section id='register-dao' className="fullScreenSection">
-					<div className="row">
-							<div className="col-xs-12 col-lg-8 mx-auto text-center">						
-							{this.state.walletRegisterError.length === 0 ? '':<div className="alert alert-danger"> {this.state.walletRegisterError} — check it out!</div>}
-							<h3 className="mt-3">Register Your Account</h3>
-					</div>
-					</div>
-						<RegisterWallet />
-					</section>
-					<section id='init-squad' className="fullScreenSection">
-						<h3> <span role="img" aria-label="Launching Rocket">&#128640;</span> TakeOff <span role="img" aria-label="Launching Rocket">&#128640;</span></h3>
-						<button
-							id='launchSquadButton'
-							className="btn hdaoBtnOutline btn-lg mt-3"
-							onClick={this.submitSquad}
-						>
-							Launch Squad
-						</button>
-					</section>					
-				</div>
-			</Layout>
-
-		);
-	}
+            </div>
+          </div>
+        </div>        
+        </div>
+        
+      </Layaout>
+    )
 }
-
-export default NewSquad;

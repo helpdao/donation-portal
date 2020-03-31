@@ -113,7 +113,9 @@ export default class RegisterForm extends React.Component{
         }).then((data) => {
             return this.sendData()
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+            console.log(err)
+        })
 
     }
     render(){

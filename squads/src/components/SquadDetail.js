@@ -68,7 +68,7 @@ const SquadDetails = props => {
         { donation === details._id? 
          ( <div className="row mt-3">
             <div className="col-xs-12 col-lg-8 mx-auto text-center">
-              <a href={details.inviteLink}>
+              <a target="_blank" href={details.inviteLink}>
                 <button className="btn hdaoBtnContrast ml-1 btn-lg" >Join the Group</button>
               </a>
             </div>

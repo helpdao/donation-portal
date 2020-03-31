@@ -7,7 +7,6 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import NewReleasesIcon from '@material-ui/icons/NewReleases';
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
-import Badge from '@material-ui/core/Badge';
 import ReactMarkdown from 'react-markdown'
 
 const useStyles = makeStyles({

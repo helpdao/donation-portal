@@ -12,6 +12,7 @@
     "@wyre/api": "^1.0.5",
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
+    "bs-stepper": "^1.7.0",
     "formik": "^2.1.4",
     "jquery": "^3.4.1",
     "react": "^16.13.1",
