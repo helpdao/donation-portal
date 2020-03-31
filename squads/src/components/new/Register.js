@@ -7,7 +7,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 import '../styles/styles.css';
 
 const NewSquad = () => {
-	localStorage.setItem('walletConected', false)
 	let wallet = useWallet();
 	let loadPluggin = () => {
 		wallet.activate('fortmatic')

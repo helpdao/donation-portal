@@ -57,7 +57,7 @@ export default function SquadCard({ name, desc, url, verified }) {
         </Typography>
       </CardContent>
       <CardActions className={classes.posBottom}>
-          <Button className="hdaoBtnOutline" size="small" href={url}>Learn More <span class="badge black">{verified ? <VerifiedUserIcon fontSize="small"/>:<NewReleasesIcon fontSize="small"/>}</span></Button>
+          <Button className="hdaoBtnOutline" size="small" href={url}>Learn More <span class="badge">{verified ? <VerifiedUserIcon fontSize="small"/>:''}</span></Button>
       </CardActions>      
     </Card>
   );

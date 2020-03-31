@@ -101,6 +101,7 @@ export default class RegisterForm extends React.Component{
     }
     sendData(){
         this.props.parentCallback(this.state)
+        
     }
     validateAll = () => {
         this.validateName()
