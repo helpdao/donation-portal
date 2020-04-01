@@ -31,12 +31,14 @@ const SquadList = props => {
           <h2 className="mt-5 blue"><b>OUR HELP SQUADS:</b></h2>
         </div>
       </div>
+      <div className="row">
       {squads.length > 0 ? (
         squads.map(squad => {
           return (
-            <div key={squad._id} className="col-xs-12 col-lg-3 mx-auto">
-              <SquadCard name={squad.name} desc={squad.description} url={"/squad/" + squad._id} verified={squad.verified}></SquadCard>
+            <div key={squad._id} className="col-xs-12 col-lg-4 p-1">
+                <SquadCard name={squad.name} desc={squad.description} url={"/squad/" + squad._id} verified={squad.verified}></SquadCard>
             </div>
+            
           );
         })
       ) : (
@@ -44,6 +46,8 @@ const SquadList = props => {
           <div className="col-xs-12 col-lg-8 mx-auto alert alert-danger text-center">Something goes wrong. Reload the page or try it again in a while.</div>
         </div>
       )}
+      </div>
+
             <div className="col-xs-12 col-lg-3 mx-auto">
               <div className="row p-2">
                 <div className="col-12 text-center">
