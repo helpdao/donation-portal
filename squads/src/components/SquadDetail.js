@@ -5,35 +5,32 @@ import Layout from './Layout'
 const SquadDetails = props => {
   const { squadId } = props.match.params;
   const [details, setDetails] = useState({});
+  const [donation, setDonation] = useState(false);
 
   useEffect(() => {
     async function getDetails() {
-      try{
+      try {
         const result = await squadDetails(squadId);
-        console.log("Result Squad Details: ")
-        console.log(result)
-        if(result.data && result.data.squad){
+        console.log("Result Squad Details: ");
+        console.log(result);
+        if (result.data && result.data.squad) {
           setDetails(result.data.squad);
+          setDonation(
+            Boolean(localStorage.getItem(`donation-${result.data.squad._id}`))
+          );
         }
-      }catch(err){
-        console.log(err)
+      } catch (err) {
+        console.log(err);
       }
     }
     getDetails();
   }, [squadId]);
-  let donation = false
-  let makeDonation = () =>{
-    localStorage.setItem('donation', details._id);
-  }
-  let isDonationMaked = () => {
-    try{
-      donation = localStorage.getItem('donation');
-    }catch(err){
-      console.log(err);
 
-    }
-  }
-  isDonationMaked()
+  const makeDonation = () => {
+    localStorage.setItem(`donation-${details._id}`, true);
+    setDonation(true);
+  };
+
   return (
     <Layout>
       <div className="container my-5">
@@ -82,16 +79,17 @@ const SquadDetails = props => {
             </div>
           </div>
         </div>
-        { donation === details._id? 
-         ( <div className="row mt-3">
+        {donation ? (
+          <div className="row mt-3">
             <div className="col-xs-12 col-lg-8 mx-auto text-center">
               <a target="_blank" href={details.inviteLink}>
                 <button className="btn hdaoBtnContrast ml-1 btn-lg" >Join the Group</button>
               </a>
             </div>
-          </div>  
-         ):''
-        }      
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </Layout>
   );
