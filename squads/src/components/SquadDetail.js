@@ -5,35 +5,32 @@ import Layout from './Layout'
 const SquadDetails = props => {
   const { squadId } = props.match.params;
   const [details, setDetails] = useState({});
+  const [donation, setDonation] = useState(false);
 
   useEffect(() => {
     async function getDetails() {
-      try{
+      try {
         const result = await squadDetails(squadId);
-        console.log("Result Squad Details: ")
-        console.log(result)
-        if(result.data && result.data.squad){
+        console.log("Result Squad Details: ");
+        console.log(result);
+        if (result.data && result.data.squad) {
           setDetails(result.data.squad);
+          setDonation(
+            Boolean(localStorage.getItem(`donation-${result.data.squad._id}`))
+          );
         }
-      }catch(err){
-        console.log(err)
+      } catch (err) {
+        console.log(err);
       }
     }
     getDetails();
   }, [squadId]);
-  let donation = false
-  let makeDonation = () =>{
-    localStorage.setItem('donation', details._id);
-  }
-  let isDonationMaked = () => {
-    try{
-      donation = localStorage.getItem('donation');
-    }catch(err){
-      console.log(err);
 
-    }
-  }
-  isDonationMaked()
+  const makeDonation = () => {
+    localStorage.setItem(`donation-${details._id}`, true);
+    setDonation(true);
+  };
+
   return (
     <Layout>
       <div className="container my-5">
@@ -60,21 +57,39 @@ const SquadDetails = props => {
         </div>
         <div className="row mt-3">
           <div className="col-xs-12 col-lg-8 mx-auto text-center">
-            <a onClick={() => {makeDonation()}}href={"https://pay.sendwyre.com/purchase?destCurrency=DAI&paymentMethod=debit-card&dest=" + details.daoAddress + "&redirectUrl=http://localhost:3000/squad/" + details._id}>
-              <button className="btn hdaoBtn btn-lg">Donate</button>
-            </a>
+            <div className="row">
+              <div className="col-5 offset-1">
+                <a
+                  onClick={() => {makeDonation()}}
+                  target="_blank"
+                  rel="external"
+                  href={`https://buy.ramp.network?swapAsset=DAI&userAddress=${details.daoAddress}`}
+                >
+                  <button className="btn hdaoBtn btn-lg">Donate with Ramp (EU)</button>
+                </a>
+              </div>
+              <div className="col-5">
+                <a
+                  onClick={() => {makeDonation()}}
+                  href={"https://pay.sendwyre.com/purchase?destCurrency=DAI&paymentMethod=debit-card&dest=" + details.daoAddress + "&redirectUrl=http://localhost:3000/squad/" + details._id}
+                >
+                  <button className="btn hdaoBtn btn-lg">Donate with Wyre (US)</button>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
-        { donation === details._id? 
-         ( <div className="row mt-3">
+        {donation ? (
+          <div className="row mt-3">
             <div className="col-xs-12 col-lg-8 mx-auto text-center">
               <a target="_blank" href={details.inviteLink}>
                 <button className="btn hdaoBtnContrast ml-1 btn-lg" >Join the Group</button>
               </a>
             </div>
-          </div>  
-         ):''
-        }      
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </Layout>
   );
