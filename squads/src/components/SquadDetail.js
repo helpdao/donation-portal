@@ -60,9 +60,26 @@ const SquadDetails = props => {
         </div>
         <div className="row mt-3">
           <div className="col-xs-12 col-lg-8 mx-auto text-center">
-            <a onClick={() => {makeDonation()}}href={"https://pay.sendwyre.com/purchase?destCurrency=DAI&paymentMethod=debit-card&dest=" + details.daoAddress + "&redirectUrl=http://localhost:3000/squad/" + details._id}>
-              <button className="btn hdaoBtn btn-lg">Donate</button>
-            </a>
+            <div className="row">
+              <div className="col-5 offset-1">
+                <a
+                  onClick={() => {makeDonation()}}
+                  target="_blank"
+                  rel="external"
+                  href={`https://buy.ramp.network?swapAsset=DAI&userAddress=${details.daoAddress}`}
+                >
+                  <button className="btn hdaoBtn btn-lg">Donate with Ramp (EU)</button>
+                </a>
+              </div>
+              <div className="col-5">
+                <a
+                  onClick={() => {makeDonation()}}
+                  href={"https://pay.sendwyre.com/purchase?destCurrency=DAI&paymentMethod=debit-card&dest=" + details.daoAddress + "&redirectUrl=http://localhost:3000/squad/" + details._id}
+                >
+                  <button className="btn hdaoBtn btn-lg">Donate with Wyre (US)</button>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
         { donation === details._id? 
