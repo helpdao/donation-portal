@@ -1,6 +1,4 @@
 import React from 'react'
-import Layout from '../Layout'
-import Layaout from '../Layout'
 import Stepper from 'bs-stepper'
 import Register from './Register'
 import 'bs-stepper/dist/css/bs-stepper.min.css'
@@ -116,8 +114,7 @@ export default class  NewSquad extends React.Component{
     })
     localStorage.setItem('walletConected', false)
     return(
-      <Layaout>
-        <div className="container">
+      <>
         <div id="bs-stepper" className="bs-stepper">
           <div className="bs-stepper-header" role="tablist">
             <div className="step" data-target="#logins-part">
@@ -177,9 +174,7 @@ export default class  NewSquad extends React.Component{
             </div>
           </div>
         </div>        
-        </div>
-        
-      </Layaout>
+      </>
     )
   }
 }

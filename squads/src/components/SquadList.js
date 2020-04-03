@@ -28,14 +28,14 @@ const SquadList = props => {
     <div  className="">
       <div className="row">
         <div className="col-xs-12 col-lg-8 mx-auto text-center">
-          <h2 className="mt-5 blue"><b>OUR HELP SQUADS:</b></h2>
+          <h2 className="mt-5 blue"><b>HELP SQUADS</b></h2>
         </div>
       </div>
       <div className="row">
       {squads.length > 0 ? (
         squads.map(squad => {
           return (
-            <div key={squad._id} className="col-xs-12 col-lg-4 p-1">
+            <div key={squad._id} className="col-xs-12 col-lg-4 p-3">
                 <SquadCard name={squad.name} desc={squad.description} url={"/squad/" + squad._id} verified={squad.verified}></SquadCard>
             </div>
             

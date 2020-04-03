@@ -6,6 +6,7 @@ import Register from "./components/new/Register";
 import SquadDetail from "./components/SquadDetail";
 import SquadList from "./components/SquadList";
 import Layout from './components/Layout'
+import Container from '@material-ui/core/Container'
 //CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'jquery/dist/jquery.min.js'
@@ -21,28 +22,20 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/">
-          <Layout>
-            <div className="container mt-5">
-                <div className="row">
-                <div className="col-xs-7 col-lg-7 text-center mx-auto">
-                  <img className="img-fluid" src={help_dao} alt="help_dao_logo" />
-                </div>
-              </div>
-              <div className="mt-3">
-                <SquadList />
-              </div>
-            </div>
+        <Layout>
+          <Container maxWidth="md">
+            <Route exact path="/">
+              <SquadList />
+            </Route>
+            <Route exact path="/new">
+              <NewSquad />
+            </Route>
+            <Route exact path="/new/register">
+              <Register />
+            </Route>
+            <Route path="/squad/:squadId" component={SquadDetail} />
+          </Container>
           </Layout>
-
-        </Route>
-        <Route exact path="/new">
-          <NewSquad />
-        </Route>
-        <Route exact path="/new/register">
-          <Register />
-        </Route>
-        <Route path="/squad/:squadId" component={SquadDetail} />
       </Switch>
     </Router>
   );

@@ -12,38 +12,22 @@ import ReactMarkdown from 'react-markdown'
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
-    display:'flex',
-    border:'0.5px solid #ffd8da',
-    height:'100%',
-    minHeight:'100%'
-  },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
+    height: 220,
   },
   title: {
     fontSize: 14,
   },
-  pos: {
-    marginBottom: 12,
-  },
   posBottom:{
-    position: 'absolute',
-    bottom:0
+    padding: 16,
   },
-  alignRight:{
-    alignItems:'right'
-  }
 });
 
 export default function SquadCard({ name, desc, url, verified }) {
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
 
   return (
-    <Card className={classes.root}>
-      <CardContent>
+    <Card>
+      <CardContent className={classes.root}>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
         </Typography>
         <Typography variant="h5" component="h2">
