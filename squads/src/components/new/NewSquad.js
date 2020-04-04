@@ -1,13 +1,27 @@
 import React from 'react'
-import Stepper from 'bs-stepper'
+import { Steps, Button, message } from 'antd';
 import Register from './Register'
-import 'bs-stepper/dist/css/bs-stepper.min.css'
 import RegisterForm from './registerForm'
 import { createSquad } from "../../requests"
 
-let stepper = null
-let stepperEl = null
-export default class  NewSquad extends React.Component{
+const { Step } = Steps;
+
+const steps = [
+  {
+    title: 'Register',
+    content: <Register></Register>,
+  },
+  {
+    title: 'Enter details',
+    content: <RegisterForm parentCallback={(data) => this.getFormData(data)}/>,
+  },
+  {
+    title: 'Launch',
+    content: 'Last-content',
+  },
+];
+
+export default class NewSquad extends React.Component{
   constructor(props){
     super(props);
     this.state = {
@@ -16,7 +30,8 @@ export default class  NewSquad extends React.Component{
       walletConnected:false,
       formValid:false,
       walletError:'',
-      formError:''
+      formError:'',
+      current: 0,
     }
   }
 
@@ -26,7 +41,7 @@ export default class  NewSquad extends React.Component{
         this.setState({name:data.name})
         this.setState({formValid:true})
         this.setState({formError:''})
-        stepper.next()
+        this.next()
       })
     }
 
@@ -36,12 +51,10 @@ export default class  NewSquad extends React.Component{
       console.log("CONNECTED: ")
       console.log(connected)
     if(connected !== null){
-      console.log("ENTRO AQUI")
       Promise.resolve(this.setState({walletConnected:connected}))
       .then(() => {
         if(connected !== false){
-          console.log("ENTRO AQUI TAMBIEN")
-          stepper.next()
+          this.next()
           this.setState({walletError:""})
         }  
       })    
@@ -53,7 +66,6 @@ export default class  NewSquad extends React.Component{
   findError(){
     let goTo = -1
     if(this.state.formValid === false){
-      console.log("FALLA FORMVALID")
       this.setState({formError:"Seems that something is missing."})
       goTo = 1
     }
@@ -64,7 +76,7 @@ export default class  NewSquad extends React.Component{
     return new Promise((resolve, reject) => {
       if(this.state.formValid === false){
         this.setState({formError:"Seems that something is missing."})
-        stepper.to(1)
+        // stepper.to(1)
         reject()
       }else{
         resolve()
@@ -73,107 +85,77 @@ export default class  NewSquad extends React.Component{
   }
   validateWallet(){
     return new Promise((resolve, reject) => {
-      if(this.state.walletConnected === false){
+      if (this.state.walletConnected === false){
         this.setState({walletError:"You need to login in your account."})
-        stepper.to(2)
+        // thisstepper.to(2)
         reject()
-      }else{
+      } else {
         resolve()
       }
     });
   }
+
   validateFields(){
     this.validateForm().then(() => {
       return this.validateWallet();
     }).then(() => {
       let dao = "0x0000000000000000ABADBABE0000000000000000"
 			let data = {
-				name:this.state.body.name,
-				description:this.state.body.description,
-				inviteLink:this.state.body.inviteLink,
-				daoAddress:dao
-			  }
+				name: this.state.body.name,
+				description: this.state.body.description,
+				inviteLink: this.state.body.inviteLink,
+				daoAddress: dao,
+			}
 		  createSquad(data).then((response) => {
-        if(response.status === 200){
+        if (response.status === 200) {
           document.location.href=`/squad/${response.data.newSquad._id}`
         }        
       }).catch((err) => {
-        console.log("ALGO SALIO MAL :(")
         console.log(err)
       });
-    }).catch((err) => {
-      console.log("Algo Fallo")
-    })
+    }).catch((err) => {})
   }
+
+  next() {
+    const current = this.state.current + 1;
+    this.setState({ current });
+  }
+
+  prev() {
+    const current = this.state.current - 1;
+    this.setState({ current });
+  }
+
   render(){
-    document.addEventListener('DOMContentLoaded', function () {
-      stepperEl = document.getElementById("bs-stepper")
-      let options = {linear:false}
-      stepper = new Stepper(document.querySelector('.bs-stepper'), options)
-      console.log(stepper._currentIndex)     
-    })
+    const { current } = this.state;
     localStorage.setItem('walletConected', false)
     return(
       <>
-        <div id="bs-stepper" className="bs-stepper">
-          <div className="bs-stepper-header" role="tablist">
-            <div className="step" data-target="#logins-part">
-              <button type="button" className="step-trigger" role="tab" aria-controls="logins-part" id="logins-part-trigger">
-                <span className="bs-stepper-circle">1</span>
-                <span className="bs-stepper-label">Squad Info</span>
-              </button>
-            </div>
-            <div className="line"></div>
-            <div className="step" data-target="#information-part">
-              <button type="button" className="step-trigger" role="tab" aria-controls="information-part" id="information-part-trigger">
-                <span className="bs-stepper-circle">2</span>
-                <span className="bs-stepper-label">Connect your Account</span>
-              </button>
-            </div>
-            <div className="line"></div>
-            <div className="step" data-target="#finish-part">
-              <button type="button" className="step-trigger" role="tab" aria-controls="finish-part" id="finish-part-trigger">
-                <span className="bs-stepper-circle">3</span>
-                <span className="bs-stepper-label">Launch Squad</span>
-              </button>
-            </div>            
+        <div>
+          <Steps current={current}>
+            {steps.map(item => (
+              <Step key={item.title} title={item.title} />
+            ))}
+          </Steps>
+          <div className="steps-content">{steps[current].content}</div>
+          <div className="steps-action">
+            {current < steps.length - 1 && (
+              <Button type="primary" onClick={() => this.next()}>
+                Next
+              </Button>
+            )}
+            {current === steps.length - 1 && (
+              <Button type="primary" onClick={() => message.success('Processing complete!')}>
+                Done
+              </Button>
+            )}
+            {current > 0 && (
+              <Button style={{ margin: 8 }} onClick={() => this.prev()}>
+                Previous
+              </Button>
+            )}
           </div>
-          <div className="bs-stepper-content">
-            <div id="logins-part" className="content" role="tabpanel" aria-labelledby="logins-part-trigger">
-              <RegisterForm parentCallback={(data) => this.getFormData(data)}/>
-            </div>
-            <div id="information-part" className="content" role="tabpanel" aria-labelledby="information-part-trigger">         
-              <div className="fullScreenSection">
-              <div className="row">
-                <div className ="col-xs-12 col-lg-8 mx-auto">
-                {this.state.walletError.length === 0 ?'':(<div class="alert alert-danger" role="alert"> {this.state.walletError}</div>)}
-                </div>
-              </div>                  
-                <h3 className="my-3">Register Your Account</h3>
-                <Register></Register>
-              </div>
-            <div className="row">
-              <div className="col-6">
-                <button className="btn hdaoBtnContrast btn-lg" onClick={() => {stepper.previous()}}>Previous</button>
-              </div>
-              <div className="col-6 text-right">
-                <button className="btn hdaoBtn btn-lg" onClick={() => {this.isWalletConnected()}}>Next</button>
-              </div>
-            </div>  
-            </div>
-            <div id="finish-part" className="content" role="tabpanel" aria-labelledby="finish-part-trigger">
-              <div className="fullScreenSection">
-                <h3>Launch {this.state.name} Squad</h3>
-                <button className="btn hdaoBtnOutline btn-lg" onClick={() => {this.validateFields()}}>Launch</button>
-              </div>
-            <div className="row">
-              <div className="col-6">
-                <button className="btn hdaoBtnContrast btn-lg" onClick={() => {stepper.previous()}}>Previous</button>
-              </div>
-            </div>  
-            </div>
-          </div>
-        </div>        
+        </div>      
       </>
     )
   }

@@ -1,18 +1,9 @@
 import React, { useEffect, useState } from "react";
 import ReactMarkdown from 'react-markdown'
 import { squadDetails } from "../requests";
-import Layout from './Layout'
-import Box from '@material-ui/core/Box'
-import { makeStyles } from '@material-ui/core/styles';
-
-const useStyles = makeStyles({
-  h1: {
-    textAlign: 'center',
-  },
-});
+import { Statistic, Row, Col, Button } from 'antd';
 
 const SquadDetails = props => {
-  const classes = useStyles();
   const { squadId } = props.match.params;
   const [details, setDetails] = useState({});
   const [donation, setDonation] = useState(false);
@@ -42,62 +33,25 @@ const SquadDetails = props => {
   };
 
   return (
-    <Box flexDirection="row">
-      <Box alignItems="center">
-        <h1 className={classes.h1}>
-          <span role="img" aria-label="Rescue Worker’s Helmet">&#9937;</span>
-            {details.name} Help Squad
-          <span role="img" aria-label="Rescue Worker’s Helmet">&#9937;</span>
-        </h1>
-      </Box>
-      <div className="row mt-5">
-        <div className="col-xs-12 col-lg-8 mx-auto text-left">
-        <ReactMarkdown source={details.description}></ReactMarkdown>
-        </div>
-      </div>
-      <div className="row mt-3">
-        <div className="col-xs-12 col-lg-8 mx-auto text-center">
-          <h5>Total Donated: $000</h5>
-          <h5>Remaining: $000</h5>
-
-        </div>
-      </div>
-      <div className="row mt-3">
-        <div className="col-xs-12 col-lg-8 mx-auto text-center">
-          <div className="row">
-            <div className="col-5 offset-1">
-              <a
-                onClick={() => {makeDonation()}}
-                target="_blank"
-                rel="external"
-                href={`https://buy.ramp.network?swapAsset=DAI&userAddress=${details.daoAddress}`}
-              >
-                <button className="btn hdaoBtn btn-lg">Donate with Ramp (EU)</button>
-              </a>
-            </div>
-            <div className="col-5">
-              <a
-                onClick={() => {makeDonation()}}
-                href={"https://pay.sendwyre.com/purchase?destCurrency=DAI&paymentMethod=debit-card&dest=" + details.daoAddress + "&redirectUrl=http://localhost:3000/squad/" + details._id}
-              >
-                <button className="btn hdaoBtn btn-lg">Donate with Wyre (US)</button>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-      {donation ? (
-        <div className="row mt-3">
-          <div className="col-xs-12 col-lg-8 mx-auto text-center">
-            <a target="_blank" href={details.inviteLink}>
-              <button className="btn hdaoBtnContrast ml-1 btn-lg" >Join the Group</button>
-            </a>
-          </div>
-        </div>
-      ) : (
-        ""
-      )}
-    </Box>
+    <div style={{ marginTop: 32, marginBottom: 32 }}>
+      <h1>{details.name}</h1>
+      <ReactMarkdown source={details.description}></ReactMarkdown>
+      <Row>
+        <Col span={12}>
+          <Statistic title="Total donated" value={112893} />
+        </Col>
+        <Col span={12}>
+          <Statistic title="Remaining" value={112893} precision={2} />
+        </Col>
+      </Row>
+      <Row>
+        <Button type="primary" href={`https://buy.ramp.network?swapAsset=DAI&userAddress=${details.daoAddress}`}>Donate with Ramp (EU)</Button>
+        <Button type="primary" href={"https://pay.sendwyre.com/purchase?destCurrency=DAI&paymentMethod=debit-card&dest=" + details.daoAddress + "&redirectUrl=http://localhost:3000/squad/" + details._id}>Donate with Wyre (US)</Button>
+        {donation ? (
+          <Button href={details.inviteLink}>Join the chat</Button>
+        ) : ( '' )}
+      </Row>
+    </div>
   );
 };
 

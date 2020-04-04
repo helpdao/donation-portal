@@ -13,6 +13,7 @@ import 'jquery/dist/jquery.min.js'
 import $ from 'jquery'
 import 'bootstrap/dist/js/bootstrap.min.js'
 import "./App.css";
+import 'antd/dist/antd.css';
 
 //Enabling Tooltips:
 $(function () {
