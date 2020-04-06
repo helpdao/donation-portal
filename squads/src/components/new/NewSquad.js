@@ -27,6 +27,7 @@ export default class NewSquad extends React.Component{
     this.state = {
       body:null,
       name:'',
+      fortmaticAddress:null,
       walletConnected:false,
       formValid:false,
       walletError:'',
@@ -41,12 +42,11 @@ export default class NewSquad extends React.Component{
         this.setState({name:data.name})
         this.setState({formValid:true})
         this.setState({formError:''})
-        this.next()
       })
     }
 
   isWalletConnected(){
-    Promise.resolve(localStorage.getItem('walletConected'))
+    Promise.resolve(localStorage.getItem('fortmatic'))
     .then((connected) => {
       console.log("CONNECTED: ")
       console.log(connected)
@@ -54,12 +54,14 @@ export default class NewSquad extends React.Component{
       Promise.resolve(this.setState({walletConnected:connected}))
       .then(() => {
         if(connected !== false){
+          message.success("Registered!")
           this.next()
           this.setState({walletError:""})
         }  
       })    
     }else{
       this.setState({walletError:"You need to login in your account."})
+      message.error("You need to login in your account.")
     }
     })
   }
@@ -71,6 +73,10 @@ export default class NewSquad extends React.Component{
     }
 
     return goTo    
+  }
+  validForm(){
+    console.log("Not yet")
+    return false
   }
   validateForm(){
     return new Promise((resolve, reject) => {
@@ -125,11 +131,31 @@ export default class NewSquad extends React.Component{
     const current = this.state.current - 1;
     this.setState({ current });
   }
+  validateStep(){
+    if(this.state.current === 0){
+      Promise.resolve(localStorage.getItem('fortmatic'))
+      .then((fortmatic) => {
+        console.log("FORTMATIC: " + fortmatic)
+        if(fortmatic.length !== 0){
+          this.next()
+        }else
+          message.error("You need to log in your account!")
+      })
 
+    }else if(this.state.current === 1){
+      if(this.validForm()){
+        this.next()
+      }else{
+        message.error("Review the form!")
+      }
+    }
+  }
   render(){
     const { current } = this.state;
-    localStorage.setItem('walletConected', false)
+    localStorage.setItem('fortmatic', '')
+
     return(
+      
       <>
         <div>
           <Steps current={current}>
@@ -140,7 +166,7 @@ export default class NewSquad extends React.Component{
           <div className="steps-content">{steps[current].content}</div>
           <div className="steps-action">
             {current < steps.length - 1 && (
-              <Button type="primary" onClick={() => this.next()}>
+              <Button type="primary" onClick={() => this.validateStep()}>
                 Next
               </Button>
             )}

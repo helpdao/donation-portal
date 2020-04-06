@@ -6,15 +6,16 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 import '../styles/styles.css';
 
-const NewSquad = () => {
-	let wallet = useWallet();
-	let loadPluggin = () => {
+const NewSquad = (props) => {
+	const wallet = useWallet();
+	const loadPluggin = () => {
 		wallet.activate('fortmatic')
 	}
-	let isConnected = () => {
+
+	const isConnected = () => {
 		if(wallet.account !== null){
 			document.location.href="#init-squad"
-			localStorage.setItem('walletConected', true);
+			localStorage.setItem('fortmatic', wallet.account);
 			return(
 				<Alert severity="success">Account connected!</Alert>
 			)
@@ -25,7 +26,7 @@ const NewSquad = () => {
 			<div>
 			{wallet.connected ? (
 				isConnected()
-			) : ( wallet.activating !== null ? (
+			) : (wallet.activating !== null ? (
 				<div className="spinner-border red" role="status">
 					<span className="sr-only">Loading...</span>
 				</div>
@@ -41,7 +42,9 @@ const NewSquad = () => {
 	);
 };
 
-export default () => (
+export default(props) => {
+	
+	return(
 	<UseWalletProvider
 		chainId={1}
 		connectors={{
@@ -51,4 +54,4 @@ export default () => (
 	>
 		<NewSquad />
 	</UseWalletProvider>
-);
+)};
