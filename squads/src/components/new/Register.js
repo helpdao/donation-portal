@@ -1,8 +1,7 @@
 import React from 'react';
 import { useWallet, UseWalletProvider } from 'use-wallet';
-import Button from '@material-ui/core/Button';
-import Alert from '@material-ui/lab/Alert';
-import Tooltip from '@material-ui/core/Tooltip';
+import {Button, Alert} from 'antd';
+
 
 import '../styles/styles.css';
 
@@ -17,7 +16,7 @@ const NewSquad = (props) => {
 			document.location.href="#init-squad"
 			localStorage.setItem('fortmatic', wallet.account);
 			return(
-				<Alert severity="success">Account connected!</Alert>
+				<Alert message="Account connected!" type="success" />
 			)
 		}
 
@@ -31,11 +30,11 @@ const NewSquad = (props) => {
 					<span className="sr-only">Loading...</span>
 				</div>
 			):(	
-				<button
+				<Button
 				onClick = { () => {loadPluggin()}}
-				className="btn hdaoBtnOutline btn-lg">
+				>
 				Register
-				</button>
+				</Button>
 			)
 			)}
 			</div>
