@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { allSquads } from "../requests";
 import SquadCard from "./SquadCard";
 import { Card, Col, Row } from 'antd';
