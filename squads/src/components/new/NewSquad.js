@@ -79,7 +79,7 @@ export default function NewSquad() {
   const steps = [
     {
       title: "Register",
-      content: <Register></Register>,
+      content: <Register onCompletedRegister={() => validateStep()}></Register>,
     },
     {
       title: "Enter details",

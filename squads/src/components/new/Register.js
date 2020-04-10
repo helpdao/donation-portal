@@ -15,6 +15,7 @@ const NewSquad = (props) => {
     if (wallet.account !== null) {
       document.location.href = "#init-squad";
       localStorage.setItem("fortmatic", wallet.account);
+      props.parentCallback()
       return <Alert message="Account connected!" type="success" />;
     }
   };
@@ -55,6 +56,9 @@ const NewSquad = (props) => {
 };
 
 export default (props) => {
+  const callback = () => {
+    props.onCompletedRegister()
+  }
   return (
     <UseWalletProvider
       chainId={1}
@@ -63,7 +67,7 @@ export default (props) => {
         fortmatic: { apiKey: "pk_live_C11CB41780801641" },
       }}
     >
-      <NewSquad />
+      <NewSquad parentCallback={() => callback()}/>
     </UseWalletProvider>
   );
 };
