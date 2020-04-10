@@ -19,8 +19,8 @@ const NewSquad = (props) => {
     }
   };
   return (
-    <Row gutter={64}>
-      <Col md={24} lg={12}>
+    <Row gutter={64} justify="space-around" align="middle">
+      <Col xs={24} sm={12}>
         <Title level={3}>Register</Title>
         <p>
           In order to launch a help squad, you will need to sign up.
@@ -47,7 +47,7 @@ const NewSquad = (props) => {
           </Button>
         )}
       </Col>
-      <Col md={24} lg={12}>
+      <Col xs={0} sm={12}>
         <img src={signup} style={{ width: '100%' }} />
       </Col>
     </Row>

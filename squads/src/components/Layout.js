@@ -11,8 +11,9 @@ export default class Layout extends React.Component {
       <Row style={{ borderBottom: "none" }}>
         <Col
           sm={{ span: 24 }}
-          md={{ span: 16, offset: 4 }}
-          lg={{ span: 12, offset: 6 }}
+          md={{ span: 20, offset: 2 }}
+          lg={{ span: 16, offset: 4 }}
+          xl={{ span: 12, offset: 6 }}
         >
           <Header />
           {this.props.children}

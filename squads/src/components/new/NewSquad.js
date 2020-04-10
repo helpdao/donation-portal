@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Steps, Button, message, Form, Input } from "antd";
+import { Steps, Button, message, Form, Input, Row, Col, Typography } from "antd";
 import Register from "./Register";
 import { findSquad, createSquad } from "../../requests";
-import ReactMarkdown from "react-markdown";
+import write from "../../assets/write.svg";
+
 const { Step } = Steps;
 const { TextArea } = Input;
 let inviteLinkRegex = RegExp(
@@ -154,30 +155,35 @@ export default function NewSquad() {
     {
       title: "Enter details",
       content: (
-        <div>
-          <label>Squad Name</label>
-          <Input
-            name="name"
-            placeholder="Name"
-            value={name}
-            onChange={(evt) => setName(evt.target.value)}
-          />
-          <label>Squad Invitation Link</label>
-          <Input
-            name="inviteLink"
-            placeholder="InviteLink"
-            value={inviteLink}
-            onChange={(evt) => setInviteLink(evt.target.value)}
-          />
-          <label>Squad Description</label>
-          <TextArea
-            rows={20}
-            name="description"
-            placeholder="Description"
-            value={description}
-            onChange={(evt) => setDescription(evt.target.value)}
-          />
-        </div>
+        <Row gutter={64} justify="space-around" align="middle">
+          <Col xs={24} sm={24} md={12}>
+            <label>Squad Name</label>
+            <Input
+              name="name"
+              placeholder="Name"
+              value={name}
+              onChange={(evt) => setName(evt.target.value)}
+            />
+            <label>Squad Invitation Link</label>
+            <Input
+              name="inviteLink"
+              placeholder="InviteLink"
+              value={inviteLink}
+              onChange={(evt) => setInviteLink(evt.target.value)}
+            />
+            <label>Squad Description</label>
+            <TextArea
+              rows={20}
+              name="description"
+              placeholder="Description"
+              value={description}
+              onChange={(evt) => setDescription(evt.target.value)}
+            />
+          </Col>
+          <Col xs={0} sm={0} md={12}>
+            <img src={write} style={{ width: '100%' }} />
+          </Col>
+        </Row>
       ),
     },
     {
