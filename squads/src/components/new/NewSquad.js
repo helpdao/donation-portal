@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Steps, Button, message, Form, Input, Modal } from "antd";
+import { Steps, Button, message, Form, Input } from "antd";
 import Register from "./Register";
 import { findSquad, createSquad } from "../../requests";
 import ReactMarkdown from "react-markdown";
@@ -146,20 +146,6 @@ export default function NewSquad() {
     }
   };
 
-  //MODAL CONTROLS
-  const showModal = () => {
-    setVisible(true);
-  };
-
-  const handleOk = (e) => {
-    setVisible(false);
-    validateStep();
-  };
-
-  const handleCancel = (e) => {
-    setVisible(false);
-  };
-
   const steps = [
     {
       title: "Register",
@@ -191,16 +177,6 @@ export default function NewSquad() {
             value={description}
             onChange={(evt) => setDescription(evt.target.value)}
           />
-          <Button onClick={() => showModal()}>Preview MD</Button>
-          <Modal
-            width={800}
-            title="Basic Modal"
-            visible={visible}
-            onOk={handleOk}
-            onCancel={handleCancel}
-          >
-            <ReactMarkdown source={description} />
-          </Modal>
         </div>
       ),
     },
