@@ -1,54 +1,73 @@
-import React from 'react';
-import { useWallet, UseWalletProvider } from 'use-wallet';
-import Button from '@material-ui/core/Button';
-import Alert from '@material-ui/lab/Alert';
-import Tooltip from '@material-ui/core/Tooltip';
+import React from "react";
+import { useWallet, UseWalletProvider } from "use-wallet";
+import { Button, Alert } from "antd";
+import { Row, Col, Typography } from "antd";
 
-import '../styles/styles.css';
+import signup from "../../assets/signup.svg";
+import "../styles/styles.css";
 
-const NewSquad = () => {
-	let wallet = useWallet();
-	let loadPluggin = () => {
-		wallet.activate('fortmatic')
-	}
-	let isConnected = () => {
-		if(wallet.account !== null){
-			document.location.href="#init-squad"
-			localStorage.setItem('walletConected', true);
-			return(
-				<Alert severity="success">Account connected!</Alert>
-			)
-		}
+const { Title } = Typography;
 
-		}
-	return (
-			<div>
-			{wallet.connected ? (
-				isConnected()
-			) : ( wallet.activating !== null ? (
-				<div className="spinner-border red" role="status">
-					<span className="sr-only">Loading...</span>
-				</div>
-			):(	
-				<button
-				onClick = { () => {loadPluggin()}}
-				className="btn hdaoBtnOutline btn-lg">
-				Register
-				</button>
-			)
-			)}
-			</div>
-	);
+const NewSquad = (props) => {
+  const wallet = useWallet();
+
+  const isConnected = () => {
+    if (wallet.account !== null) {
+      document.location.href = "#init-squad";
+      localStorage.setItem("fortmatic", wallet.account);
+      props.parentCallback()
+      return <Alert message="Account connected!" type="success" />;
+    }
+  };
+  return (
+    <Row gutter={64} justify="space-around" align="middle">
+      <Col xs={24} sm={12}>
+        <Title level={3}>Register</Title>
+        <p>
+          In order to launch a help squad, you will need to sign up.
+          You can use your email or phone number.
+          After that, you need to purchase ETH by:
+          <ol>
+            <li>1. Going into x</li>
+            <li>2. Doing Y</li>
+            <li>3. Doing Y</li>
+          </ol>
+          Then you can proceed to the next step!
+        </p>
+        {wallet.connected ? (
+          isConnected()
+        ) : wallet.activating !== null ? (
+          <div className="spinner-border red" role="status">
+            <span className="sr-only">Loading...</span>
+          </div>
+        ) : (
+          <Button
+            onClick={() => wallet.activate("fortmatic")}
+          >
+            Register
+          </Button>
+        )}
+      </Col>
+      <Col xs={0} sm={12}>
+        <img src={signup} style={{ width: '100%' }} />
+      </Col>
+    </Row>
+  );
 };
 
-export default () => (
-	<UseWalletProvider
-		chainId={1}
-		connectors={{
-			// This is how connectors get configured
-			fortmatic: { apiKey: 'pk_live_C11CB41780801641' }
-		}}
-	>
-		<NewSquad />
-	</UseWalletProvider>
-);
+export default (props) => {
+  const callback = () => {
+    props.onCompletedRegister()
+  }
+  return (
+    <UseWalletProvider
+      chainId={1}
+      connectors={{
+        // This is how connectors get configured
+        fortmatic: { apiKey: "pk_live_C11CB41780801641" },
+      }}
+    >
+      <NewSquad parentCallback={() => callback()}/>
+    </UseWalletProvider>
+  );
+};

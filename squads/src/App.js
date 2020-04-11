@@ -1,9 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import help_dao from "./assets/help_dao.svg";
 import NewSquad from "./components/new/NewSquad";
 import Register from "./components/new/Register";
 import SquadDetail from "./components/SquadDetail";
+import Hero from "./components/Hero";
 import SquadList from "./components/SquadList";
 import Layout from './components/Layout'
 import Container from '@material-ui/core/Container'
@@ -13,6 +13,7 @@ import 'jquery/dist/jquery.min.js'
 import $ from 'jquery'
 import 'bootstrap/dist/js/bootstrap.min.js'
 import "./App.css";
+import 'antd/dist/antd.less';
 
 //Enabling Tooltips:
 $(function () {
@@ -25,6 +26,7 @@ function App() {
         <Layout>
           <Container maxWidth="md">
             <Route exact path="/">
+              <Hero />
               <SquadList />
             </Route>
             <Route exact path="/new">
