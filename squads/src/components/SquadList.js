@@ -28,7 +28,7 @@ const SquadList = props => {
       </Row>
       <Row gutter={[16, 16]}>
         {squads.map(squad => (
-          <Col span={8}>
+          <Col xs={24} sm={12} lg={8}>
             <SquadCard name={squad.name} desc={squad.description} url={"/squad/" + squad._id} verified={squad.verified}></SquadCard>
           </Col>
         ))}

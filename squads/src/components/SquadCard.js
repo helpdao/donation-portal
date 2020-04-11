@@ -4,10 +4,6 @@ import { Link } from "react-router-dom";
 import ReactMarkdown from 'react-markdown'
 
 export default function SquadCard({ name, desc, url, verified }) {
-  console.log("ORIGINAL")
-  console.log(desc.substring(0, 180))
-  console.log("AFTER REGEX")
-  console.log(desc.substring(0, 180).replace(/([\#])+/g, ''))
   return (
     <Card
       actions={[

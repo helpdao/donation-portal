@@ -33,7 +33,7 @@ const SquadDetails = props => {
   return (
     <div style={{ marginTop: 32, marginBottom: 32 }}>
       <PageHeader
-        onBack={() => window.history.back()}
+        onBack={() => document.location.href="/"}
         title={details.name}
         tags={details.verified ? <Tag color="green">Verified</Tag> : ''}
         extra={[
@@ -54,8 +54,12 @@ const SquadDetails = props => {
       </Row>
       <ReactMarkdown source={details.description}></ReactMarkdown>
       <Row>
-        <Button type="primary" href={`https://buy.ramp.network?swapAsset=DAI&userAddress=${details.daoAddress}`}>Donate with Ramp (EU)</Button>
-        <Button type="primary" href={"https://pay.sendwyre.com/purchase?destCurrency=DAI&paymentMethod=debit-card&dest=" + details.daoAddress + "&redirectUrl=http://localhost:3000/squad/" + details._id}>Donate with Wyre (US)</Button>
+        <Col  offset={6} span={6}>
+          <Button type="primary" onClick={() => makeDonation()} href={`https://buy.ramp.network?swapAsset=DAI&userAddress=${details.daoAddress}`}>Donate with Ramp (EU)</Button>        
+        </Col>
+        <Col  span={6}>
+          <Button type="primary" onClick={() => makeDonation()} href={"https://pay.sendwyre.com/purchase?destCurrency=DAI&paymentMethod=debit-card&dest=" + details.daoAddress + "&redirectUrl=http://localhost:3000/squad/" + details._id}>Donate with Wyre (US)</Button>        
+        </Col>
         {donation ? (
           <Button href={details.inviteLink}>Join the chat</Button>
         ) : ( '' )}
