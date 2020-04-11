@@ -4,6 +4,10 @@ import { Link } from "react-router-dom";
 import ReactMarkdown from 'react-markdown'
 
 export default function SquadCard({ name, desc, url, verified }) {
+  console.log("ORIGINAL")
+  console.log(desc.substring(0, 180))
+  console.log("AFTER REGEX")
+  console.log(desc.substring(0, 180).replace(/([\#])+/g, ''))
   return (
     <Card
       actions={[
@@ -12,7 +16,7 @@ export default function SquadCard({ name, desc, url, verified }) {
       title={<>{name}{verified ? <Tag color="green" style={{ float: 'right' }}>Verified</Tag> : ''}</>}
     >
       <div style={{ height: 164 }}>
-        <ReactMarkdown source={desc.substring(0, 180).replace(/[\#]*/, '')}></ReactMarkdown>
+        <ReactMarkdown source={desc.substring(0, 180).replace(/([\#])+/g, '')}></ReactMarkdown>
       </div>
     </Card>
   );
