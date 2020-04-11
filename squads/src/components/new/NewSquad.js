@@ -72,6 +72,7 @@ export default function NewSquad() {
   };
 
   const setSquadDetails = (values) => {
+    console.log(values)
     setDetails(values);
     next();
   }

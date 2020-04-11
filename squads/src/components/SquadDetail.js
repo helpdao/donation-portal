@@ -53,17 +53,23 @@ const SquadDetails = props => {
         </Col>
       </Row>
       <ReactMarkdown source={details.description}></ReactMarkdown>
-      <Row>
-        <Col  offset={6} span={6}>
+      <Row justify="center" align="middle" gutter={[8, 8]}>
+        <Col xs={24} md={{span:6, offset:6}} align="middle">
           <Button type="primary" onClick={() => makeDonation()} href={`https://buy.ramp.network?swapAsset=DAI&userAddress=${details.daoAddress}`}>Donate with Ramp (EU)</Button>        
         </Col>
-        <Col  span={6}>
+        <Col  xs={24} md={6} align="middle">
           <Button type="primary" onClick={() => makeDonation()} href={"https://pay.sendwyre.com/purchase?destCurrency=DAI&paymentMethod=debit-card&dest=" + details.daoAddress + "&redirectUrl=http://localhost:3000/squad/" + details._id}>Donate with Wyre (US)</Button>        
         </Col>
-        {donation ? (
-          <Button href={details.inviteLink}>Join the chat</Button>
-        ) : ( '' )}
       </Row>
+
+        {donation ? (
+        <Row gutter={[8, 16]}>
+          <Col xs={24} justify="center" align="middle">          
+            <Button href={details.inviteLink}>Join the chat</Button>
+          </Col>
+        </Row>          
+        ) : ( '' )}
+
     </div>
   );
 };
