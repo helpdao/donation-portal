@@ -1,13 +1,13 @@
 import React from "react";
 import { useWallet, UseWalletProvider } from "use-wallet";
 import { Button, Alert } from "antd";
-import { Col, Typography, Spin } from "antd";
+import { Row, Col, Typography, Spin } from "antd";
 
-import signup from "../../assets/signup.svg";
+import help from "../../assets/help.svg";
 
 const { Title } = Typography;
 
-const NewSquad = ({ parentCallback }) => {
+const LaunchSquad = ({ parentCallback }) => {
   const wallet = useWallet();
 
   const isConnected = () => {
@@ -19,7 +19,7 @@ const NewSquad = ({ parentCallback }) => {
   return (
     <>
       <Col xs={24} sm={12}>
-        <Title level={3}>Register</Title>
+        <Title level={3}>Launch</Title>
         <p>
           In order to launch a help squad, you will need to sign up.
           You can use your email or phone number.
@@ -33,12 +33,12 @@ const NewSquad = ({ parentCallback }) => {
             type="primary"
             onClick={() => wallet.activate("fortmatic")}
           >
-            Register
+            Launch help squad
           </Button>
         )}
       </Col>
       <Col xs={0} sm={12}>
-        <img src={signup} style={{ width: '100%' }} />
+        <img src={help} style={{ width: '100%' }} />
       </Col>
     </>
   );
@@ -52,7 +52,7 @@ export default (props) => {
         fortmatic: { apiKey: "pk_live_C11CB41780801641" },
       }}
     >
-      <NewSquad parentCallback={() => props.onCompletedRegister()}/>
+      <LaunchSquad parentCallback={() => props.onCompletedRegister()}/>
     </UseWalletProvider>
   );
 };

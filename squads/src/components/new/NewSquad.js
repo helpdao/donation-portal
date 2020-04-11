@@ -5,12 +5,11 @@ import {
   message,
   Row,
   Col,
-  Typography,
 } from "antd";
 import Register from "./Register";
+import LaunchSquad from "./LaunchSquad";
 import SquadForm from "./SquadForm";
 import { findSquad, createSquad } from "../../requests";
-import write from "../../assets/write.svg";
 
 const { Step } = Steps;
 
@@ -84,20 +83,11 @@ export default function NewSquad() {
     },
     {
       title: "Enter details",
-      content: (
-        <Row gutter={64} justify="space-around" align="middle">
-          <Col xs={24} sm={24} md={12}>
-            <SquadForm onFinish={setSquadDetails}></SquadForm>
-          </Col>
-          <Col xs={0} sm={0} md={12}>
-            <img src={write} style={{ width: "100%" }} />
-          </Col>
-        </Row>
-      ),
+      content: <SquadForm onFinish={setSquadDetails}></SquadForm>,
     },
     {
       title: "Launch",
-      content: "Last-content",
+      content: <LaunchSquad></LaunchSquad>
     },
   ];
 
@@ -113,13 +103,10 @@ export default function NewSquad() {
           <Step key={item.title} title={item.title} />
         ))}
       </Steps>
-      <div className="steps-content">{steps[current].content}</div>
-      <div className="steps-action">
-        {current === steps.length - 1 && (
-          <Button type="primary" onClick={() => validateStep()}>
-            Launch {details.name} Squad!
-          </Button>
-        )}
+      <div className="steps-content">
+        <Row gutter={64} justify="space-around" align="middle">
+          {steps[current].content}
+        </Row>
       </div>
     </>
   );
