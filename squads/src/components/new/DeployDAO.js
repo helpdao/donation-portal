@@ -3,7 +3,7 @@ import ethers from 'ethers';
 const templateFactory = '0xxxx';
 const contractAbi = {};
 
-const deployDAO = ({ creator, web3provider }) => {
+const deployDAO = async ({ creator, web3provider }) => {
   const factory = new ethers.Contract(templateFactory, contractAbi, web3provider);
 
   let deploymentTx = await factory.createDao(creator);
