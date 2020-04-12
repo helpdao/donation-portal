@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import Fortmatic from "fortmatic";
 import { useWallet, UseWalletProvider } from "use-wallet";
-import { Button, Alert } from "antd";
-import { Row, Col, Typography, Spin } from "antd";
+import { Button } from "antd";
+import { Col, Typography } from "antd";
+import deployDAO from './DeployDAO';
 
 import help from "../../assets/help.svg";
 
@@ -15,6 +16,11 @@ const LaunchSquad = ({ parentCallback }) => {
   // for balance and then use setBalance to simulate an ETH deposit
   // const [balance, setBalance] = useState(0);
   // window.setBalance = setBalance;
+
+  const launchDAO = async () => {
+    const { agentAddress }= await deployDAO({ creator: wallet.account, web3provider: wallet.ethereum })
+    return agentAddress;
+  }
 
   return (
     <>
@@ -36,7 +42,7 @@ const LaunchSquad = ({ parentCallback }) => {
         ) : (
           <Button
             type="primary"
-            onClick={() => wallet.activate("fortmatic")}
+            onClick={() => launchDAO()}
           >
             Launch help squad
           </Button>
