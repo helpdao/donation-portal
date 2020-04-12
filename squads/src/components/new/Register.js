@@ -12,7 +12,7 @@ const NewSquad = ({ parentCallback }) => {
 
   const isConnected = () => {
     if (wallet.account !== null) {
-      localStorage.setItem("fortmatic", wallet.account);
+      localStorage.setItem("ethAddress", wallet.account);
       parentCallback()
     }
   };

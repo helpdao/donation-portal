@@ -50,7 +50,7 @@ export default class NewSquad extends React.Component{
     }
 
   isWalletConnected(){
-    Promise.resolve(localStorage.getItem('fortmatic'))
+    Promise.resolve(localStorage.getItem('ethAddress'))
     .then((connected) => {
       console.log("CONNECTED: ")
       console.log(connected)
@@ -137,7 +137,7 @@ export default class NewSquad extends React.Component{
   }
   validateStep(){
     if(this.state.current === 0){
-      Promise.resolve(localStorage.getItem('fortmatic'))
+      Promise.resolve(localStorage.getItem('ethAddress'))
       .then((fortmatic) => {
         console.log("FORTMATIC: " + fortmatic)
         if(true || fortmatic.length !== 0){
@@ -172,7 +172,7 @@ export default class NewSquad extends React.Component{
       },
     ];    
     const { current } = this.state;
-    localStorage.setItem('fortmatic', '')
+    localStorage.setItem('ethAddress', '')
 
     return(
       

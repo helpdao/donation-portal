@@ -32,7 +32,7 @@ export default function NewSquad() {
 
   const validateStep = () => {
     if (current === 0) {
-      Promise.resolve(localStorage.getItem("fortmatic")).then((fortmatic) => {
+      Promise.resolve(localStorage.getItem("ethAddress")).then((fortmatic) => {
         console.log("FORTMATIC: " + fortmatic);
         if (fortmatic.length !== 0) {
           next();
@@ -91,7 +91,7 @@ export default function NewSquad() {
     },
   ];
 
-  localStorage.setItem("fortmatic", "");
+  localStorage.setItem("ethAddress", "");
   return (
     <>
       <Steps
