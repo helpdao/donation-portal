@@ -54,7 +54,7 @@ const SquadDetails = props => {
       </Row>
       <ReactMarkdown source={details.description}></ReactMarkdown>
       <Row justify="center" align="middle" gutter={[8, 8]}>
-        <Col xs={24} md={{span:6, offset:6}} align="middle">
+        <Col xs={24} md={6} align="middle">
           <Button type="primary" onClick={() => makeDonation()} href={`https://buy.ramp.network?swapAsset=DAI&userAddress=${details.daoAddress}`}>Donate with Ramp (EU)</Button>        
         </Col>
         <Col  xs={24} md={6} align="middle">
