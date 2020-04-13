@@ -1,6 +1,6 @@
 import React from "react";
 import { useWallet, UseWalletProvider } from "use-wallet";
-import { Button, Alert } from "antd";
+import { Button } from "antd";
 import { Col, Typography, Spin } from "antd";
 
 import signup from "../../assets/signup.svg";

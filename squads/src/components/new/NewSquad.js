@@ -1,15 +1,13 @@
 import React, { useState } from "react";
 import {
   Steps,
-  Button,
   message,
   Row,
-  Col,
 } from "antd";
 import Register from "./Register";
 import LaunchSquad from "./LaunchSquad";
 import SquadForm from "./SquadForm";
-import { findSquad, createSquad } from "../../requests";
+import { createSquad } from "../../requests";
 
 const { Step } = Steps;
 
@@ -19,14 +17,8 @@ export default function NewSquad() {
   const [walletConnected, setWalletConnected] = useState(false);
   const [details, setDetails] = useState({});
 
-  //STEPS CONTROLLERS
   const next = () => {
     const val = current + 1;
-    setCurrent(val);
-  };
-
-  const prev = () => {
-    let val = current - 1;
     setCurrent(val);
   };
 

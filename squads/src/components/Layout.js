@@ -3,9 +3,6 @@ import Header from "./Header";
 import { Row, Col } from "antd";
 
 export default class Layout extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
       <Row style={{ borderBottom: "none" }}>

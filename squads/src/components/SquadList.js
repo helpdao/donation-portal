@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { allSquads } from "../requests";
 import SquadCard from "./SquadCard";
-import { Card, Col, Row } from 'antd';
-//import "../App.css";
+import { Col, Row } from 'antd';
 
 const SquadList = props => {
   const [squads, setSquads] = useState([]);

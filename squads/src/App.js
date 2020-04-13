@@ -7,18 +7,10 @@ import Hero from "./components/Hero";
 import SquadList from "./components/SquadList";
 import Layout from './components/Layout'
 import Container from '@material-ui/core/Container'
-//CSS
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'jquery/dist/jquery.min.js'
-import $ from 'jquery'
-import 'bootstrap/dist/js/bootstrap.min.js'
+
 import "./App.css";
 import 'antd/dist/antd.less';
 
-//Enabling Tooltips:
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})
 function App() {
   return (
     <Router>
