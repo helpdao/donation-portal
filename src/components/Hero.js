@@ -1,13 +1,15 @@
 import React from 'react'
-import { Row, Col } from 'antd';
+import { Row, Col, Typography } from 'antd';
+
+const { Title } = Typography;
 
 export default class Footer extends React.Component {
   render() {
     return(
       <Row gutter={32} style={{ paddingTop: 64, paddingBottom: 64 }}>
         <Col span={14}>
-          <h1>Grassroots help for vulnerable groups in COVID-19.</h1>
-          <h5>Discover local squads that help those who need it the most in the current COVID-19 pandemic.</h5>
+          <Title level={2}>Grassroots help for vulnerable groups in COVID-19.</Title>
+          <Title level={4} type="secondary">Discover local squads that help those who need it the most in the current COVID-19 pandemic.</Title>
         </Col>
         <Col span={10}>
           <img
