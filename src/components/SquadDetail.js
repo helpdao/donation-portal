@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import ReactMarkdown from 'react-markdown'
 import { squadDetails } from "../requests";
-import { Statistic, Row, Col, Button, PageHeader, Tag, Menu, Dropdown } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
+import { Statistic, Row, Col, Button, PageHeader, Tag, Menu, Dropdown, Typography } from 'antd';
+import { DownOutlined, CreditCardOutlined, CalculatorOutlined } from '@ant-design/icons';
+
+const { Text } = Typography;
 
 const SquadDetails = props => {
   const { squadId } = props.match.params;
@@ -34,10 +36,16 @@ const SquadDetails = props => {
   const donationMenu = (
     <Menu onClick={makeDonation}>
       <Menu.Item key="1">
-        💳 Credit and debit card
+        <a href={"https://pay.sendwyre.com/purchase?destCurrency=DAI&paymentMethod=debit-card&dest=" + details.daoAddress + "&redirectUrl=http://localhost:3000/squad/" + details._id} target="_blank" rel="noopener noreferrer">
+          <CreditCardOutlined />
+          <Text strong style={{ marginLeft: 8 }}>Credit and debit card</Text>
+        </a>
       </Menu.Item>
       <Menu.Item key="2">
-        🇪🇺+🇬🇧 Bank account
+        <a href={`https://buy.ramp.network?swapAsset=DAI&userAddress=${details.daoAddress}`} target="_blank" rel="noopener noreferrer">
+          <CalculatorOutlined />
+          <Text strong style={{ marginLeft: 8 }}>Bank account - 🇪🇺🇬🇧</Text>
+        </a>
       </Menu.Item>
     </Menu>
   );
@@ -49,7 +57,7 @@ const SquadDetails = props => {
         title={details.name}
         tags={details.verified ? <Tag color="green">Verified</Tag> : ''}
         extra={[
-          <Dropdown overlay={donationMenu}>
+          <Dropdown overlay={donationMenu} placement="bottomRight">
             <Button type="primary">
               Donate <DownOutlined />
             </Button>
