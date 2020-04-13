@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ReactMarkdown from 'react-markdown'
 import { squadDetails } from "../requests";
-import { Statistic, Row, Col, Button, PageHeader, Tag } from 'antd';
+import { Statistic, Row, Col, Button, PageHeader, Tag, Menu, Dropdown } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
 
 const SquadDetails = props => {
   const { squadId } = props.match.params;
@@ -30,6 +31,17 @@ const SquadDetails = props => {
     setDonation(true);
   };
 
+  const donationMenu = (
+    <Menu onClick={makeDonation}>
+      <Menu.Item key="1">
+        💳 Credit and debit card
+      </Menu.Item>
+      <Menu.Item key="2">
+        🇪🇺+🇬🇧 Bank account
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
     <div style={{ marginTop: 32, marginBottom: 32 }}>
       <PageHeader
@@ -37,9 +49,11 @@ const SquadDetails = props => {
         title={details.name}
         tags={details.verified ? <Tag color="green">Verified</Tag> : ''}
         extra={[
-          <Button key="1" type="primary">
-            Donate
-          </Button>,
+          <Dropdown overlay={donationMenu}>
+            <Button type="primary">
+              Donate <DownOutlined />
+            </Button>
+          </Dropdown>,
         ]}
         style={{ padding: 0 }}
       ></PageHeader>
