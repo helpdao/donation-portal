@@ -8,7 +8,7 @@ import Register from "./Register";
 import LaunchSquad from "./LaunchSquad";
 import SquadForm from "./SquadForm";
 import { createSquad } from "../../requests";
-
+import {findSquad} from '../../requests/index'
 const { Step } = Steps;
 
 export default function NewSquad() {
@@ -63,9 +63,20 @@ export default function NewSquad() {
   };
 
   const setSquadDetails = (values) => {
-    console.log(values)
-    setDetails(values);
-    next();
+    findSquad({name:values.name}).then((response) =>{
+      console.log("Valid Name?")
+      console.log(response)
+      if(response.data.squads.length === 0){
+        setDetails(values);
+        next();        
+      }else{
+        message.error("This name is in use, please choose another one.")
+      }
+  }).catch((err) => {
+    message.error("Something goes wrong please try it again.")
+    console.log(err)
+  })
+
   }
 
   const steps = [
