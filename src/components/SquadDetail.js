@@ -12,7 +12,6 @@ const SquadDetails = props => {
   const { squadId } = props.match.params;
   const [details, setDetails] = useState({});
   const [balance, setBalance] = useState(0);
-  const [donation, setDonation] = useState(false);
 
   useEffect(() => {
     async function getDetails() {
@@ -20,9 +19,6 @@ const SquadDetails = props => {
         const result = await squadDetails(squadId);
         if (result.data && result.data.squad) {
           setDetails(result.data.squad);
-          setDonation(
-            Boolean(localStorage.getItem(`donation-${result.data.squad._id}`))
-          );
         }
         let balance = await getBalance()
         setBalance(balance);
@@ -39,15 +35,10 @@ const SquadDetails = props => {
     return data.balance;
   }
 
-  const makeDonation = () => {
-    localStorage.setItem(`donation-${details._id}`, true);
-    setDonation(true);
-  };
-
   const donationMenu = (
-    <Menu onClick={makeDonation}>
+    <Menu>
       <Menu.Item key="1">
-        <a href={"https://pay.sendwyre.com/purchase?destCurrency=DAI&paymentMethod=debit-card&dest=" + details.daoAddress + "&redirectUrl=http://localhost:3000/squad/" + details._id} target="_blank" rel="noopener noreferrer">
+        <a href={`https://pay.sendwyre.com/purchase?destCurrency=DAI&paymentMethod=debit-card&dest=${details.daoAddress}&redirectUrl=http://localhost:3000/squad/${details._id}`} target="_blank" rel="noopener noreferrer">
           <CreditCardOutlined />
           <Text strong style={{ marginLeft: 8 }}>Credit and debit card</Text>
         </a>
@@ -68,29 +59,27 @@ const SquadDetails = props => {
         title={details.name}
         tags={details.verified ? <Tag color="green">Verified</Tag> : ''}
         extra={[
+          <Button href={details.inviteLink} target="_blank" rel="noopener noreferrer">Join the chat</Button>,
           <Dropdown overlay={donationMenu} placement="bottomRight">
             <Button type="primary">
               Donate <DownOutlined />
             </Button>
-          </Dropdown>,
+          </Dropdown>
         ]}
         style={{ padding: 0 }}
       ></PageHeader>
 
-      <Row style={{ marginTop: 32, marginBottom: 32 }}>
-        <Col span={12}>
+      <Row style={{ marginTop: 32, marginBottom: 32 }} gutter={64}>
+        <Col xs={24} sm={24} md={16}>
+          <ReactMarkdown source={details.description}></ReactMarkdown>
+        </Col>
+        <Col xs={24} sm={24} md={8}>
           <Statistic title="Current balance" prefix="$" value={balance} precision={2} valueStyle={{ color: '#3f8600' }} />
+          <a href={`https://mainnet.aragon.org/#/${details.daoAddress}`} target="_blank" rel="noopener noreferrer">
+            Check finances →
+          </a>
         </Col>
       </Row>
-      <ReactMarkdown source={details.description}></ReactMarkdown>
-
-      {donation ? (
-      <Row gutter={[8, 16]}>
-        <Col xs={24} justify="center" align="middle">          
-          <Button href={details.inviteLink}>Join the chat</Button>
-        </Col>
-      </Row>          
-      ) : ( '' )}
     </div>
   );
 };
