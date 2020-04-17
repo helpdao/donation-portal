@@ -1,13 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Button, Input, Col } from "antd";
+import { EditorState, convertToRaw } from 'draft-js';
+import draftToMarkdown from 'draftjs-to-markdown';
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import write from "../../assets/write.svg";
 
 const SquadForm = ({ onFinish }) => {
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+
+  const onPreFinish = (details) => {
+    const contentState = convertToRaw(editorState.getCurrentContent());
+    const markdown = draftToMarkdown(contentState);
+    console.log(markdown)
+
+    details.description = markdown;
+    onFinish(details);
+  }
+
   return (
     <>
       <Col xs={24} sm={24} md={12}>
-        <Form name="new" onFinish={onFinish} layout="vertical">
+        <Form name="new" onFinish={onPreFinish} layout="vertical">
           <Form.Item
             label="Squad name"
             name="name"
@@ -28,12 +43,16 @@ const SquadForm = ({ onFinish }) => {
           <Form.Item
             label="Squad description"
             name="description"
-            rules={[{ required: true, message: "Please write a description!" }]}
           >
-            <Input.TextArea
-              rows={10}
-              name="description"
-              placeholder="Description"
+            <Editor
+              editorState={editorState}
+              toolbarClassName="toolbarClassName"
+              wrapperClassName="wrapperClassName"
+              editorClassName="editorClassName"
+              onEditorStateChange={setEditorState}
+              toolbar={{
+                options: ['inline', 'blockType', 'list', 'colorPicker', 'link', 'remove'],
+              }}
             />
           </Form.Item>
           <Form.Item>

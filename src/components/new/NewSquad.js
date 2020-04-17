@@ -63,20 +63,8 @@ export default function NewSquad() {
   };
 
   const setSquadDetails = (values) => {
-    findSquad({name:values.name}).then((response) =>{
-      console.log("Valid Name?")
-      console.log(response)
-      if(response.data.squads.length === 0){
-        setDetails(values);
-        next();        
-      }else{
-        message.error("This name is in use, please choose another one.")
-      }
-  }).catch((err) => {
-    message.error("Something goes wrong please try it again.")
-    console.log(err)
-  })
-
+    setDetails(values);
+    next();
   }
 
   const steps = [
