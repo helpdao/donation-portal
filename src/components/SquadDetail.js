@@ -6,9 +6,12 @@ import { DownOutlined, CreditCardOutlined, CalculatorOutlined } from '@ant-desig
 
 const { Text } = Typography;
 
+const daiAddress = '0x6b175474e89094c44da98b954eedeac495271d0f';
+
 const SquadDetails = props => {
   const { squadId } = props.match.params;
   const [details, setDetails] = useState({});
+  const [balance, setBalance] = useState(0);
   const [donation, setDonation] = useState(false);
 
   useEffect(() => {
@@ -21,12 +24,20 @@ const SquadDetails = props => {
             Boolean(localStorage.getItem(`donation-${result.data.squad._id}`))
           );
         }
+        let balance = await getBalance()
+        setBalance(balance);
       } catch (err) {
         console.log(err)
       }
     }
     getDetails();
   }, [squadId]);
+
+  const getBalance = async () => {
+    let res = await fetch(`https://api.tokenbalance.com/token/${daiAddress}/${details.daoAddress}`);
+    let data = await res.json();
+    return data.balance;
+  }
 
   const makeDonation = () => {
     localStorage.setItem(`donation-${details._id}`, true);
@@ -68,30 +79,18 @@ const SquadDetails = props => {
 
       <Row style={{ marginTop: 32, marginBottom: 32 }}>
         <Col span={12}>
-          <Statistic title="Total donated" prefix="$" value={112893} precision={2} valueStyle={{ color: '#3f8600' }} />
-        </Col>
-        <Col span={12}>
-          <Statistic title="Remaining" prefix="$" value={112893} precision={2} />
+          <Statistic title="Current balance" prefix="$" value={balance} precision={2} valueStyle={{ color: '#3f8600' }} />
         </Col>
       </Row>
       <ReactMarkdown source={details.description}></ReactMarkdown>
-      <Row justify="center" align="middle" gutter={[8, 8]}>
-        <Col xs={24} md={6} align="middle">
-          <Button type="primary" onClick={() => makeDonation()} href={`https://buy.ramp.network?swapAsset=DAI&userAddress=${details.daoAddress}`}>Donate with Ramp (EU)</Button>        
-        </Col>
-        <Col  xs={24} md={6} align="middle">
-          <Button type="primary" onClick={() => makeDonation()} href={"https://pay.sendwyre.com/purchase?destCurrency=DAI&paymentMethod=debit-card&dest=" + details.daoAddress + "&redirectUrl=http://localhost:3000/squad/" + details._id}>Donate with Wyre (US)</Button>        
-        </Col>
-      </Row>
 
-        {donation ? (
-        <Row gutter={[8, 16]}>
-          <Col xs={24} justify="center" align="middle">          
-            <Button href={details.inviteLink}>Join the chat</Button>
-          </Col>
-        </Row>          
-        ) : ( '' )}
-
+      {donation ? (
+      <Row gutter={[8, 16]}>
+        <Col xs={24} justify="center" align="middle">          
+          <Button href={details.inviteLink}>Join the chat</Button>
+        </Col>
+      </Row>          
+      ) : ( '' )}
     </div>
   );
 };
