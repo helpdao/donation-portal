@@ -7,7 +7,7 @@ export default class Footer extends React.Component {
   render() {
     return (
       <Menu mode="horizontal" style={{ borderBottom: 'none', paddingTop: 16 }}>
-        <Menu.Item key="home" style={{ float: 'left', borderBottom: 'none' }}>
+        <Menu.Item key="home" style={{ float: 'left', borderBottom: 'none', paddingLeft: 12 }}>
           <Link to="/"><img src={help_dao_min} className="img-fluid d-inline-block align-top" alt="" style={{ height: 48 }}/></Link>
         </Menu.Item>
         <Menu.Item key="about" style={{ float: 'right' }}>

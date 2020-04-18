@@ -13,7 +13,9 @@ export default class Layout extends React.Component {
           xl={{ span: 12, offset: 6 }}
         >
           <Header />
-          {this.props.children}
+          <div style={{ margin: 16 }}>
+            {this.props.children}
+          </div>
         </Col>
       </Row>
     );

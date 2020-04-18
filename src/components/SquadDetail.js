@@ -53,7 +53,7 @@ const SquadDetails = props => {
   );
 
   return (
-    <div style={{ marginTop: 32, marginBottom: 32 }}>
+    <>
       <PageHeader
         onBack={() => document.location.href="/"}
         title={details.name}
@@ -70,17 +70,17 @@ const SquadDetails = props => {
       ></PageHeader>
 
       <Row style={{ marginTop: 32, marginBottom: 32 }} gutter={64}>
-        <Col xs={24} sm={24} md={16}>
+        <Col xs={{ span: 24, order: 1 }} sm={{ span: 24, order: 1 }} md={{ span: 16, order: 0 }}>
           <ReactMarkdown source={details.description}></ReactMarkdown>
         </Col>
-        <Col xs={24} sm={24} md={8}>
+        <Col xs={{ span: 24, order: 0 }} sm={{ span: 24, order: 0 }} md={{ span: 8, order: 1 }} style={{ textAlign: 'right' }}>
           <Statistic title="Current balance" prefix="$" value={balance} precision={2} valueStyle={{ color: '#3f8600' }} />
           <a href={`https://mainnet.aragon.org/#/${details.daoAddress}`} target="_blank" rel="noopener noreferrer">
             Check finances →
           </a>
         </Col>
       </Row>
-    </div>
+    </>
   );
 };
 
