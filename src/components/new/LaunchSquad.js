@@ -1,24 +1,26 @@
 import React, { useState } from "react";
 import Fortmatic from "fortmatic";
-import { useWallet, UseWalletProvider } from "use-wallet";
 import { Button } from "antd";
 import { Col, Typography } from "antd";
-import deployDAO from './DeployDAO';
+import { ethers } from 'ethers';
+import { useWallet } from "use-wallet";
+import { currentNetwork, vars } from '../../vars.json';
+import deployDAO from '../../web3/DeployDAO';
 
 import help from "../../assets/help.svg";
 
 const { Title } = Typography;
 
-const LaunchSquad = ({ parentCallback }) => {
+const LaunchSquad = ({ onFinish }) => {
   const wallet = useWallet();
-  const fortmatic = new Fortmatic('pk_live_C11CB41780801641');
+  const fortmatic = new Fortmatic(vars[currentNetwork].fortmatic);
   // For testing purposes only, you can replace wallet.balance
   // for balance and then use setBalance to simulate an ETH deposit
-  // const [balance, setBalance] = useState(0);
-  // window.setBalance = setBalance;
+  const [balance, setBalance] = useState(0);
+  window.setBalance = setBalance;
 
   const launchDAO = async () => {
-    const { agentAddress }= await deployDAO({ creator: wallet.account, web3provider: wallet.ethereum })
+    const { agentAddress } = await deployDAO({ creator: wallet.account, web3provider: wallet.ethereum })
     return agentAddress;
   }
 
@@ -32,7 +34,7 @@ const LaunchSquad = ({ parentCallback }) => {
           It will cost around $5 in network fees to launch the help squad.<br/>
           <b>The rest will be deposited directly on your own help squad, so you will be its first donor!</b>
         </p>
-        {wallet.balance < 0.05 ? (
+        {parseFloat(ethers.utils.formatEther(wallet.balance)) < 0.05 ? (
           <Button
             type="primary"
             onClick={() => fortmatic.user.deposit()}
@@ -55,15 +57,4 @@ const LaunchSquad = ({ parentCallback }) => {
   );
 };
 
-export default (props) => {
-  return (
-    <UseWalletProvider
-      chainId={1}
-      connectors={{
-        fortmatic: { apiKey: "pk_live_C11CB41780801641" },
-      }}
-    >
-      <LaunchSquad parentCallback={() => props.onCompletedRegister()}/>
-    </UseWalletProvider>
-  );
-};
+export default LaunchSquad;

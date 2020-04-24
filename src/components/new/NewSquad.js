@@ -4,11 +4,13 @@ import {
   message,
   Row,
 } from "antd";
+import { UseWalletProvider } from "use-wallet";
 import Register from "./Register";
 import LaunchSquad from "./LaunchSquad";
 import SquadForm from "./SquadForm";
 import { createSquad } from "../../requests";
-import {findSquad} from '../../requests/index'
+import { currentNetwork, vars } from '../../vars.json';
+
 const { Step } = Steps;
 
 export default function NewSquad() {
@@ -23,21 +25,7 @@ export default function NewSquad() {
   };
 
   const validateStep = () => {
-    if (current === 0) {
-      Promise.resolve(localStorage.getItem("ethAddress")).then((fortmatic) => {
-        console.log("FORTMATIC: " + fortmatic);
-        if (fortmatic.length !== 0) {
-          next();
-          setError("");
-          setWalletConnected(true);
-        } else {
-          message.error("You need to sign up!");
-          setError("error");
-          setWalletConnected(false);
-        }
-      });
-    } else if (current === 1) {
-    } else if (current === 2) {
+    if (current === 2) {
       if (walletConnected === true) {
         let dao = "0x0000000000000000ABADBABE0000000000000000";
         let data = {
@@ -70,7 +58,7 @@ export default function NewSquad() {
   const steps = [
     {
       title: "Register",
-      content: <Register onCompletedRegister={() => validateStep()}></Register>,
+      content: <Register onFinish={next}></Register>,
     },
     {
       title: "Enter details",
@@ -84,7 +72,12 @@ export default function NewSquad() {
 
   localStorage.setItem("ethAddress", "");
   return (
-    <>
+    <UseWalletProvider
+      chainId={vars[currentNetwork].chainId}
+      connectors={{
+        fortmatic: { apiKey: vars[currentNetwork].fortmatic },
+      }}
+    >
       <Steps
         current={current}
         status={error}
@@ -99,6 +92,6 @@ export default function NewSquad() {
           {steps[current].content}
         </Row>
       </div>
-    </>
+    </UseWalletProvider>
   );
 }

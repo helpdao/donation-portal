@@ -1,21 +1,15 @@
 import React from "react";
-import { useWallet, UseWalletProvider } from "use-wallet";
 import { Button } from "antd";
 import { Col, Typography, Spin } from "antd";
+import { useWallet } from "use-wallet";
 
 import signup from "../../assets/signup.svg";
 
 const { Title } = Typography;
 
-const NewSquad = ({ parentCallback }) => {
+const Register = ({ onFinish }) => {
   const wallet = useWallet();
 
-  const isConnected = () => {
-    if (wallet.account !== null) {
-      localStorage.setItem("ethAddress", wallet.account);
-      parentCallback()
-    }
-  };
   return (
     <>
       <Col xs={24} sm={12}>
@@ -25,7 +19,7 @@ const NewSquad = ({ parentCallback }) => {
           You can use your email or phone number.
         </p>
         {wallet.connected ? (
-          isConnected()
+          onFinish()
         ) : wallet.activating !== null ? (
           <Spin size="large" />
         ) : (
@@ -44,15 +38,4 @@ const NewSquad = ({ parentCallback }) => {
   );
 };
 
-export default (props) => {
-  return (
-    <UseWalletProvider
-      chainId={1}
-      connectors={{
-        fortmatic: { apiKey: "pk_live_C11CB41780801641" },
-      }}
-    >
-      <NewSquad parentCallback={() => props.onCompletedRegister()}/>
-    </UseWalletProvider>
-  );
-};
+export default Register;

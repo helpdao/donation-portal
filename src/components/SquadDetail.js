@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReactMarkdown from 'react-markdown'
 import { squadDetails } from "../requests";
-import { Statistic, Row, Col, Button, PageHeader, Tag, Menu, Dropdown, Typography } from 'antd';
+import { Statistic, Row, Col, Button, PageHeader, Tag, Menu, Dropdown, Typography, Result } from 'antd';
 import { DownOutlined, CreditCardOutlined, CalculatorOutlined } from '@ant-design/icons';
 
 const { Text } = Typography;
@@ -12,8 +12,12 @@ const SquadDetails = props => {
   const { squadId } = props.match.params;
   const [details, setDetails] = useState({});
   const [balance, setBalance] = useState(0);
+  const [donation, setDonation] = useState(false);
 
   useEffect(() => {
+    let urlParams = new URLSearchParams(window.location.search);
+    setDonation(urlParams.get('donation') === 'true');
+
     async function getDetails() {
       try {
         const result = await squadDetails(squadId);
@@ -68,6 +72,14 @@ const SquadDetails = props => {
         ]}
         style={{ padding: 0 }}
       ></PageHeader>
+
+      {donation ? (
+        <Result
+          status="success"
+          title="Thanks for donating!"
+          subTitle={`You have successfully donated to ${details.name}. Thank you!`}
+        />
+      ) : ''}
 
       <Row style={{ marginTop: 32, marginBottom: 32 }} gutter={64}>
         <Col xs={{ span: 24, order: 1 }} sm={{ span: 24, order: 1 }} md={{ span: 16, order: 0 }}>
