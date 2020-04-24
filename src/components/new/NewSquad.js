@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   Steps,
-  message,
   Row,
 } from "antd";
 import { UseWalletProvider } from "use-wallet";
@@ -15,8 +14,7 @@ const { Step } = Steps;
 
 export default function NewSquad() {
   const [current, setCurrent] = useState(0);
-  const [error, setError] = useState("");
-  const [walletConnected, setWalletConnected] = useState(false);
+  const [error, setError] = useState('');
   const [details, setDetails] = useState({});
   const [daoAddresses, setDAOAddresses] = useState({});
 
@@ -26,25 +24,21 @@ export default function NewSquad() {
   };
 
   const launchSquad = async ({ daoAddress, agentAddress }) => {
+    setDAOAddresses({ daoAddress, agentAddress });
     let data = {
       name: details.name,
       description: details.description,
       inviteLink: details.inviteLink,
       daoAddress: daoAddress,
-      agentAddress: agentAddress,
+      donationAddress: agentAddress,
     };
     const res = await createSquad(data);
-    console.log(res);
+    window.location.replace(`${window.location.origin}/squad/${res.data.newSquad._id}?launched=true`);
   }
 
   const setSquadDetails = (values) => {
     setDetails(values);
     next();
-  }
-
-  const setDAODetails = ({ daoAddress, agentAddress }) => {
-    setDAOAddresses({ daoAddress, agentAddress });
-    launchSquad({ daoAddress, agentAddress });
   }
 
   const steps = [
@@ -58,11 +52,10 @@ export default function NewSquad() {
     },
     {
       title: "Launch",
-      content: <LaunchSquad onFinish={setDAODetails}></LaunchSquad>
+      content: <LaunchSquad onFinish={launchSquad}></LaunchSquad>
     },
   ];
 
-  localStorage.setItem("ethAddress", "");
   return (
     <UseWalletProvider
       chainId={vars[currentNetwork].chainId}
