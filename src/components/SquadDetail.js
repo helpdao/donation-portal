@@ -46,7 +46,7 @@ const SquadDetails = props => {
   const donationMenu = (
     <Menu>
       <Menu.Item key="1">
-        <a href={`https://pay.sendwyre.com/purchase?destCurrency=DAI&paymentMethod=debit-card&dest=${details.donationAddress}&redirectUrl=http://localhost:3000/squad/${details._id}`} target="_blank" rel="noopener noreferrer">
+        <a href={`https://pay.sendwyre.com/purchase?destCurrency=DAI&paymentMethod=debit-card&dest=${details.donationAddress}&redirectUrl=${window.location.origin}/squad/${details._id}?donation=true`} target="_blank" rel="noopener noreferrer">
           <CreditCardOutlined />
           <Text strong style={{ marginLeft: 8 }}>Credit and debit card</Text>
         </a>
