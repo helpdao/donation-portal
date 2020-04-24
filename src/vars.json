@@ -4,7 +4,8 @@
     "rinkeby": {
       "chainId": 4,
       "fortmatic": "pk_test_701389F30161C509",
-      "templateFactory": "0xd0798582fb6d2a2e7fdb562868e28798d59d0c48"
+      "templateFactory": "0xd0798582fb6d2a2e7fdb562868e28798d59d0c48",
+      "agentAppId": "0x9ac98dc5f995bf0211ed589ef022719d1487e5cb2bab505676f0d084c07cf89a"
     },
     "mainnet": {
       "chainId": 1,

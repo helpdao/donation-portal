@@ -20,8 +20,8 @@ const LaunchSquad = ({ onFinish }) => {
   window.setBalance = setBalance;
 
   const launchDAO = async () => {
-    const { agentAddress } = await deployDAO({ creator: wallet.account, web3provider: wallet.ethereum })
-    return agentAddress;
+    const { daoAddress, agentAddress } = await deployDAO({ creator: wallet.account, web3provider: wallet.ethereum });
+    onFinish({ daoAddress, agentAddress });
   }
 
   return (

@@ -18,41 +18,33 @@ export default function NewSquad() {
   const [error, setError] = useState("");
   const [walletConnected, setWalletConnected] = useState(false);
   const [details, setDetails] = useState({});
+  const [daoAddresses, setDAOAddresses] = useState({});
 
   const next = () => {
     const val = current + 1;
     setCurrent(val);
   };
 
-  const validateStep = () => {
-    if (current === 2) {
-      if (walletConnected === true) {
-        let dao = "0x0000000000000000ABADBABE0000000000000000";
-        let data = {
-          name: details.name,
-          description: details.description,
-          inviteLink: details.inviteLink,
-          daoAddress: dao,
-        };
-        createSquad(data)
-          .then((response) => {
-            if (response.status === 200) {
-              document.location.href = `/squad/${response.data.newSquad._id}`;
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-            message.error(
-              "Oops, something goes wrong, please review all the fields and try it again in a while."
-            );
-          });
-      }
-    }
-  };
+  const launchSquad = async ({ daoAddress, agentAddress }) => {
+    let data = {
+      name: details.name,
+      description: details.description,
+      inviteLink: details.inviteLink,
+      daoAddress: daoAddress,
+      agentAddress: agentAddress,
+    };
+    const res = await createSquad(data);
+    console.log(res);
+  }
 
   const setSquadDetails = (values) => {
     setDetails(values);
     next();
+  }
+
+  const setDAODetails = ({ daoAddress, agentAddress }) => {
+    setDAOAddresses({ daoAddress, agentAddress });
+    launchSquad({ daoAddress, agentAddress });
   }
 
   const steps = [
@@ -66,7 +58,7 @@ export default function NewSquad() {
     },
     {
       title: "Launch",
-      content: <LaunchSquad></LaunchSquad>
+      content: <LaunchSquad onFinish={setDAODetails}></LaunchSquad>
     },
   ];
 
