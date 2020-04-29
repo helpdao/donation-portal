@@ -115,9 +115,8 @@ const DonateCrypto = ({ squadDetails }) => {
 
   return(
     <>
-      <Row style={{ paddingTop: 16, paddingBottom: 16 }}>
+      <Row>
         <Col>
-          <Title level={2}>Donate cryptocurrencies</Title>
           <Text>The easiest way to donate to this squad is with cryptocurrencies, if you have some !</Text>
         </Col>
       </Row>
