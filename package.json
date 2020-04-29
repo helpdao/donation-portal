@@ -1,6 +1,5 @@
 {
   "name": "squads",
-  "homepage": "https://heldao.github.io/donation-portal",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
