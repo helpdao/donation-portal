@@ -11,14 +11,8 @@ const SquadPage = props => {
   const { squadId } = props.match.params;
   const [details, setDetails] = useState({});
   const [balance, setBalance] = useState(0);
-  const [donation, setDonation] = useState(false);
-  const [launched, setLaunched] = useState(false);
 
   useEffect(() => {
-    let urlParams = new URLSearchParams(window.location.search);
-    setDonation(urlParams.get('donation') === 'true');
-    setLaunched(urlParams.get('launched') === 'true');
-
     async function getDetails() {
       try {
         const result = await squadDetails(squadId);
