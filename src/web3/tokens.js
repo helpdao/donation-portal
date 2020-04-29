@@ -37,4 +37,5 @@ export const sendDAI = async (ethereum, daiAmount, toAddress) => {
   if(receipt.status === 0) {
     throw new Error('transaction-fail');
   }
+  return tx;
 }

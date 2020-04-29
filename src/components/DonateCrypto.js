@@ -3,30 +3,9 @@ import { Row, Col, Typography, Button, Spin, Form, InputNumber } from 'antd';
 import { useWallet } from 'use-wallet';
 
 import { sendDAI, getDAIBalance } from '../web3/tokens'
+import RequireWallet from './RequireWallet';
 
 const { Title, Text } = Typography;
-
-const ConnectWallet = () => {
-  const wallet = useWallet();
-
-  return(
-    <Row gutter={32} style={{ paddingTop: 32, paddingBottom: 16 }}>
-      <Col>
-        {
-          wallet.activating ?
-            <Spin size="large" />
-            :
-            <Button
-              type="primary"
-              onClick={() => wallet.activate("fortmatic")}
-            >
-              Connect wallet
-            </Button>
-        }
-      </Col>
-    </Row>
-  );
-}
 
 const DonationForm = ({ donationAddress }) => {
   const [error, setError] = useState(null);
@@ -75,7 +54,7 @@ const DonationForm = ({ donationAddress }) => {
             rules={[
               { required: true, message: "Invalid amount" },
               { max: daiBalance, type: 'number', message: "Insuffisent balance" },
-              { min: 0.1, type: 'number', message: "Amount too low" },
+              { min: 1, type: 'number', message: "Amount too low" },
             ]}
           >
             <InputNumber min={0} max={daiBalance} />
@@ -96,7 +75,7 @@ const DonationForm = ({ donationAddress }) => {
         {error &&
         <Row>
           <Text type="danger">
-            {error.message}
+            <b>Error:</b>&nbsp;{error.message}
           </Text>
         </Row>
         }
@@ -111,8 +90,6 @@ const DonationForm = ({ donationAddress }) => {
 };
 
 const DonateCrypto = ({ squadDetails }) => {
-  const wallet = useWallet();
-
   return(
     <>
       <Row style={{ paddingTop: 16, paddingBottom: 16 }}>
@@ -121,11 +98,9 @@ const DonateCrypto = ({ squadDetails }) => {
           <Text>The easiest way to donate to this squad is with cryptocurrencies, if you have some !</Text>
         </Col>
       </Row>
-      {wallet.connected ?
+      <RequireWallet>
         <DonationForm donationAddress={squadDetails.donationAddress}/>
-        :
-        <ConnectWallet />
-      }
+      </RequireWallet>
     </>
   );
 };

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useRouteMatch, useParams, Switch, Route } from "react-router-dom";
-import { Link } from "react-router-dom";
 import { squadDetails } from "../requests";
 import { Button, PageHeader, Tag, Menu, Dropdown, Typography, Modal } from 'antd';
 import { DownOutlined, CreditCardOutlined, CalculatorOutlined, WalletOutlined } from '@ant-design/icons';
 import SquadDetails from '../components/SquadDetail';
+import SquadVolunteer from '../components/SquadVolunteer';
 import { getBalance } from '../web3/tokens';
 import DonateCrypto from '../components/DonateCrypto';
 
@@ -80,12 +80,12 @@ const SquadPage = () => {
       </Switch>
 
       <SquadDetails squadDetails={details} balance={balance} />
+      <SquadVolunteer squadDetails={details} />
 
       <Modal
         title="Donate cryptocurrencies"
         visible={donateCryptoModal}
         onCancel={() => setDonateCryptoModal(false)}
-        okText="Close"
         footer={null}
       >
         <DonateCrypto squadDetails={details} />
