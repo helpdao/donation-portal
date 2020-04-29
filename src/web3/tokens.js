@@ -24,15 +24,15 @@ export const sendDAI = async (ethereum, daiAmount, toAddress) => {
   const signer = provider.getSigner();
   const tokenContract = new ethers.Contract(daiAddress, erc20ABI, signer);
 
-  const uintAmount = new BN(daiAmount).times(10**18);
+  const numberOfTokens = ethers.utils.parseUnits(String(daiAmount), 18);
 
   const senderAddress = await signer.getAddress();
   const tokenBalance = await tokenContract.balanceOf(senderAddress);
-  if(new BN(uintAmount).gt(tokenBalance)) {
+  if(numberOfTokens.gt(tokenBalance)) {
     throw new Error('token-balance-too-low');
   }
 
-  const tx = await tokenContract.transfer(toAddress, uintAmount);
+  const tx = await tokenContract.transfer(toAddress, numberOfTokens);
   const receipt = await provider.waitForTransaction(tx.hash);
   if(receipt.status === 0) {
     throw new Error('transaction-fail');

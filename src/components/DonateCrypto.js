@@ -30,15 +30,19 @@ const ConnectWallet = () => {
 
 const DonationForm = ({ donationAddress }) => {
   const [error, setError] = useState(null);
+  const [sending, setSending] = useState(false);
   const [daiBalance, setDAIBalance] = useState(null);
   const wallet = useWallet();
 
   async function onDeposit(data) {
+    setSending(true);
     setError(null);
     try {
       await sendDAI(wallet.ethereum, data.amount, donationAddress);
+      setSending(false);
     } catch(error) {
       console.error(error);
+      setSending(false);
       setError(error);
     }
   }
@@ -49,10 +53,9 @@ const DonationForm = ({ donationAddress }) => {
         .then(balance => setDAIBalance(Number(balance)))
         .catch(console.error);
     }
-
-    const intervalid = setInterval(reloadBalance, 5000);
     reloadBalance();
 
+    const intervalid = setInterval(reloadBalance, 20000);
     return () => clearInterval(intervalid);
   }, [wallet]);
 
@@ -78,14 +81,30 @@ const DonationForm = ({ donationAddress }) => {
             <InputNumber min={0} max={daiBalance} />
           </Form.Item>
 
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Donate
-            </Button>
-          </Form.Item>
+          {
+            sending ?
+              <Spin size="large" />
+              :
+              <Form.Item>
+                <Button type="primary" htmlType="submit">
+                  Donate
+                </Button>
+              </Form.Item>
+          }
+
         </Form>
-        {error && error.message}
-        DAI Balance: {daiBalance}
+        {error &&
+        <Row>
+          <Text type="danger">
+            {error.message}
+          </Text>
+        </Row>
+        }
+        <Row>
+          <Text type="secondary">
+            DAI Balance: {daiBalance}
+          </Text>
+        </Row>
       </Col>
     </Row>
   )
