@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
+import { useRouteMatch, useParams, Switch, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { squadDetails } from "../requests";
 import { Button, PageHeader, Tag, Menu, Dropdown, Typography } from 'antd';
-import { DownOutlined, CreditCardOutlined, CalculatorOutlined } from '@ant-design/icons';
+import { DownOutlined, CreditCardOutlined, CalculatorOutlined, WalletOutlined } from '@ant-design/icons';
 import SquadDetails from '../components/SquadDetail';
-import { getBalance } from '../requests/tokens';
+import { getBalance } from '../web3/tokens';
+import DonateCrypto from '../components/DonateCrypto';
 
 const { Text } = Typography;
 
-const SquadPage = props => {
-  const { squadId } = props.match.params;
+const SquadPage = () => {
+  let { squadId } = useParams();
+  let { path } = useRouteMatch();
   const [details, setDetails] = useState({});
   const [balance, setBalance] = useState(0);
 
@@ -42,6 +46,12 @@ const SquadPage = props => {
           <Text strong style={{ marginLeft: 8 }}>Bank account - 🇪🇺🇬🇧</Text>
         </a>
       </Menu.Item>
+      <Menu.Item key="3">
+        <Link to={`/squad/${squadId}/donate-crypto`}>
+          <WalletOutlined />
+          <Text strong style={{ marginLeft: 8 }}>Crypto</Text>
+        </Link>
+      </Menu.Item>
     </Menu>
   );
 
@@ -52,8 +62,8 @@ const SquadPage = props => {
         title={details.name}
         tags={details.verified ? <Tag color="green">Verified</Tag> : ''}
         extra={[
-          <Button href={details.inviteLink} target="_blank" rel="noopener noreferrer">Join the chat</Button>,
-          <Dropdown overlay={donationMenu} placement="bottomRight">
+          <Button key="1" href={details.inviteLink} target="_blank" rel="noopener noreferrer">Join the chat</Button>,
+          <Dropdown key="2"  overlay={donationMenu} placement="bottomRight">
             <Button type="primary">
               Donate <DownOutlined />
             </Button>
@@ -62,7 +72,14 @@ const SquadPage = props => {
         style={{ padding: 0 }}
       ></PageHeader>
 
+      <Switch>
+        <Route path={`${path}/donate-crypto`}>
+          <DonateCrypto squadDetails={details} />
+        </Route>
+      </Switch>
+
       <SquadDetails details={details} balance={balance} />
+
     </>
   );
 };
