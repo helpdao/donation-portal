@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import NewSquad from "./components/new/NewSquad";
 import Register from "./components/new/Register";
-import SquadDetail from "./components/SquadDetail";
+import SquadPage from "./pages/SquadPage";
 import Hero from "./components/Hero";
 import SquadList from "./components/SquadList";
 import Layout from './components/Layout'
@@ -25,7 +25,7 @@ function App() {
           <Route exact path="/new/register">
             <Register />
           </Route>
-          <Route path="/squad/:squadId" component={SquadDetail} />
+          <Route path="/squad/:squadId" component={SquadPage} />
         </Layout>
       </Switch>
     </Router>
