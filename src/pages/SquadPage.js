@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRouteMatch, useParams, Switch, Route } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { squadDetails } from "../requests";
-import { Button, PageHeader, Tag, Menu, Dropdown, Typography } from 'antd';
+import { Button, PageHeader, Tag, Menu, Dropdown, Typography, Modal } from 'antd';
 import { DownOutlined, CreditCardOutlined, CalculatorOutlined, WalletOutlined } from '@ant-design/icons';
 import SquadDetails from '../components/SquadDetail';
 import { getBalance } from '../web3/tokens';
@@ -15,6 +15,7 @@ const SquadPage = () => {
   let { path } = useRouteMatch();
   const [details, setDetails] = useState({});
   const [balance, setBalance] = useState(0);
+  const [donateCryptoModal, setDonateCryptoModal] = useState(false);
 
   useEffect(() => {
     async function getDetails() {
@@ -47,10 +48,10 @@ const SquadPage = () => {
         </a>
       </Menu.Item>
       <Menu.Item key="3">
-        <Link to={`/squad/${squadId}/donate-crypto`}>
+        <a onClick={() => setDonateCryptoModal(true)}>
           <WalletOutlined />
-          <Text strong style={{ marginLeft: 8 }}>Crypto</Text>
-        </Link>
+          <Text strong style={{ marginLeft: 8 }}>Cryptocurrency</Text>
+        </a>
       </Menu.Item>
     </Menu>
   );
@@ -78,8 +79,17 @@ const SquadPage = () => {
         </Route>
       </Switch>
 
-      <SquadDetails details={details} balance={balance} />
+      <SquadDetails squadDetails={details} balance={balance} />
 
+      <Modal
+        title="Donate cryptocurrencies"
+        visible={donateCryptoModal}
+        onCancel={() => setDonateCryptoModal(false)}
+        okText="Close"
+        footer={null}
+      >
+        <DonateCrypto squadDetails={details} />
+      </Modal>
     </>
   );
 };
