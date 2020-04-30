@@ -1,25 +1,57 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, List, Button, Select, Typography } from 'antd';
+import { ExportOutlined } from '@ant-design/icons';
 import MooniWidget from '@mooni/widget';
 import { useWallet } from 'use-wallet';
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 const { Option } = Select;
 
 const PRODUCTS = {
   'mooni': {
-    name: 'Mooni'
+    name: 'Mooni',
+    description: 'Quickly transfer up to 5.000€ to you bank account without KYC'
+  },
+  'coinbase': {
+    name: 'Coinbase',
+    description: 'Custodian fiat and cryptocurrency wallet',
+    url: 'https://www.coinbase.com/',
+  },
+  'amon': {
+    name: 'Amon',
+    description: 'Fiat and cryptocurrency custodian wallet with interest, debit card',
+    url: 'https://amon.tech/',
+  },
+  'monolith': {
+    name: 'Monolith',
+    description: 'Cryptocurrency wallet associated to a debit card',
+    url: 'https://monolith.xyz/',
+  },
+  'dharma': {
+    name: 'Dharma',
+    description: 'Earn interest on USD and transfer to/from your bank account',
+    url: 'https://www.dharma.io/',
   }
 };
 
 const COUNTRY_PRODUCTS = {
-  'EU': ['mooni'],
+  'EU': ['mooni', 'monolith', 'amon', 'coinbase'],
+  'UK': ['monolith', 'coinbase'],
+  'USA': ['dharma', 'coinbase'],
+  'OTHER': ['coinbase'],
+};
+
+const COUNTRIES = {
+  'EU': '🇪🇺 Europe',
+  'UK': '🇬🇧 United Kingdom',
+  'USA': '🇺🇸 United States',
+  'OTHER': 'Other',
 };
 
 export default function CashOut({ name, desc, url, verified }) {
   const wallet = useWallet();
 
-  const [country, setCountry] = useState('EU');
+  const [country, setCountry] = useState(Object.keys(COUNTRIES)[0]);
   const [mooni, setMooni] = useState(null);
 
   useEffect(() => {
@@ -28,55 +60,66 @@ export default function CashOut({ name, desc, url, verified }) {
     }));
   }, []);
 
-  const availableProducts = COUNTRY_PRODUCTS[country] || [];
+  const availableProducts = COUNTRY_PRODUCTS[country] || [];
   const productListData = availableProducts.map(productName => [productName, PRODUCTS[productName]]);
 
   const openProduct = (productName) => () => {
-    if(productName === 'mooni') {
+    if (productName === 'mooni') {
       mooni.open();
+    } else {
+      window.open(PRODUCTS[productName].url)
     }
   };
 
   return (
     <>
-      <Row style={{ paddingTop: 8 }}>
-        <Title level={4}>Cash out cryptocurrencies</Title>
+      <Row style={{paddingTop: 8, paddingBottom: 8}}>
+        <Col>
+          <Title level={4}>Cash out cryptocurrencies</Title>
+          <Text>If you want to transfer funds from your crypto wallet, here are some existing solutions depending on where you live.</Text>
+        </Col>
       </Row>
 
       <List
-        style={{ maxWidth: 400}}
         header={
-          <Row>
-            <Col span={16}>
-              <b>Available solutions</b>
+          <Row align="center">
+            <Col span={12}>
+              <Text strong>Available solutions</Text>
             </Col>
-            <Col span={8}>
+            <Col span={12}>
               <Select
                 value={country}
-                style={{ width: '100%' }}
+                style={{width: '100%'}}
                 onChange={value => setCountry(value)}
               >
-                <Option value="EU">Europe</Option>
-                <Option value="USA">USA</Option>
-                <Option value="OTHER">Other</Option>
+                {Object.keys(COUNTRIES).map(key =>
+                  <Option value={key}>{COUNTRIES[key]}</Option>
+                )}
               </Select>
             </Col>
           </Row>
         }
         bordered
         dataSource={productListData}
+        itemLayout="horizontal"
         renderItem={([productName, product]) => (
-          <List.Item>
-            <Col span={18}>
-              {product.name}
-            </Col>
-            <Col span={6}>
-              <Button onClick={openProduct(productName)}>Open</Button>
-            </Col>
+          <List.Item
+            key={productName}
+            actions={[
+              <Button
+                onClick={openProduct(productName)}
+                type="primary"
+              >
+                Open <ExportOutlined/>
+              </Button>
+            ]}>
+            <List.Item.Meta
+              title={<Text strong>{product.name}</Text>}
+              description={product.description}
+            />
           </List.Item>
         )}
       />
-
     </>
   );
 }

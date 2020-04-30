@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { squadDetails } from "../requests";
-import { Row, Col, Button, PageHeader, Tag, Menu, Dropdown, Typography, Modal } from 'antd';
+import { Row, Col, Button, PageHeader, Tag, Menu, Dropdown, Typography, Modal, Skeleton } from 'antd';
 import { DownOutlined, CreditCardOutlined, CalculatorOutlined, WalletOutlined } from '@ant-design/icons';
 import SquadDetails from '../components/SquadDetail';
 import SquadVolunteer from '../components/SquadVolunteer';
@@ -57,28 +57,30 @@ const SquadPage = () => {
 
   return (
     <>
+      <Skeleton loading={!details.name} active={!details.name} >
+        <PageHeader
+          onBack={() => document.location.href="/"}
+          title={details.name}
+          tags={details.verified ? <Tag color="green">Verified</Tag> : ''}
+          extra={[
+            <Button key="1" href={details.inviteLink} target="_blank" rel="noopener noreferrer">Join the chat</Button>,
+            <Dropdown key="2"  overlay={donationMenu} placement="bottomRight">
+              <Button type="primary">
+                Donate <DownOutlined />
+              </Button>
+            </Dropdown>
+          ]}
+          style={{ padding: 0 }}
+        />
 
-      <PageHeader
-        onBack={() => document.location.href="/"}
-        title={details.name}
-        tags={details.verified ? <Tag color="green">Verified</Tag> : ''}
-        extra={[
-          <Button key="1" href={details.inviteLink} target="_blank" rel="noopener noreferrer">Join the chat</Button>,
-          <Dropdown key="2"  overlay={donationMenu} placement="bottomRight">
-            <Button type="primary">
-              Donate <DownOutlined />
-            </Button>
-          </Dropdown>
-        ]}
-        style={{ padding: 0 }}
-      ></PageHeader>
+        <Row style={{ marginTop: 32, marginBottom: 128 }}>
+          <Col>
+            <SquadDetails squadDetails={details} balance={balance} />
+            <SquadVolunteer squadDetails={details} />
+          </Col>
+        </Row>
+      </Skeleton>
 
-      <Row style={{ marginTop: 32, marginBottom: 128 }}>
-        <Col>
-          <SquadDetails squadDetails={details} balance={balance} />
-          <SquadVolunteer squadDetails={details} />
-        </Col>
-      </Row>
       <Modal
         title="Donate cryptocurrencies"
         visible={donateCryptoModal}

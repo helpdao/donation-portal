@@ -4,9 +4,10 @@ import { Row, Col, Typography } from 'antd';
 // import SubmitExpense from './SubmitExpense';
 import RequireWallet from './RequireWallet';
 import WalletBalances from './WalletBalances';
+import WalletDetails from './WalletDetails';
 import CashOut from './CashOut';
 
-const { Title, Paragraph } = Typography;
+const { Title, Paragraph, Text } = Typography;
 
 const SquadVolunteer = ({ squadDetails }) => {
   // const [submitExpenseModal, setSubmitExpenseModal] = useState(false);
@@ -24,16 +25,25 @@ const SquadVolunteer = ({ squadDetails }) => {
       </Row>
 
       <Row style={{ paddingBottom: 8 }}>
+        <Col>
         <Title level={3}>My personal wallet</Title>
+        <Text>Here you will find some informations abut your cryptocurrency wallet.</Text>
+        </Col>
       </Row>
 
       <RequireWallet>
 
-        <Row>
+        <Row gutter={16}>
+          <Col sm={12} xs={24}>
+            <WalletDetails />
+          </Col>
           <Col sm={12} xs={24}>
             <WalletBalances />
           </Col>
-          <Col sm={12} xs={24}>
+        </Row>
+
+        <Row style={{ paddingTop: 16 }}>
+          <Col span={24}>
             <CashOut />
           </Col>
         </Row>
