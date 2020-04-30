@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Row, Col, Typography, Button, Spin, Form, InputNumber } from 'antd';
 import { useWallet } from 'use-wallet';
 
-import { sendDAI, getDAIBalance } from '../web3/tokens'
+import { useBalance } from '../web3/hooks'
+import { sendDAI } from '../web3/tokens'
+
 import RequireWallet from './RequireWallet';
 
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
 const DonationForm = ({ donationAddress }) => {
   const [error, setError] = useState(null);
   const [sending, setSending] = useState(false);
-  const [daiBalance, setDAIBalance] = useState(null);
+  const daiBalance = useBalance('DAI');
   const wallet = useWallet();
 
   async function onDeposit(data) {
@@ -25,18 +27,6 @@ const DonationForm = ({ donationAddress }) => {
       setError(error);
     }
   }
-
-  useEffect(() => {
-    function reloadBalance() {
-      getDAIBalance(wallet.ethereum, wallet.account)
-        .then(balance => setDAIBalance(Number(balance)))
-        .catch(console.error);
-    }
-    reloadBalance();
-
-    const intervalid = setInterval(reloadBalance, 20000);
-    return () => clearInterval(intervalid);
-  }, [wallet]);
 
   if(daiBalance === null) {
     return(

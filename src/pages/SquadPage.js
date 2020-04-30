@@ -73,12 +73,6 @@ const SquadPage = () => {
         style={{ padding: 0 }}
       ></PageHeader>
 
-      <Switch>
-        <Route path={`${path}/donate-crypto`}>
-          <DonateCrypto squadDetails={details} />
-        </Route>
-      </Switch>
-
       <SquadDetails squadDetails={details} balance={balance} />
       <SquadVolunteer squadDetails={details} />
 
