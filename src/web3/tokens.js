@@ -2,7 +2,7 @@ import BN from 'bignumber.js';
 import { ethers } from 'ethers';
 import erc20ABI from './erc20ABI.json';
 
-import { currentNetwork, vars } from '../vars.json';
+import { currentNetwork, vars } from '../vars';
 
 const daiAddress = vars[currentNetwork].daiAddress;
 
@@ -14,13 +14,6 @@ export const getBalance = async (donationAddress) => {
   let res = await fetch(`https://api.tokenbalance.com/token/${daiAddress}/${donationAddress}`);
   let data = await res.json();
   return data.balance;
-}
-
-export const getDAIBalance = async (ethereum, address) => {
-  const provider = new ethers.providers.Web3Provider(ethereum);
-  const tokenContract = new ethers.Contract(daiAddress, erc20ABI, provider);
-  const tokenBalance = await tokenContract.balanceOf(address);
-  return new BN(tokenBalance.toString()).div(10**18).toString();
 }
 
 export const getTokenBalance = async (ethereum, token, address) => {

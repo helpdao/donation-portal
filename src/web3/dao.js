@@ -6,7 +6,7 @@ import votingABI from './erc20ABI.json';
 import { encodeCallScript } from '@aragon/test-helpers/evmScript'
 import { encodeActCall } from '@aragon/toolkit'
 
-import { currentNetwork, vars } from '../vars.json';
+import { currentNetwork, vars } from '../vars';
 const daiAddress = vars[currentNetwork].daiAddress;
 
 const encodeVote = async ({ financeAddress, receiverAddress, tokenAddress, amount, receipt }) => {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useRouteMatch, useParams, Switch, Route } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { squadDetails } from "../requests";
-import { Button, PageHeader, Tag, Menu, Dropdown, Typography, Modal } from 'antd';
+import { Row, Col, Button, PageHeader, Tag, Menu, Dropdown, Typography, Modal } from 'antd';
 import { DownOutlined, CreditCardOutlined, CalculatorOutlined, WalletOutlined } from '@ant-design/icons';
 import SquadDetails from '../components/SquadDetail';
 import SquadVolunteer from '../components/SquadVolunteer';
@@ -12,7 +12,6 @@ const { Text } = Typography;
 
 const SquadPage = () => {
   let { squadId } = useParams();
-  let { path } = useRouteMatch();
   const [details, setDetails] = useState({});
   const [balance, setBalance] = useState(0);
   const [donateCryptoModal, setDonateCryptoModal] = useState(false);
@@ -58,6 +57,7 @@ const SquadPage = () => {
 
   return (
     <>
+
       <PageHeader
         onBack={() => document.location.href="/"}
         title={details.name}
@@ -73,9 +73,12 @@ const SquadPage = () => {
         style={{ padding: 0 }}
       ></PageHeader>
 
-      <SquadDetails squadDetails={details} balance={balance} />
-      <SquadVolunteer squadDetails={details} />
-
+      <Row style={{ marginTop: 32, marginBottom: 128 }}>
+        <Col>
+          <SquadDetails squadDetails={details} balance={balance} />
+          <SquadVolunteer squadDetails={details} />
+        </Col>
+      </Row>
       <Modal
         title="Donate cryptocurrencies"
         visible={donateCryptoModal}

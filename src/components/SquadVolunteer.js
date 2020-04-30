@@ -1,28 +1,15 @@
-import MooniWidget from '@mooni/widget';
-import React, { useState, useLayoutEffect, useRef } from 'react'
-import { Row, Col, Typography, Button, Spin, Form, InputNumber, Modal } from 'antd';
+import React, { useState } from 'react'
+import { Row, Col, Typography } from 'antd';
 
-import SubmitExpense from './SubmitExpense';
+// import SubmitExpense from './SubmitExpense';
 import RequireWallet from './RequireWallet';
-import { useWallet } from 'use-wallet';
-import { useBalance } from '../web3/hooks';
-import BN from 'bignumber.js';
+import WalletBalances from './WalletBalances';
+import CashOut from './CashOut';
 
 const { Title, Paragraph } = Typography;
 
 const SquadVolunteer = ({ squadDetails }) => {
-  const wallet = useWallet();
-  const daiBalance = useBalance('DAI');
-  const ethBalance = useBalance('ETH');
-
-  const [mooni, setMooni] = useState(null);
-  const [submitExpenseModal, setSubmitExpenseModal] = useState(false);
-
-  useLayoutEffect(() => {
-    setMooni(new MooniWidget({
-      web3Provider: wallet.ethereum,
-    }));
-  }, []);
+  // const [submitExpenseModal, setSubmitExpenseModal] = useState(false);
 
   return(
     <>
@@ -35,35 +22,29 @@ const SquadVolunteer = ({ squadDetails }) => {
           <Paragraph>You can find the address of your personal wallet here. Once you have received the funds, you can come back here and cash out to tranfers funds from your cryptocurrency wallet to your bank account.</Paragraph>
         </Col>
       </Row>
-      <Title level={3}>My personal wallet</Title>
+
+      <Row style={{ paddingBottom: 8 }}>
+        <Title level={3}>My personal wallet</Title>
+      </Row>
 
       <RequireWallet>
 
-        <Row style={{ paddingBottom: 16 }}>
-          <Col>
-            <Row>
-              <Title level={4}>Wallet balances</Title>
-            </Row>
-            <Row>
-              {daiBalance && new BN(daiBalance).dp(4).toNumber()} DAI
-            </Row>
-            <Row>
-              {ethBalance && new BN(ethBalance).dp(4).toNumber()} ETH
-            </Row>
+        <Row>
+          <Col sm={12} xs={24}>
+            <WalletBalances />
+          </Col>
+          <Col sm={12} xs={24}>
+            <CashOut />
           </Col>
         </Row>
 
+        {/*
         <Row gutter={16}>
           <Col>
             <Button type="primary" onClick={() => setSubmitExpenseModal(true)}>
               Submit expenses
             </Button>
           </Col>
-          {mooni && <Col>
-            <Button type="secondary" onClick={() => mooni.open()}>
-              Cash out cryptocurrencies
-            </Button>
-          </Col>}
         </Row>
         <Modal
           title="Submit expenses"
@@ -73,6 +54,8 @@ const SquadVolunteer = ({ squadDetails }) => {
         >
           <SubmitExpense squadDetails={squadDetails} />
         </Modal>
+        */}
+
       </RequireWallet>
     </>
   );
