@@ -14,7 +14,7 @@ const tailLayout = {
   wrapperCol: { offset: 8, span: 16 },
 };
 
-const SubmitExpenseForm = ({ daoAddress }) => {
+const SubmitExpenseForm = ({ squadDetails }) => {
   const [error, setError] = useState(null);
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
@@ -24,7 +24,13 @@ const SubmitExpenseForm = ({ daoAddress }) => {
     setSending(true);
     setError(null);
     try {
-      await createVote(wallet.ethereum, daoAddress, data);
+      await createVote({
+        ethereum: wallet.ethereum,
+        votingAddress: squadDetails.votingAddress, // TODO
+        financeAddress: squadDetails.financeAddress, // TODO
+        amount: data.amount,
+        receipt: data.reason,
+      });
       setSending(false);
       setSent(true);
     } catch(error) {

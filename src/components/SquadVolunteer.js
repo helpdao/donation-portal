@@ -4,16 +4,19 @@ import { Row, Col, Typography, Button, Spin, Form, InputNumber, Modal } from 'an
 
 import SubmitExpense from './SubmitExpense';
 import RequireWallet from './RequireWallet';
+import { useWallet } from 'use-wallet';
 
 const { Title, Text } = Typography;
 
 const SquadVolunteer = ({ squadDetails }) => {
+  const wallet = useWallet();
+
   const [mooni, setMooni] = useState(null);
   const [submitExpenseModal, setSubmitExpenseModal] = useState(false);
 
   useEffect(() => {
     setMooni(new MooniWidget({
-
+      web3Provider: wallet.ethereum,
     }));
   }, []);
 

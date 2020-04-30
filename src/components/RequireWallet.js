@@ -6,9 +6,9 @@ export default function RequireWallet({ children }) {
   const [menuChoice, setMenuChoice] = useState('init');
   const wallet = useWallet();
 
-  // useEffect(() => {
-  //   wallet.activate('injected')
-  // }, []);
+  const activate = (connector) => () =>{
+    wallet.activate(connector).catch(console.error)
+  };
 
   if(wallet.connected) {
     return children;
@@ -48,7 +48,7 @@ export default function RequireWallet({ children }) {
         <Col>
           <Button
             type="primary"
-            onClick={() => wallet.activate("fortmatic")}
+            onClick={activate("fortmatic")}
           >
             I don't have a wallet
           </Button>
@@ -63,7 +63,7 @@ export default function RequireWallet({ children }) {
           <Col>
             <Button
               type="primary"
-              onClick={() => wallet.activate("injected")}
+              onClick={activate("injected")}
             >
               Metamask
             </Button>
@@ -71,7 +71,7 @@ export default function RequireWallet({ children }) {
           <Col>
             <Button
               type="primary"
-              onClick={() => wallet.activate("fortmatic")}
+              onClick={activate("fortmatic")}
             >
               Fortmatic
             </Button>

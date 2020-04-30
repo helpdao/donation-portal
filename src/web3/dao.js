@@ -1,26 +1,59 @@
 import { ethers } from 'ethers';
+import votingABI from './erc20ABI.json';
+
+/*
+
+import { encodeCallScript } from '@aragon/test-helpers/evmScript'
+import { encodeActCall } from '@aragon/toolkit'
 
 import { currentNetwork, vars } from '../vars.json';
 const daiAddress = vars[currentNetwork].daiAddress;
 
-// TODO
-const financeABI = [];
+const encodeVote = async ({ financeAddress, receiverAddress, tokenAddress, amount, receipt }) => {
+  const newImmediatePaymentSignature =
+    'newImmediatePayment(address,address,uint256,string)';
 
-export const createVote = async (ethereum, daoAddress, data) => {
-  const { amount, reason } = data;
+  const calldata = await encodeActCall(newImmediatePaymentSignature, [
+    tokenAddress,
+    receiverAddress,
+    amount,
+    receipt,
+  ]);
+
+  const action = {
+    to: financeAddress,
+    calldata,
+  };
+
+  return encodeCallScript([action])
+};
+*/
+
+export const createVote = async ( { ethereum, votingAddress, financeAddress, amount, receipt }) => {
+  return;
+
+  /*
   const provider = new ethers.providers.Web3Provider(ethereum);
   const signer = provider.getSigner();
-  const recipient = await signer.getAddress();
+  const receiverAddress = await signer.getAddress();
   const numberOfTokens = ethers.utils.parseUnits(String(amount), 18);
 
-  // TODO
-  const financeContract = new ethers.Contract(daoAddress, financeABI, signer);
+  const votingContract = new ethers.Contract(votingAddress, votingABI, signer);
 
-  const tx = await financeContract.newImmediatePayment(daiAddress, recipient, numberOfTokens, reason)
-  const receipt = await provider.waitForTransaction(tx.hash);
-  if(receipt.status === 0) {
+  const script = await encodeVote({
+    financeAddress,
+    receiverAddress,
+    tokenAddress: daiAddress,
+    amount: numberOfTokens,
+    receipt
+  });
+  const tx = await votingContract.newVote(script, receipt);
+
+  const txReceipt = await provider.waitForTransaction(tx.hash);
+  if(txReceipt.status === 0) {
     throw new Error('transaction-fail');
   }
 
   return tx;
+  */
 }
