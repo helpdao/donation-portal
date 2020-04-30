@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col, List, Button, Select, Typography } from 'antd';
+import { Row, Col, List, Button, Select, Typography, Avatar } from 'antd';
 import { ExportOutlined } from '@ant-design/icons';
 import MooniWidget from '@mooni/widget';
 import { useWallet } from 'use-wallet';
+
+import MooniLogo from '../assets/mooni.png';
+import MonolithLogo from '../assets/monolith.png';
+import DharmaLogo from '../assets/dharma.png';
+import CoinbaseLogo from '../assets/coinbase.png';
+import AmonLogo from '../assets/amon.png';
 
 const { Title, Text } = Typography;
 const { Option } = Select;
@@ -10,27 +16,32 @@ const { Option } = Select;
 const PRODUCTS = {
   'mooni': {
     name: 'Mooni',
-    description: 'Quickly transfer up to 5.000€ to you bank account without KYC'
+    description: 'Quickly transfer up to 5.000€ to you bank account without KYC',
+    logo: MooniLogo,
   },
   'coinbase': {
     name: 'Coinbase',
     description: 'Custodian fiat and cryptocurrency wallet',
     url: 'https://www.coinbase.com/',
+    logo: CoinbaseLogo,
   },
   'amon': {
     name: 'Amon',
     description: 'Fiat and cryptocurrency custodian wallet with interest, debit card',
     url: 'https://amon.tech/',
+    logo: AmonLogo,
   },
   'monolith': {
     name: 'Monolith',
     description: 'Cryptocurrency wallet associated to a debit card',
     url: 'https://monolith.xyz/',
+    logo: MonolithLogo,
   },
   'dharma': {
     name: 'Dharma',
     description: 'Earn interest on USD and transfer to/from your bank account',
     url: 'https://www.dharma.io/',
+    logo: DharmaLogo,
   }
 };
 
@@ -93,7 +104,7 @@ export default function CashOut({ name, desc, url, verified }) {
                 onChange={value => setCountry(value)}
               >
                 {Object.keys(COUNTRIES).map(key =>
-                  <Option value={key}>{COUNTRIES[key]}</Option>
+                  <Option key={key} value={key}>{COUNTRIES[key]}</Option>
                 )}
               </Select>
             </Col>
@@ -102,9 +113,9 @@ export default function CashOut({ name, desc, url, verified }) {
         bordered
         dataSource={productListData}
         itemLayout="horizontal"
+        rowKey={([key]) => key}
         renderItem={([productName, product]) => (
           <List.Item
-            key={productName}
             actions={[
               <Button
                 onClick={openProduct(productName)}
@@ -114,6 +125,7 @@ export default function CashOut({ name, desc, url, verified }) {
               </Button>
             ]}>
             <List.Item.Meta
+              avatar={<Avatar src={product.logo} />}
               title={<Text strong>{product.name}</Text>}
               description={product.description}
             />
