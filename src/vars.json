@@ -1,5 +1,5 @@
 {
-  "currentNetwork": "mainnet",
+  "currentNetwork": "rinkeby",
   "vars": {
     "rinkeby": {
       "chainId": 4,
