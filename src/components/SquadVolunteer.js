@@ -9,30 +9,29 @@ import CashOut from './CashOut';
 
 const { Title, Paragraph, Text } = Typography;
 
-const SquadVolunteer = ({ squadDetails }) => {
+const SquadVolunteer = () => {
   // const [submitExpenseModal, setSubmitExpenseModal] = useState(false);
 
   return(
     <>
       <Row gutter={32} style={{ paddingTop: 32, paddingBottom: 16 }}>
         <Col>
-          <Title level={2}>Volunteers</Title>
-          <Title level={4}>Do you want to volunteer for this squad ?</Title>
-          <Paragraph>Please head over <a href={squadDetails.inviteLink} target="_blank" rel="noopener noreferrer">the chat of this team</a> to find out how you can help.</Paragraph>
-          <Paragraph>If you want to be refunded for expenses or compensated for work, you can ask them, and if the community accepts you will earn cryptocurrencies in your personal wallet..</Paragraph>
+          <Title level={3}>Volunteering</Title>
+          <Title level={4}>Do you want to volunteer for a help squad?</Title>
+          <Paragraph>You should head to the <a href='/'>homepage</a> to see if there is any help squad that interests you.</Paragraph>
+          <Paragraph>If you want to be refunded for expenses you can ask there, and if they accepts it you will earn cryptocurrencies.</Paragraph>
           <Paragraph>You can find the address of your personal wallet here. Once you have received the funds, you can come back here and cash out to tranfers funds from your cryptocurrency wallet to your bank account.</Paragraph>
         </Col>
       </Row>
 
-      <Row style={{ paddingBottom: 8 }}>
+      <Row style={{ marginTop: 8, marginBottom: 8 }}>
         <Col>
-        <Title level={3}>My personal wallet</Title>
-        <Text>Here you will find some informations abut your cryptocurrency wallet.</Text>
+          <Title level={3}>My personal wallet</Title>
+          <Text>Here you will find some informations abut your cryptocurrency wallet.</Text>
         </Col>
       </Row>
 
       <RequireWallet>
-
         <Row gutter={16}>
           <Col sm={12} xs={24}>
             <WalletDetails />

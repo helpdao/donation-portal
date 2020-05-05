@@ -65,7 +65,7 @@ export default function RequireWallet({ children }) {
               type="primary"
               onClick={activate("injected")}
             >
-              Metamask
+              MetaMask
             </Button>
           </Col>
           <Col>

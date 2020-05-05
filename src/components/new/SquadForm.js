@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form, Button, Input, Col } from "antd";
-import { EditorState, convertToRaw } from 'draft-js';
+import { EditorState } from 'draft-js';
 import { stateToMarkdown } from "draft-js-export-markdown";
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';

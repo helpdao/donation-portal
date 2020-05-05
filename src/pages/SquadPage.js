@@ -70,15 +70,10 @@ const SquadPage = () => {
               </Button>
             </Dropdown>
           ]}
-          style={{ padding: 0 }}
+          style={{ padding: 0, marginBottom: 32 }}
         />
 
-        <Row style={{ marginTop: 32, marginBottom: 128 }}>
-          <Col>
-            <SquadDetails squadDetails={details} balance={balance} />
-            <SquadVolunteer squadDetails={details} />
-          </Col>
-        </Row>
+        <SquadDetails squadDetails={details} balance={balance} />
       </Skeleton>
 
       <Modal

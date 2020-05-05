@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import NewSquad from "./components/new/NewSquad";
 import SquadPage from "./pages/SquadPage";
+import SquadVolunteer from "./components/SquadVolunteer";
 import Hero from "./components/Hero";
 import SquadList from "./components/SquadList";
 import Layout from './components/Layout'
@@ -31,6 +32,9 @@ function App() {
             </Route>
             <Route path="/squad/:squadId">
               <SquadPage />
+            </Route>
+            <Route path="/volunteers">
+              <SquadVolunteer />
             </Route>
             <Redirect to="/"/>
           </Switch>
