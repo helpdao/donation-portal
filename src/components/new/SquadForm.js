@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Button, Input, Col } from "antd";
 import { EditorState, convertToRaw } from 'draft-js';
-import draftToMarkdown from 'draftjs-to-markdown';
+import { stateToMarkdown } from "draft-js-export-markdown";
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
@@ -11,9 +11,7 @@ const SquadForm = ({ onFinish }) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
   const onPreFinish = (details) => {
-    const contentState = convertToRaw(editorState.getCurrentContent());
-    const markdown = draftToMarkdown(contentState);
-    details.description = markdown;
+    details.description = stateToMarkdown(editorState.getCurrentContent());
     onFinish(details);
   }
 
@@ -52,7 +50,7 @@ const SquadForm = ({ onFinish }) => {
               wrapperStyle={{ border: '1px solid #d9d9d9', borderRadius: 2 }}
               editorStyle={{ minHeight: '10rem', padding: '0px 16px' }}
               toolbar={{
-                options: ['inline', 'blockType', 'list', 'colorPicker', 'link', 'remove'],
+                options: ['inline', 'blockType', 'list', 'link', 'remove'],
               }}
             />
           </Form.Item>
