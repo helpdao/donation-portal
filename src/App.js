@@ -1,34 +1,43 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import NewSquad from "./components/new/NewSquad";
-import Register from "./components/new/Register";
-import SquadDetail from "./components/SquadDetail";
+import SquadPage from "./pages/SquadPage";
 import Hero from "./components/Hero";
 import SquadList from "./components/SquadList";
 import Layout from './components/Layout'
 
 import "./App.css";
 import 'antd/dist/antd.less';
+import { UseWalletProvider } from 'use-wallet';
+import { currentNetwork, vars } from './vars';
 
 function App() {
   return (
-    <Router>
-      <Switch>
+
+    <UseWalletProvider
+      chainId={vars[currentNetwork].chainId}
+      connectors={{
+        fortmatic: { apiKey: vars[currentNetwork].fortmatic },
+      }}
+    >
+      <Router>
         <Layout>
-          <Route exact path="/">
-            <Hero />
-            <SquadList />
-          </Route>
-          <Route exact path="/new">
-            <NewSquad />
-          </Route>
-          <Route exact path="/new/register">
-            <Register />
-          </Route>
-          <Route path="/squad/:squadId" component={SquadDetail} />
+          <Switch>
+            <Route exact path="/">
+              <Hero />
+              <SquadList />
+            </Route>
+            <Route exact path="/new">
+              <NewSquad />
+            </Route>
+            <Route path="/squad/:squadId">
+              <SquadPage />
+            </Route>
+            <Redirect to="/"/>
+          </Switch>
         </Layout>
-      </Switch>
-    </Router>
+      </Router>
+    </UseWalletProvider>
   );
 }
 
