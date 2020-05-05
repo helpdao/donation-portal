@@ -2,9 +2,13 @@ import BN from 'bignumber.js';
 import { ethers } from 'ethers';
 import erc20ABI from './erc20ABI.json';
 
-import { currentNetwork, vars } from '../vars.json';
+import { currentNetwork, vars } from '../vars';
 
 const daiAddress = vars[currentNetwork].daiAddress;
+
+export const tokenAddresses = {
+  DAI: vars[currentNetwork].daiAddress,
+};
 
 export const getBalance = async (donationAddress) => {
   let res = await fetch(`https://api.tokenbalance.com/token/${daiAddress}/${donationAddress}`);
@@ -12,17 +16,25 @@ export const getBalance = async (donationAddress) => {
   return data.balance;
 }
 
-export const getDAIBalance = async (ethereum, address) => {
+export const getTokenBalance = async (ethereum, token, address) => {
+  const tokenAddress = tokenAddresses[token];
+  if(!tokenAddress) {
+    throw new Error(`unknown token ${token} in network ${currentNetwork}`);
+  }
   const provider = new ethers.providers.Web3Provider(ethereum);
-  const tokenContract = new ethers.Contract(daiAddress, erc20ABI, provider);
+  const tokenContract = new ethers.Contract(tokenAddress, erc20ABI, provider);
   const tokenBalance = await tokenContract.balanceOf(address);
-  return new BN(tokenBalance.toString()).div(10**18).toString();
+
+  // TODO get token decimals. Works now for DAI and ETH but can break for other tokens
+  const tokenDecimals = 18;
+
+  return new BN(tokenBalance.toString()).div(10 ** tokenDecimals).toString();
 }
 
 export const sendDAI = async (ethereum, daiAmount, toAddress) => {
   const provider = new ethers.providers.Web3Provider(ethereum);
   const signer = provider.getSigner();
-  const tokenContract = new ethers.Contract(daiAddress, erc20ABI, signer);
+  const tokenContract = new ethers.Contract(tokenAddresses.DAI, erc20ABI, signer);
 
   const numberOfTokens = ethers.utils.parseUnits(String(daiAmount), 18);
 
@@ -37,4 +49,5 @@ export const sendDAI = async (ethereum, daiAmount, toAddress) => {
   if(receipt.status === 0) {
     throw new Error('transaction-fail');
   }
+  return tx;
 }

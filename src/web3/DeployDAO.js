@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import { currentNetwork, vars } from '../vars.json';
+import { currentNetwork, vars } from '../vars';
 import contractAbi from './deployABI.json';
 
 const filterAddresses = async (factory, transactionHash) => {

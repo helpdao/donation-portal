@@ -1,37 +1,18 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Row, Col, Typography, Button, Spin, Form, InputNumber } from 'antd';
 import { useWallet } from 'use-wallet';
 
-import { sendDAI, getDAIBalance } from '../web3/tokens'
+import { useBalance } from '../web3/hooks'
+import { sendDAI } from '../web3/tokens'
 
-const { Title, Text } = Typography;
+import RequireWallet from './RequireWallet';
 
-const ConnectWallet = () => {
-  const wallet = useWallet();
-
-  return(
-    <Row gutter={32} style={{ paddingTop: 32, paddingBottom: 16 }}>
-      <Col>
-        {
-          wallet.activating ?
-            <Spin size="large" />
-            :
-            <Button
-              type="primary"
-              onClick={() => wallet.activate("fortmatic")}
-            >
-              Connect wallet
-            </Button>
-        }
-      </Col>
-    </Row>
-  );
-}
+const { Text } = Typography;
 
 const DonationForm = ({ donationAddress }) => {
   const [error, setError] = useState(null);
   const [sending, setSending] = useState(false);
-  const [daiBalance, setDAIBalance] = useState(null);
+  const daiBalance = useBalance('DAI');
   const wallet = useWallet();
 
   async function onDeposit(data) {
@@ -46,18 +27,6 @@ const DonationForm = ({ donationAddress }) => {
       setError(error);
     }
   }
-
-  useEffect(() => {
-    function reloadBalance() {
-      getDAIBalance(wallet.ethereum, wallet.account)
-        .then(balance => setDAIBalance(Number(balance)))
-        .catch(console.error);
-    }
-    reloadBalance();
-
-    const intervalid = setInterval(reloadBalance, 20000);
-    return () => clearInterval(intervalid);
-  }, [wallet]);
 
   if(daiBalance === null) {
     return(
@@ -75,7 +44,7 @@ const DonationForm = ({ donationAddress }) => {
             rules={[
               { required: true, message: "Invalid amount" },
               { max: daiBalance, type: 'number', message: "Insuffisent balance" },
-              { min: 0.1, type: 'number', message: "Amount too low" },
+              { min: 1, type: 'number', message: "Amount too low" },
             ]}
           >
             <InputNumber min={0} max={daiBalance} />
@@ -96,7 +65,7 @@ const DonationForm = ({ donationAddress }) => {
         {error &&
         <Row>
           <Text type="danger">
-            {error.message}
+            <b>Error:</b>&nbsp;{error.message}
           </Text>
         </Row>
         }
@@ -111,8 +80,6 @@ const DonationForm = ({ donationAddress }) => {
 };
 
 const DonateCrypto = ({ squadDetails }) => {
-  const wallet = useWallet();
-
   return(
     <>
       <Row>
@@ -120,11 +87,9 @@ const DonateCrypto = ({ squadDetails }) => {
           <Text>The easiest way to donate to this squad is with cryptocurrencies, if you have some !</Text>
         </Col>
       </Row>
-      {wallet.connected ?
+      <RequireWallet>
         <DonationForm donationAddress={squadDetails.donationAddress}/>
-        :
-        <ConnectWallet />
-      }
+      </RequireWallet>
     </>
   );
 };

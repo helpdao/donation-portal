@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import ReactMarkdown from 'react-markdown'
-import { currentNetwork } from '../vars.json';
+import { currentNetwork } from '../vars';
 import { Statistic, Row, Col, Button, Typography, Result } from 'antd';
 import SquadShare from './SquadShare'
 
@@ -35,7 +35,7 @@ const SquadDetails = ({ squadDetails, balance }) => {
         />
       )}
 
-      <Row style={{ marginTop: 32, marginBottom: 32 }} gutter={64}>
+      <Row gutter={64}>
         <Col xs={{ span: 24, order: 1 }} sm={{ span: 24, order: 1 }} md={{ span: 16, order: 0 }}>
           <ReactMarkdown source={squadDetails.description}></ReactMarkdown>
           <Title level={3}>Share</Title>

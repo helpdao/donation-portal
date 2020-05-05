@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useRouteMatch, useParams, Switch, Route } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { squadDetails } from "../requests";
-import { Button, PageHeader, Tag, Menu, Dropdown, Typography, Modal } from 'antd';
+import { Row, Col, Button, PageHeader, Tag, Menu, Dropdown, Typography, Modal, Skeleton } from 'antd';
 import { DownOutlined, CreditCardOutlined, CalculatorOutlined, WalletOutlined } from '@ant-design/icons';
 import SquadDetails from '../components/SquadDetail';
+import SquadVolunteer from '../components/SquadVolunteer';
 import { getBalance } from '../web3/tokens';
 import DonateCrypto from '../components/DonateCrypto';
 
@@ -12,7 +12,6 @@ const { Text } = Typography;
 
 const SquadPage = () => {
   let { squadId } = useParams();
-  let { path } = useRouteMatch();
   const [details, setDetails] = useState({});
   const [balance, setBalance] = useState(0);
   const [donateCryptoModal, setDonateCryptoModal] = useState(false);
@@ -58,28 +57,34 @@ const SquadPage = () => {
 
   return (
     <>
-      <PageHeader
-        onBack={() => document.location.href="/"}
-        title={details.name}
-        tags={details.verified ? <Tag color="green">Verified</Tag> : ''}
-        extra={[
-          <Button key="1" href={details.inviteLink} target="_blank" rel="noopener noreferrer">Join the chat</Button>,
-          <Dropdown key="2"  overlay={donationMenu} placement="bottomRight">
-            <Button type="primary">
-              Donate <DownOutlined />
-            </Button>
-          </Dropdown>
-        ]}
-        style={{ padding: 0 }}
-      ></PageHeader>
+      <Skeleton loading={!details.name} active={!details.name} >
+        <PageHeader
+          onBack={() => document.location.href="/"}
+          title={details.name}
+          tags={details.verified ? <Tag color="green">Verified</Tag> : ''}
+          extra={[
+            <Button key="1" href={details.inviteLink} target="_blank" rel="noopener noreferrer">Join the chat</Button>,
+            <Dropdown key="2"  overlay={donationMenu} placement="bottomRight">
+              <Button type="primary">
+                Donate <DownOutlined />
+              </Button>
+            </Dropdown>
+          ]}
+          style={{ padding: 0 }}
+        />
 
-      <SquadDetails squadDetails={details} balance={balance} />
+        <Row style={{ marginTop: 32, marginBottom: 128 }}>
+          <Col>
+            <SquadDetails squadDetails={details} balance={balance} />
+            <SquadVolunteer squadDetails={details} />
+          </Col>
+        </Row>
+      </Skeleton>
 
       <Modal
         title="Donate cryptocurrencies"
         visible={donateCryptoModal}
         onCancel={() => setDonateCryptoModal(false)}
-        okText="Close"
         footer={null}
       >
         <DonateCrypto squadDetails={details} />

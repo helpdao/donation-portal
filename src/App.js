@@ -13,7 +13,6 @@ import { currentNetwork, vars } from './vars';
 
 function App() {
   return (
-
     <UseWalletProvider
       chainId={vars[currentNetwork].chainId}
       connectors={{
