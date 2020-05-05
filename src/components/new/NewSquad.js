@@ -3,12 +3,10 @@ import {
   Steps,
   Row,
 } from "antd";
-import { UseWalletProvider } from "use-wallet";
 import Register from "./Register";
 import LaunchSquad from "./LaunchSquad";
 import SquadForm from "./SquadForm";
 import { createSquad } from "../../requests";
-import { currentNetwork, vars } from '../../vars.json';
 
 const { Step } = Steps;
 
@@ -57,12 +55,7 @@ export default function NewSquad() {
   ];
 
   return (
-    <UseWalletProvider
-      chainId={vars[currentNetwork].chainId}
-      connectors={{
-        fortmatic: { apiKey: vars[currentNetwork].fortmatic },
-      }}
-    >
+    <>
       <Steps
         current={current}
         status={error}
@@ -77,6 +70,6 @@ export default function NewSquad() {
           {steps[current].content}
         </Row>
       </div>
-    </UseWalletProvider>
+    </>
   );
 }
