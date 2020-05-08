@@ -1,6 +1,6 @@
 import { ethers } from 'ethers';
-import { currentNetwork, vars } from '../vars.json';
-import contractAbi from './abi.json';
+import { currentNetwork, vars } from '../vars';
+import contractAbi from './deployABI.json';
 
 const filterAddresses = async (factory, transactionHash) => {
   const daoPromise = new Promise((resolve, reject) => {

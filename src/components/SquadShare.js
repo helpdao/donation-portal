@@ -16,28 +16,28 @@ import {
   WhatsappIcon,
 } from "react-share";
 
-const SquadShare = props => {
+const SquadShare = ({ url }) => {
   return (
     <div style={{ marginTop: 16, marginBottom: 16 }}>
-      <WhatsappShareButton url={window.location.href} style={{ marginRight: 8 }}>
+      <WhatsappShareButton url={url} style={{ marginRight: 8 }}>
         <WhatsappIcon size={32} round={true}/>
       </WhatsappShareButton>
-      <TelegramShareButton url={window.location.href} style={{ marginRight: 8 }}>
+      <TelegramShareButton url={url} style={{ marginRight: 8 }}>
         <TelegramIcon size={32} round={true}/>
       </TelegramShareButton>
-      <FacebookShareButton url={window.location.href} style={{ marginRight: 8 }}>
+      <FacebookShareButton url={url} style={{ marginRight: 8 }}>
         <FacebookIcon size={32} round={true}/>
       </FacebookShareButton>
-      <TwitterShareButton url={window.location.href} style={{ marginRight: 8 }}>
+      <TwitterShareButton url={url} style={{ marginRight: 8 }}>
         <TwitterIcon size={32} round={true}/>
       </TwitterShareButton>
-      <VKShareButton url={window.location.href} style={{ marginRight: 8 }}>
+      <VKShareButton url={url} style={{ marginRight: 8 }}>
         <VKIcon size={32} round={true}/>
       </VKShareButton>
-      <MailruShareButton url={window.location.href} style={{ marginRight: 8 }}>
+      <MailruShareButton url={url} style={{ marginRight: 8 }}>
         <MailruIcon size={32} round={true}/>
       </MailruShareButton>
-      <EmailShareButton url={window.location.href} style={{ marginRight: 8 }}>
+      <EmailShareButton url={url} style={{ marginRight: 8 }}>
         <EmailIcon size={32} round={true}/>
       </EmailShareButton>
     </div>

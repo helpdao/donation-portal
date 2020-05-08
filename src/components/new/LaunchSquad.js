@@ -4,7 +4,7 @@ import { Button } from "antd";
 import { Col, Typography } from "antd";
 import { ethers } from 'ethers';
 import { useWallet } from "use-wallet";
-import { currentNetwork, vars } from '../../vars.json';
+import { currentNetwork, vars } from '../../vars';
 import deployDAO from '../../web3/DeployDAO';
 
 import help from "../../assets/help.svg";
