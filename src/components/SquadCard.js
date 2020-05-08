@@ -11,8 +11,8 @@ export default function SquadCard({ name, desc, url, verified }) {
       ]}
       title={<>{name}{verified ? <Tag color="green" style={{ float: 'right' }}>Verified</Tag> : ''}</>}
     >
-      <div style={{ height: 164 }}>
-        <ReactMarkdown source={desc.substring(0, 180).replace(/([\#])+/g, '')}></ReactMarkdown>
+      <div style={{ height: 164, maxHeight:164, overflow:'hidden'}}>
+        <ReactMarkdown source={desc.substring(0,180).replace(/([\#])+/g, '')}></ReactMarkdown>
       </div>
     </Card>
   );

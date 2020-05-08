@@ -51,6 +51,20 @@ const SquadForm = ({ onFinish }) => {
               editorStyle={{ minHeight: '10rem', padding: '0px 16px' }}
               toolbar={{
                 options: ['inline', 'blockType', 'list', 'link', 'remove'],
+                inline: {
+                  inDropdown: false,
+                  className: undefined,
+                  component: undefined,
+                  dropdownClassName: undefined,
+                  options: ['bold', 'italic', 'strikethrough', 'monospace'],
+                },
+                blockType: {
+                  inDropdown: true,
+                  options: ['Normal', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6'],
+                  className: undefined,
+                  component: undefined,
+                  dropdownClassName: undefined,
+                }                
               }}
             />
           </Form.Item>
