@@ -1,3 +1,3 @@
-export const API = process.env.API_URL || "https://testbackend.helpdao.org";
+export const API = process.env.API_URL || "https://backend.helpdao.org";
 
 
