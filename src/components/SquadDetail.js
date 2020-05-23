@@ -10,7 +10,7 @@ const { Panel } = Collapse;
 const SquadDetails = ({ squadDetails, balance }) => {
 
   let urlParams = new URLSearchParams(window.location.search);
-  const donation = urlParams.get('donation') === 'true';
+  const donation = urlParams.get('donation') === 'true' || urlParams.get('donation') === 'true?';
   const launched = urlParams.get('launched') === 'true';
 
   return (

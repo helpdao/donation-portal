@@ -11,9 +11,9 @@ export const tokenAddresses = {
 };
 
 export const getBalance = async (donationAddress) => {
-  let res = await fetch(`https://api.tokenbalance.com/token/${daiAddress}/${donationAddress}`);
+  let res = await fetch(`https://api.etherscan.io/api?module=account&action=tokenbalance&contractaddress=${daiAddress}&address=${donationAddress}&tag=latest&apikey=MH91B4Y7QYP4W1EUDAB8YY5TQX12PMW8P6`);
   let data = await res.json();
-  return data.balance;
+  return ethers.utils.parseUnits(String(data.result), 18);
 }
 
 export const getTokenBalance = async (ethereum, token, address) => {
