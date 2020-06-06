@@ -7,7 +7,7 @@ import SquadDetails from '../components/SquadDetail';
 import SquadVolunteer from '../components/SquadVolunteer';
 import { getBalance } from '../web3/tokens';
 import DonateCrypto from '../components/DonateCrypto';
-
+import RampWidget from '../components/RampWidget'
 const { Text } = Typography;
 
 const SquadPage = () => {
@@ -41,10 +41,7 @@ const SquadPage = () => {
         </a>
       </Menu.Item>
       <Menu.Item key="2">
-        <a href={`https://buy.ramp.network?swapAsset=DAI&userAddress=${details.donationAddress}`} target="_blank" rel="noopener noreferrer">
-          <CalculatorOutlined />
-          <Text strong style={{ marginLeft: 8 }}>Bank account - 🇪🇺🇬🇧</Text>
-        </a>
+      <RampWidget name={details.name}></RampWidget>
       </Menu.Item>
       <Menu.Item key="3">
         <a onClick={() => setDonateCryptoModal(true)}>

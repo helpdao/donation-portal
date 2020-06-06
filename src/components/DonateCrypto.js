@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Row, Col, Typography, Button, Spin, Form, InputNumber } from 'antd';
 import { useWallet } from 'use-wallet';
-
 import { useBalance } from '../web3/hooks'
 import { sendDAI } from '../web3/tokens'
 
