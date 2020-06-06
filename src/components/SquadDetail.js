@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import ReactMarkdown from 'react-markdown'
+import RampWidget from './RampWidget'
 import { currentNetwork } from '../vars';
 import { Statistic, Row, Col, Button, Typography, Result, Collapse } from 'antd';
 import SquadShare from './SquadShare'
