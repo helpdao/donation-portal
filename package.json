@@ -10,7 +10,7 @@
     "@testing-library/user-event": "^7.1.2",
     "@wyre/api": "^1.0.5",
     "antd": "4.1.2",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bignumber.js": "^9.0.0",
     "bootstrap": "^4.4.1",
     "bs-stepper": "^1.7.0",
