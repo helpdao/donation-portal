@@ -36,7 +36,7 @@
     "babel-plugin-import": "^1.13.0",
     "customize-cra": "^0.9.1",
     "react-app-rewired": "^2.1.5",
-    "react-dev-utils": "^10.2.1"
+    "react-dev-utils": "^11.0.4"
   },
   "scripts": {
     "predeploy": "npm run build",
